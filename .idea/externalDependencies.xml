@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Docker" />
+    <plugin id="com.intellij.css" />
+    <plugin id="com.jetbrains.php.dql" />
+    <plugin id="com.jetbrains.twig" />
+    <plugin id="fr.adrienbrault.idea.symfony2plugin" />
+    <plugin id="org.jetbrains.plugins.github" />
+    <plugin id="org.jetbrains.plugins.phpstorm-remote-interpreter" />
+  </component>
+</project>
