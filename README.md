@@ -1,6 +1,6 @@
 # Gestion de compte
 
-Application de gestion des dépenses de plusieures personnes autour d'un évènement.
+Application de gestion des dépenses de plusieurs personnes autour d'un évènement.
 Cette application permet de gérer, par exemple, les dépenses lors d'un weekend entre amis ou des vacances en famille.
 
 ## modèle de donnée
@@ -24,7 +24,7 @@ Cette application permet de gérer, par exemple, les dépenses lors d'un weekend
      * operations (1-n)
    * operation
      * id
-     * user
+     * user (1-1)
      * date
      * description
      * category
@@ -35,7 +35,9 @@ Cette application permet de gérer, par exemple, les dépenses lors d'un weekend
      * id
      * user (1-1)
      * amount
+     * operation (n-1)
    * payment
      * id
      * user (1-1)
      * amount
+     * operation (n-1)
