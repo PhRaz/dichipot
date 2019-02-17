@@ -33,9 +33,15 @@ class Event
      */
     private $userEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Operation", mappedBy="event", orphanRemoval=true)
+     */
+    private $operations;
+
     public function __construct()
     {
         $this->userEvents = new ArrayCollection();
+        $this->operations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +98,37 @@ class Event
             // set the owning side to null (unless already changed)
             if ($userEvent->getEvent() === $this) {
                 $userEvent->setEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Operation[]
+     */
+    public function getOperations(): Collection
+    {
+        return $this->operations;
+    }
+
+    public function addOperation(Operation $operation): self
+    {
+        if (!$this->operations->contains($operation)) {
+            $this->operations[] = $operation;
+            $operation->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOperation(Operation $operation): self
+    {
+        if ($this->operations->contains($operation)) {
+            $this->operations->removeElement($operation);
+            // set the owning side to null (unless already changed)
+            if ($operation->getEvent() === $this) {
+                $operation->setEvent(null);
             }
         }
 
