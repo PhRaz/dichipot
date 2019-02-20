@@ -32,7 +32,7 @@ class MainController extends AbstractController
     /**
      * @Route("/event/list/{user}", name="event_list")
      */
-    public function eventList($user)
+    public function eventList(User $user) : Response
     {
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $events = array(); // TODO lister les events et afficher un liens de création d'event
