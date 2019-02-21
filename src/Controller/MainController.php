@@ -30,6 +30,14 @@ class MainController extends AbstractController
     }
 
     /**
+     * @Route("/user/create", name="user_create")
+     */
+    public function userCreate()
+    {
+        return $this->render("userCreate.html.twig");
+    }
+
+    /**
      * @Route("/event/list/{user}", name="event_list")
      */
     public function eventList(User $user) : Response
