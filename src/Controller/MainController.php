@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,27 @@ class MainController extends AbstractController
 
     /**
      * @Route("/user/create", name="user_create")
+     * @param $request Request
+     * @return Response
      */
-    public function userCreate()
+    public function userCreate(Request $request) : Response
     {
-        return $this->render("userCreate.html.twig");
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $user->setDate(new \DateTime('now'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_list');
+        }
+
+        return $this->render("userCreate.html.twig", ['form' => $form->createView()]);
     }
 
     /**

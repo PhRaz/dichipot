@@ -1,3 +1,5 @@
+{% extends 'base.html.twig' %}
+
 {% block body %}
     <a href="{{ path('home') }}">retour vers menu</a>
     <h1>Liste des utilisateurs</h1>
@@ -13,5 +15,5 @@
             <p>aucun utilisateur</p>
         {% endfor %}
     </ul>
-    <a href="{{ path("user_create") }}">Créer un utilisateur</a>
+    <a href="{{ path("user_create") }}">Créer un nouvel utilisateur</a>
 {% endblock body %}
