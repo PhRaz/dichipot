@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('home') }}">retour vers menu</a>
+    <h1>Liste des évènements de {{ user.name }}</h1>
+    <ul>
+        {% for event in events if events|length > 0 %}
+            <p>{{ event.name }}</p>
+        {% else %}
+            <p>aucun évènement</p>
+        {% endfor %}
+    </ul>
+    <a href="{{ path("event_create") }}">Créer un nouvel évènement</a>
+{% endblock body %}
