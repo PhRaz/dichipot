@@ -19,6 +19,20 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @param $user User
+     * @return array
+     */
+    public function getUserEvents(User $user) : array
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.UserEvents', 'ue')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

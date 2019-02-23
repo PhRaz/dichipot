@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\EventType;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class MainController extends AbstractController
 {
@@ -34,6 +37,7 @@ class MainController extends AbstractController
      * @Route("/user/create", name="user_create")
      * @param $request Request
      * @return Response
+     * @throws \Exception
      */
     public function userCreate(Request $request) : Response
     {
@@ -56,14 +60,39 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/event/list/{user}", name="event_list")
+     * @Route("/event/list/{id}", name="event_list")
+     * @param $user User
+     * @return Response
      */
     public function eventList(User $user) : Response
     {
-        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        $events = array(); // TODO lister les events et afficher un liens de création d'event
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $events = $userRepo->getUserEvents($user);
 
-        return $this->render("eventList.html.twig");
+        return $this->render("eventList.html.twig", ['user' => $user, 'events' => $events]);
+    }
+
+    /**
+     * @Route("/event/create", name="event_create")
+     * @return Response
+     * @throws \Exception
+     */
+    public function eventCreate(Request $request)
+    {
+        $event = new Event();
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event = $form->getData();
+            $event->setDate(new \DateTime('now'));
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('event_list');
+        }
+        return new Response();
     }
 
     /**
