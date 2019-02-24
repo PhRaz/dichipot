@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\User;
+use App\Entity\UserEvent;
 use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\UserRepository;
@@ -74,25 +75,37 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/event/create", name="event_create")
+     * @Route("/event/create/{id}", name="event_create")
+     * @param $request Request
+     * @param $user User
      * @return Response
      * @throws \Exception
      */
-    public function eventCreate(Request $request)
+    public function eventCreate(Request $request, User $user)
     {
+        /** @var Event $event */
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $userEvent = new UserEvent();
+            $userEvent->setDate(new \DateTime());
+            $userEvent->setAdministrator(true);
+            $userEvent->setUser($user);
+
             $event = $form->getData();
-            $event->setDate(new \DateTime('now'));
+            $event->addUserEvent($userEvent);
+            $event->setDate(new \DateTime());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
+            $entityManager->persist($userEvent);
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_list');
+            return $this->redirectToRoute('event_list', ['id' => $user->getId()]);
         }
-        return new Response();
+
+        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
 
     /**

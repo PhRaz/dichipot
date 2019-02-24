@@ -4,11 +4,11 @@
     <a href="{{ path('home') }}">retour vers menu</a>
     <h1>Liste des évènements de {{ user.name }}</h1>
     <ul>
-        {% for event in events if events|length > 0 %}
-            <p>{{ event.name }}</p>
+        {% for userEvent in user.UserEvents if user.UserEvents|length > 0 %}
+            <p>{{ userEvent.user.id }} / {{ userEvent.event.id }}</p>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
     </ul>
-    <a href="{{ path("event_create") }}">Créer un nouvel évènement</a>
+    <a href="{{ path("event_create", {'id': user.id}) }}">Créer un nouvel évènement</a>
 {% endblock body %}
