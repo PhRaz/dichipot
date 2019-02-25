@@ -20,18 +20,18 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $user User
+     * @param $userId userId
      * @return array
      */
-    public function getUserEvents(User $user) : array
+    public function getUserEvents($userId) : array
     {
         return $this->createQueryBuilder('u')
-            ->leftJoin('u.UserEvents', 'ue')
-            ->leftJoin('ue.event', 'e')
+            ->innerJoin('u.UserEvents', 'ue')
+            ->innerJoin('ue.event', 'e')
             ->andWhere('u.id = :userId')
             ->addSelect('ue')
             ->addSelect('e')
-            ->setParameter('userId', $user->getId())
+            ->setParameter('userId', $userId)
             ->getQuery()
             ->getResult();
     }
