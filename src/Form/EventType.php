@@ -13,11 +13,12 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name');
+            ->add('name')
+            ->add('description');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class'=> Event::class]);
+        $resolver->setDefaults(['data_class' => Event::class]);
     }
 }

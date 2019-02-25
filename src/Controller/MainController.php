@@ -8,6 +8,7 @@ use App\Entity\UserEvent;
 use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\UserRepository;
+use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @route("/home", name="home")
+     * @route("/", name="home")
      */
     public function home() {
         return $this->render("home.html.twig");
@@ -80,43 +81,44 @@ class MainController extends AbstractController
      */
     public function eventCreate(Request $request, User $user)
     {
-        /** @var Event $event */
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $userEvent = new UserEvent();
             $userEvent->setDate(new \DateTime());
             $userEvent->setAdministrator(true);
-            $userEvent->setUser($user);
-
-            $event = $form->getData();
-            $event->addUserEvent($userEvent);
             $event->setDate(new \DateTime());
+
+            $userEvent->setUser($user);
+            $userEvent->setEvent($event);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->persist($userEvent);
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_list', ['id' => $user->getId()]);
+            return $this->redirectToRoute('event_list', ['userId' => $user->getId()]);
         }
 
         return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'user' => $user]);
     }
 
     /**
-     * @route("/operation/list/{id}", name="operation_list")
+     * @route("/operation/list/{eventId}", name="operation_list")
      */
-    public function operationList(Event $event)
+    public function operationList($eventId)
     {
-        $operations = array();
+        /** @var EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $event = $eventRepo->getEventOperations($eventId);
 
-        return $this->render('operationList.html.twig', ['event' => $event, 'operations' => $operations]);
+        return $this->render('operationList.html.twig', ['event' => $event[0]]);
     }
 
     /**
-     * @Route("/newOperation", name="operation_create")
+     * @Route("/operation/create", name="operation_create")
      */
     public function operationCreate() : Response
     {
