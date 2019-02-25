@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('home') }}">retour vers menu</a>
+    <h1>Liste des opération de l'évènement {{ event.name }}</h1>
+    <ul>
+        {% for operation in operations if operation|length > 0 %}
+            <li>{{ operation.date|date('d/m/y') }}
+                <ul>{{ operation.description }}</ul>
+                <ul>{{ operation.category }}</ul>
+            </li>
+        {% else %}
+            <p>aucune opération sur cet évènement</p>
+        {% endfor %}
+    </ul>
+    <a href="{{ path("operation_create") }}">Créer une nouvelle opération</a>
+{% endblock body %}

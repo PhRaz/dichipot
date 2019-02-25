@@ -27,8 +27,10 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->leftJoin('u.UserEvents', 'ue')
+            ->leftJoin('ue.event', 'e')
             ->andWhere('u.id = :userId')
             ->addSelect('ue')
+            ->addSelect('e')
             ->setParameter('userId', $user->getId())
             ->getQuery()
             ->getResult();

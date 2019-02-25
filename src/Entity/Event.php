@@ -29,6 +29,11 @@ class Event
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserEvent", mappedBy="event")
      */
     private $userEvents;
@@ -71,6 +76,22 @@ class Event
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
     /**
