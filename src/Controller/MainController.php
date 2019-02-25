@@ -29,7 +29,6 @@ class MainController extends AbstractController
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $users = $userRepo->findAll();
-
         return $this->render("userList.html.twig", ['users' => $users]);
     }
 
