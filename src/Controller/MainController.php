@@ -17,14 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @route("/home", name="home")
      */
     public function home() {
         return $this->render("home.html.twig");
     }
 
     /**
-     * @Route("/user/list", name="user_list")
+     * @route("/user/list", name="user_list")
      */
     public function userList() : Response
     {
@@ -35,7 +35,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/user/create", name="user_create")
+     * @route("/user/create", name="user_create")
      * @param $request Request
      * @return Response
      * @throws \Exception
@@ -61,7 +61,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/event/list/{id}", name="event_list")
+     * @route("/event/list/{id}", name="event_list")
      * @param $user User
      * @return Response
      */
@@ -75,7 +75,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/event/create/{id}", name="event_create")
+     * @route("/event/create/{id}", name="event_create")
      * @param $request Request
      * @param $user User
      * @return Response
@@ -109,10 +109,20 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/newOperation", name="new_operation")
+     * @route("/operation/list/{id}", name="operation_list")
      */
-    public function newOperation() : Response
+    public function operationList(Event $event)
     {
-        return $this->render("newOperation.html.twig");
+        $operations = array();
+
+        return $this->render('operationList.html.twig', ['event' => $event, 'operations' => $operations]);
+    }
+
+    /**
+     * @Route("/newOperation", name="operation_create")
+     */
+    public function operationCreate() : Response
+    {
+        return $this->render("operationCreate.html.twig");
     }
 }

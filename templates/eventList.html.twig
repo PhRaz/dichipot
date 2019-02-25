@@ -5,7 +5,7 @@
     <h1>Liste des évènements de {{ user.name }}</h1>
     <ul>
         {% for userEvent in user.UserEvents if user.UserEvents|length > 0 %}
-            <p>{{ userEvent.user.id }} / {{ userEvent.event.id }}</p>
+            <p><a href="{{ path("operation_list", {'id': userEvent.event.id}) }}">{{ userEvent.event.name }}</a> : {{ userEvent.event.description }}</p>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
