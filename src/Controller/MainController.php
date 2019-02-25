@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class MainController extends AbstractController
 {
     /**
@@ -61,17 +60,16 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/event/list/{id}", name="event_list")
-     * @param $user User
+     * @route("/event/list/{userId}", name="event_list")
+     * @param $userId
      * @return Response
      */
-    public function eventList(User $user) : Response
+    public function eventList($userId) : Response
     {
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $events = $userRepo->getUserEvents($user);
-
-        return $this->render("eventList.html.twig", ['user' => $user, 'events' => $events]);
+        $user = $userRepo->getUserEvents($userId);
+        return $this->render("eventList.html.twig", ['user' => $user[0]]);
     }
 
     /**
