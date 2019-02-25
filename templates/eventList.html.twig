@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('home') }}">retour vers menu</a>
     <h1>Liste des évènements de {{ user.name }}</h1>
     <ul>
         {% for userEvent in user.UserEvents if user.UserEvents|length > 0 %}
-            <p><a href="{{ path("operation_list", {'id': userEvent.event.id}) }}">{{ userEvent.event.name }}</a> : {{ userEvent.event.description }}</p>
+            <p><a href="{{ path("operation_list", {'eventId': userEvent.event.id}) }}">{{ userEvent.event.name }}</a>
+                : {{ userEvent.event.description }}</p>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
     </ul>
-    <a href="{{ path("event_create", {'id': user.id}) }}">Créer un nouvel évènement</a>
+    <nav>
+        <a href="{{ path('home') }}">Home</a>
+        <a href="{{ path('user_list') }}">Liste des utilisateurs</a>
+    </nav>
 {% endblock body %}
