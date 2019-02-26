@@ -27,7 +27,7 @@ class UserEvent
     private $administrator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="UserEvents")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userEvents")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
