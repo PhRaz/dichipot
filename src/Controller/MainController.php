@@ -19,7 +19,9 @@ class MainController extends AbstractController
     /**
      * @route("/", name="home")
      */
-    public function home() {
+    public function home()
+    {
+
         return $this->render("home.html.twig");
     }
 
@@ -30,6 +32,7 @@ class MainController extends AbstractController
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $users = $userRepo->findAll();
+
         return $this->render("userList.html.twig", ['users' => $users]);
     }
 
@@ -69,6 +72,7 @@ class MainController extends AbstractController
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->getUserEvents($userId);
+
         return $this->render("eventList.html.twig", ['user' => $user[0]]);
     }
 
@@ -106,6 +110,29 @@ class MainController extends AbstractController
     }
 
     /**
+     * @route("/event/addUser/{eventId}/{userId}", name="event_add_user")
+     * @param Request $request
+     * @param $eventId
+     * @param $userId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function eventAddUser(Request $request, $eventId, $userId)
+    {
+        $event = $this->getDoctrine()->getRepository(Event::class)->find($eventId);
+        $administrator = $this->getDoctrine()->getRepository(User::class)->find($userId);
+
+        $user = new User();
+        $form = $this->createForm(UserType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            return ($this->redirectToRoute('event_list', ['userId' => $user->getId()]));
+        }
+
+        return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event'=> $event, 'administrator' => $administrator]);
+    }
+
+    /**
      * @route("/operation/list/{eventId}", name="operation_list")
      */
     public function operationList($eventId)
@@ -122,6 +149,7 @@ class MainController extends AbstractController
      */
     public function operationCreate() : Response
     {
+
         return $this->render("operationCreate.html.twig");
     }
 }
