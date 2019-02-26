@@ -5,12 +5,11 @@
     <ul>
         {% for user in users if users
             |length > 0 %}
-            <li>{{ user.name }}
-                <ul>
-                    <li><a href="mailto:{{ user.mail }}">{{ user.mail }}</a></li>
-                    <li><a href="{{ path('event_list', {'userId': user.id}) }}">liste des évènements</a></li>
-                </ul>
-            </li>
+            <h2>{{ user.name }}</h2>
+            <ul>
+                <li><a href="mailto:{{ user.mail }}">{{ user.mail }}</a></li>
+                <li><a href="{{ path('event_list', {'userId': user.id}) }}">liste des évènements</a></li>
+            </ul>
         {% else %}
             <p>aucun utilisateur</p>
         {% endfor %}

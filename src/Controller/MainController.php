@@ -90,11 +90,11 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $event->setDate(new \DateTime());
+
             $userEvent = new UserEvent();
             $userEvent->setDate(new \DateTime());
             $userEvent->setAdministrator(true);
-            $event->setDate(new \DateTime());
-
             $userEvent->setUser($user);
             $userEvent->setEvent($event);
 
@@ -118,15 +118,31 @@ class MainController extends AbstractController
      */
     public function eventAddUser(Request $request, $eventId, $userId)
     {
+        /** @var Event $event */
         $event = $this->getDoctrine()->getRepository(Event::class)->find($eventId);
+        /** @var User $administrator */
         $administrator = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
         $user = new User();
-        $form = $this->createForm(UserType::class);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            return ($this->redirectToRoute('event_list', ['userId' => $user->getId()]));
+            $user->setDate(new \DateTime());
+
+            $userEvent = new UserEvent();
+            $userEvent->setDate(new \DateTime());
+            $userEvent->setAdministrator(false);
+
+            $userEvent->setUser($user);
+            $userEvent->setEvent($event);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->persist($userEvent);
+            $entityManager->flush();
+
+            return ($this->redirectToRoute('event_list', ['userId' => $administrator->getId()]));
         }
 
         return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event'=> $event, 'administrator' => $administrator]);
