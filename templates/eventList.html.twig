@@ -11,8 +11,8 @@
             <p>Liste des participants de l'évènement :
             <ul>
                 {% for userEvent2 in event.userEvents %}
-                    {% set user = userEvent2.user %}
-                    <li>{{ user.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</li>
+                    {% set user2 = userEvent2.user %}
+                    <li>{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</li>
                 {% endfor %}
                 <a href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}">Ajouter un
                     participant</a>

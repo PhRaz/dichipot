@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ceae441-ab8e-4e82-9d7d-d918653b9b54" name="Default" comment="migration DB">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Repository/EventRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Repository/EventRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../templates/eventList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/eventList.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../templates/userList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/../templates/userList.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="0ceae441-ab8e-4e82-9d7d-d918653b9b54" name="Default" comment="migration DB" />
     <list id="9ec12612-d57e-40b3-bbea-429e7bb61a65" name="Local" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -129,7 +121,7 @@
         <entry file="file://$PROJECT_DIR$/../templates/eventList.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="465">
-              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
             </state>
           </provider>
         </entry>
@@ -398,7 +390,7 @@
       <workItem from="1550265537709" duration="12143000" />
       <workItem from="1550606909302" duration="935000" />
       <workItem from="1550690978394" duration="3542000" />
-      <workItem from="1551187014922" duration="7666000" />
+      <workItem from="1551187014922" duration="8169000" />
     </task>
     <task id="LOCAL-00001" summary="ajout User / Event / UserEvent">
       <created>1550432983807</created>
@@ -432,7 +424,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37649000" />
+    <option name="totallyTimeSpent" value="38152000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="30" width="1922" height="1054" extended-state="6" />
@@ -702,7 +694,7 @@
     <entry file="file://$PROJECT_DIR$/../templates/eventList.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
-          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
