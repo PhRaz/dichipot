@@ -36,11 +36,11 @@ class User
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserEvent", mappedBy="user")
      */
-    private $UserEvents;
+    private $userEvents;
 
     public function __construct()
     {
-        $this->UserEvents = new ArrayCollection();
+        $this->userEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,13 +89,13 @@ class User
      */
     public function getUserEvents(): Collection
     {
-        return $this->UserEvents;
+        return $this->userEvents;
     }
 
     public function addUserEvent(UserEvent $userEvent): self
     {
-        if (!$this->UserEvents->contains($userEvent)) {
-            $this->UserEvents[] = $userEvent;
+        if (!$this->userEvents->contains($userEvent)) {
+            $this->userEvents[] = $userEvent;
             $userEvent->setUser($this);
         }
 
@@ -104,8 +104,8 @@ class User
 
     public function removeUserEvent(UserEvent $userEvent): self
     {
-        if ($this->UserEvents->contains($userEvent)) {
-            $this->UserEvents->removeElement($userEvent);
+        if ($this->userEvents->contains($userEvent)) {
+            $this->userEvents->removeElement($userEvent);
             // set the owning side to null (unless already changed)
             if ($userEvent->getUser() === $this) {
                 $userEvent->setUser(null);

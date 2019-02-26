@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Liste des évènements de {{ user.name }}</h1>
     <ul>
-        {% for userEvent in user.UserEvents if user.UserEvents|length > 0 %}
+        {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
             {% set event = userEvent.event %}
             <h2>
                 <a href="{{ path("operation_list", {'eventId': event.id}) }}">{{ event.name }}</a>: {{ event.description }}
