@@ -6,6 +6,13 @@
         {% for userEvent in user.UserEvents if user.UserEvents|length > 0 %}
             <p><a href="{{ path("operation_list", {'eventId': userEvent.event.id}) }}">{{ userEvent.event.name }}</a>
                 : {{ userEvent.event.description }}</p>
+            <p>Liste des participants de l'évènement :
+            <ul>
+                <li>{{ user.name }} (administrateur)</li>
+            <a href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}">Ajouter un participant</a>
+            </ul>
+
+            </p>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
