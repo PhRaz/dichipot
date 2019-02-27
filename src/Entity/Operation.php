@@ -19,7 +19,7 @@ class Operation
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -40,12 +40,12 @@ class Operation
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Expense", mappedBy="operation", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Expense", mappedBy="operation", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $expenses;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="operation", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="operation", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $payments;
 

@@ -32,7 +32,7 @@ class MainController extends AbstractController
     /**
      * @route("/user/list", name="user_list")
      */
-    public function userList() : Response
+    public function userList(): Response
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $users = $userRepo->findAll();
@@ -46,7 +46,7 @@ class MainController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function userCreate(Request $request) : Response
+    public function userCreate(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -71,7 +71,7 @@ class MainController extends AbstractController
      * @param $userId
      * @return Response
      */
-    public function eventList($userId) : Response
+    public function eventList($userId): Response
     {
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
@@ -149,7 +149,7 @@ class MainController extends AbstractController
             return ($this->redirectToRoute('event_list', ['userId' => $administrator->getId()]));
         }
 
-        return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event'=> $event, 'administrator' => $administrator]);
+        return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event' => $event, 'administrator' => $administrator]);
     }
 
     /**
@@ -167,24 +167,42 @@ class MainController extends AbstractController
     /**
      * @Route("/operation/create/{eventId}/{userId}", name="operation_create")
      */
-    public function operationCreate(Request $request, $eventId, $userId) : Response
+    public function operationCreate(Request $request, $eventId, $userId): Response
     {
-        /** @var Event $event */
-        $event = $this->getDoctrine()->getRepository(Event::class)->find($eventId);
+        /** @var Event[] $event */
+        $event = $this->getDoctrine()->getRepository(Event::class)->getEventUsers($eventId);
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
         $operation = new Operation();
-        $operation->getExpenses()->add(new Expense());
-        $operation->getExpenses()->add(new Expense());
-        $operation->getPayments()->add(new Payment());
-        $operation->getPayments()->add(new Payment());
+        $operation->setUser($user);
+        $operation->setDate(new \DateTime());
+        $operation->setEvent($event[0]);
+
+        foreach ($event[0]->getUserEvents() as $userEvent) {
+            $expense = new Expense();
+            $expense->setUser($userEvent->getUser());
+            $expense->setAmount(0);
+            $expense->setOperation($operation);
+            $operation->getExpenses()->add($expense);
+            $payment = new Payment();
+            $payment->setUser($userEvent->getUser());
+            $payment->setAmount(1);
+            $payment->setOperation($operation);
+            $operation->getPayments()->add($payment);
+        }
 
         $form = $this->createForm(OperationType::class, $operation);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            return $this->render('operationList.html.twig', ['event' => $event[0]]);
         }
 
-        return $this->render("operationCreate.html.twig", ['form' => $form->createView()]);
+        return $this->render("operationCreate.html.twig", ['form' => $form->createView(), 'event' => $event]);
     }
 }
