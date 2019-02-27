@@ -8,7 +8,7 @@
             <h2>
                 <a href="{{ path("operation_list", {'eventId': event.id}) }}">{{ event.name }}</a>: {{ event.description }}
             </h2>
-            <p>Liste des participants de l'évènement :
+            <h3>Liste des participants de l'évènement :</h3>
             <ul>
                 {% for userEvent2 in event.userEvents %}
                     {% set user2 = userEvent2.user %}
@@ -17,8 +17,6 @@
                 <a href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}">Ajouter un
                     participant</a>
             </ul>
-
-            </p>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
