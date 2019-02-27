@@ -24,7 +24,7 @@ Cette application permet de gérer, par exemple, les dépenses lors d'un weekend
      * operations (1-n)
    * operation
      * id
-     * user (1-1)
+     * user (n-1)
      * date
      * description
      * category
@@ -33,11 +33,11 @@ Cette application permet de gérer, par exemple, les dépenses lors d'un weekend
      * event (n-1)
    * expense
      * id
-     * user (1-1)
+     * user (n-1)
      * amount
      * operation (n-1)
    * payment
      * id
-     * user (1-1)
+     * user (n-1)
      * amount
      * operation (n-1)
