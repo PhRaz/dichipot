@@ -119,6 +119,7 @@ class MainController extends AbstractController
      * @param $eventId
      * @param $userId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
     public function eventAddUser(Request $request, $eventId, $userId)
     {
