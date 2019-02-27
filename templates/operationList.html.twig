@@ -16,6 +16,6 @@
         <a href="{{ path('home') }}">Home</a>
         <a href="{{ path('user_list') }}">Liste des utilisateurs</a>
         <a href="{{ path("event_list", {'userId': event.userEvents[0].user.id}) }}">Liste des évènements de {{ event.userEvents[0].user.name }}</a>
-        <a href="{{ path("operation_create") }}">Créer une nouvelle opération</a>
+        <a href="{{ path("operation_create", {'eventId': event.id, 'userId': event.userEvents[0].user.id}) }}">Créer une nouvelle opération</a>
     </nav>
 {% endblock body %}

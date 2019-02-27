@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Expense;
+use App\Entity\Payment;
+use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\UserEvent;
+use App\Form\OperationType;
 use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\UserRepository;
@@ -161,11 +165,26 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/operation/create", name="operation_create")
+     * @Route("/operation/create/{eventId}/{userId}", name="operation_create")
      */
-    public function operationCreate() : Response
+    public function operationCreate(Request $request, $eventId, $userId) : Response
     {
+        /** @var Event $event */
+        $event = $this->getDoctrine()->getRepository(Event::class)->find($eventId);
+        /** @var User $user */
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
-        return $this->render("operationCreate.html.twig");
+        $operation = new Operation();
+        $operation->getExpenses()->add(new Expense());
+        $operation->getExpenses()->add(new Expense());
+        $operation->getPayments()->add(new Payment());
+        $operation->getPayments()->add(new Payment());
+
+        $form = $this->createForm(OperationType::class, $operation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+        }
+
+        return $this->render("operationCreate.html.twig", ['form' => $form->createView()]);
     }
 }
