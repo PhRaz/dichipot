@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Ajout d'un nouveau participant pour {{ event.name }}</h1>
+    <h2>Participant pour {{ event.name }}</h2>
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <button type="submit" class="btn btn-success">Save</button>

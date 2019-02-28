@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Liste des évènements de {{ user.name }}</h1>
+    <h2>Evènements</h2>
     <ul>
         {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
             {% set event = userEvent.event %}
-            <h2>
+            <h3>
                 <a href="{{ path("operation_list", {'eventId': event.id}) }}">{{ event.name }}</a>: {{ event.description }}
-            </h2>
+            </h3>
             <h3>Liste des participants de l'évènement :</h3>
             <ul>
                 {% for userEvent2 in event.userEvents %}

@@ -1,15 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Liste des utilisateurs</h1>
+    <h2>Utilisateurs</h2>
     <ul>
-        {% for user in users if users
-            |length > 0 %}
-            <h2>{{ user.name }}</h2>
-            <ul>
-                <li><a href="mailto:{{ user.mail }}">{{ user.mail }}</a></li>
-                <li><a href="{{ path('event_list', {'userId': user.id}) }}">liste des évènements</a></li>
-            </ul>
+        {% for user in users if users|length > 0 %}
+            <li><a href="{{ path('event_list', {'userId': user.id}) }}">{{ user.name }}</a></li>
         {% else %}
             <p>aucun utilisateur</p>
         {% endfor %}
