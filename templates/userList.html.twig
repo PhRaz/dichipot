@@ -2,13 +2,14 @@
 
 {% block body %}
     <h2>Utilisateurs</h2>
-    <ul>
+    <div class="list-group">
         {% for user in users if users|length > 0 %}
-            <li><a href="{{ path('event_list', {'userId': user.id}) }}">{{ user.name }}</a></li>
+            <a class="list-group-item list-group-item-action"
+               href="{{ path('event_list', {'userId': user.id}) }}">{{ user.name }}</a>
         {% else %}
             <p>aucun utilisateur</p>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock body %}
 
 {% block navbar %}
