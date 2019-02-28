@@ -1,8 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Gestion de compte</h1>
-    <nav>
-        <a href="{{ path('user_list') }}">Liste des utilisateurs</a>
-    </nav>
-{% endblock body %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Gestion de compte</h1>
+            <p class="lead">Une solution simple pour gérer les dépenses de plusieurs personnes lors d'un évènement
+                commun.</p>
+            <hr class="my-4">
+            <p>Ce site est conçu pour fonctionner sur un mobile aussi bien que sur une tablette ou un ordinateur de
+                bureau.</p>
+            <a class="btn btn-primary btn-lg" href="https://github.com/PhRaz/compte" role="button">Plus
+                d'information</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('user_list') }}">Liste des utilisateurs</a>
+    </li>
+{% endblock %}
