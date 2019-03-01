@@ -9,6 +9,7 @@
 ###< symfony/framework-bundle ###
 
 /.docker/data/
+/.idea
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

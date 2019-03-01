@@ -1,61 +1,107 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>{{ event.name }}</h2>
-    <table class="table table-hover table-sm">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Catégorie</th>
-            <th>Dépense</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% set grand_total = 0 %}
-        {% for operation in event.operations if event.operations|length > 0 %}
-            <tr>
-                <td>{{ operation.date|date('d/m/y') }}</td>
-                <td>{{ operation.description }}</td>
-                <td>{{ operation.category }}</td>
-                <td>
-                    {% set expense_total = 0 %}
-                    {% for expense in operation.expenses if expense.amount > 0 %}
-                        {% set expense_total = expense_total + expense.amount %}
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ event.name }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 font-weight-bold">Date</div>
+        <div class="col-6 font-weight-bold">Description</div>
+        <div class="col-2 font-weight-bold">Catégorie</div>
+        <div class="col-2 font-weight-bold">Dépense</div>
+    </div>
+    {% set grand_total = 0 %}
+    {% for operation in event.operations if event.operations|length > 0 %}
+        <div data-toggle="collapse" data-target="#operation_{{ operation.id }}" class="row accordion-toggle border-top">
+            <div class="col-2">{{ operation.date|date('d/m/y') }}</div>
+            <div class="col-6 text-truncate">{{ operation.description }}</div>
+            <div class="col-2 text-truncate">{{ operation.category }}</div>
+            <div class="col-2 text-right">
+                {% set expense_total = 0 %}
+                {% for expense in operation.expenses if expense.amount > 0 %}
+                    {% set expense_total = expense_total + expense.amount %}
+                {% endfor %}
+                {{ expense_total|number_format('2', ',', ' ') }} €
+            </div>
+        </div>
+        <div class="row border-top bg-light">
+            <div class="col-12 hidden">
+                <div class="row accordion-body collapse" id="operation_{{ operation.id }}">
+                    <div class="col-12">
+                        <p>Opération enregistrée par {{ operation.user.name }}</p>
+                    </div>
+                    <div class="col-6">
+                        {% set total_expense = 0 %}
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th colspan="2">
+                                    Dépense
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for expense in operation.expenses if expense.amount > 0 %}
+                                <tr>
+                                    <td>{{ expense.user.name }}</td>
+                                    <td class="text-right">{{ expense.amount }} €</td>
+                                    {% set total_expense = total_expense + expense.amount %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% set total_amount = 0 %}
+                    {% for payment in operation.payments if payment.amount > 0 %}
+                        {% set total_amount  = total_amount + payment.amount %}
                     {% endfor %}
-                    {{ expense_total }}
-                </td>
-            </tr>
-            {% set grand_total = grand_total + expense_total %}
-        {% else %}
-            <tr>
-                <td colspan="4">aucune opération sur cet évènement</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <strong>{{ grand_total }}</strong>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th colspan="2">Paiement</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for payment in operation.payments if payment.amount > 0 %}
+                                {% set contribution = total_expense  / total_amount * payment.amount %}
+                                <tr>
+                                    <td>{{ payment.user.name }}</td>
+                                    <td class="text-right">{{ contribution|number_format('2', ',', ' ') }} €</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% set grand_total = grand_total + expense_total %}
+    {% else %}
+        <div class="row">
+            <div class="col-12">aucune opération sur cet évènement</div>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2 text-right">
+            <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
+        </div>
+    </div>
 {% endblock %}
 
 {% block navbar %}
     <li class="nav-item">
-        <a class="nav-link" href="{{ path('user_list') }}">Liste des utilisateurs</a>
+        <a class="nav-link" href="{{ path('user_list') }}">Utilisateurs</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ path("event_list", {'userId': event.userEvents[0].user.id}) }}">Liste des
-            évènements
-            de {{ event.userEvents[0].user.name }}</a>
+        <a class="nav-link" href="{{ path("event_list", {'userId': event.userEvents[0].user.id}) }}">Evènements</a>
     </li>
     <li class="nav-item">
         <a class="nav-link"
-           href="{{ path("operation_create", {'eventId': event.id, 'userId': event.userEvents[0].user.id}) }}">Créer une
-            nouvelle opération</a>
+           href="{{ path("operation_create", {'eventId': event.id, 'userId': event.userEvents[0].user.id}) }}">
+            Nouvelle opération</a>
     </li>
 {% endblock %}

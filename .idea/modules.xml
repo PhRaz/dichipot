@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kit-starter-symfony-4-docker.iml" filepath="$PROJECT_DIR$/.idea/kit-starter-symfony-4-docker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/compte.iml" filepath="$PROJECT_DIR$/.idea/compte.iml" />
     </modules>
   </component>
 </project>

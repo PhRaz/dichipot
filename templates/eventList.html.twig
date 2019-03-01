@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Evènements</h2>
     <ul>
         {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
             {% set event = userEvent.event %}
@@ -24,7 +23,7 @@
 
 {% block navbar %}
     <li class="nav-item">
-        <a class="nav-link" href="{{ path('user_list') }}">Liste des utilisateurs</a>
+        <a class="nav-link" href="{{ path('user_list') }}">Utilisateurs</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ path('event_create', {'id': user.id}) }}">Créer un nouvel évènement</a>
