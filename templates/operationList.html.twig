@@ -15,7 +15,7 @@
     {% set grand_total = 0 %}
     {% for operation in event.operations if event.operations|length > 0 %}
         <a data-toggle="collapse" data-target="#operation_{{ operation.id }}" href="#operation_{{ operation.id }}"
-           class="row accordion-toggle border-top" style="text-decoration: none">
+           class="row accordion-toggle border-top" style="text-decoration: none; cursor: pointer;">
             <div class="col-2">{{ operation.date|date('d/m/y') }}</div>
             <div class="col-5 text-truncate">{{ operation.description }}</div>
             <div class="col-2 text-truncate">{{ operation.category }}</div>
