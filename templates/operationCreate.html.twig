@@ -10,24 +10,24 @@
     {{ form_row(form.category) }}
 
     <div class="form-group row">
-        <div class="col-2">
+        <div class="col-4">
         </div>
-        <div class="col-5">
+        <div class="col-4">
             Dépenses
         </div>
-        <div class="col-5">
+        <div class="col-4">
             Paiements
         </div>
     </div>
     {% for userEvent in event[0].userEvents %}
         <div class="form-group row">
-            <div class="col-form-label col-2">
+            <div class="col-form-label col-4">
                 <div>{{ userEvent.user.name }}</div>
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 {{ form_widget(form.expenses[loop.index0].amount) }}
             </div>
-            <div class="col-5">
+            <div class="col-4">
                 {{ form_widget(form.payments[loop.index0].amount) }}
             </div>
         </div>

@@ -29,7 +29,8 @@
             <div class="col-12 hidden">
                 <div class="row accordion-body collapse" id="operation_{{ operation.id }}">
                     <div class="col-12">
-                        <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }} dans {{ operation.category }}</p>
+                        <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
+                            dans {{ operation.category }}</p>
                     </div>
                     <div class="col-6">
                         {% set total_expense = 0 %}
@@ -88,6 +89,22 @@
         <div class="col-3 text-right">
             <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
         </div>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                {% for user, data in total %}
+                    <th>{{ user }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tr>
+                {% for user, data in total %}
+                    <td>{{ data.balance }}</td>
+                {% endfor %}
+            </tr>
+        </table>
     </div>
 {% endblock %}
 
