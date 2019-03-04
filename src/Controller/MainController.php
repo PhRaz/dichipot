@@ -14,6 +14,7 @@ use App\Form\EventType;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -162,16 +163,71 @@ class MainController extends AbstractController
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         $event = $eventRepo->getEventOperations($eventId);
 
-        return $this->render('operationList.html.twig', ['event' => $event[0]]);
+        /*
+         * compute balance
+         */
+        $balance = array();
+        $grandTotal = 0;
+        foreach ($event[0]->getOperations() as $operation) {
+            $id = $operation->getId();
+
+            $totalExpense = 0;
+            foreach ($operation->getExpenses() as $expense) {
+                $grandTotal += $expense->getAmount();
+                $totalExpense += $expense->getAmount();
+                $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getAmount();
+            }
+
+            $totalPayment = 0;
+            foreach ($operation->getPayments() as $payment) {
+                $totalPayment += $payment->getAmount();
+                $balance[$id][$payment->getUser()->getName()]['payment'] = $payment->getAmount();
+            }
+
+            foreach ($balance[$id] as $userName => $data) {
+                $amountToPay = $totalExpense / $totalPayment * $balance[$id][$userName]['payment'];
+                $balance[$id][$userName] = array_merge($balance[$id][$userName], [
+                    'amountToPay' => $amountToPay,
+                    'balance' => $amountToPay - $balance[$id][$userName]['expense']
+                ]);
+            }
+        }
+
+        $total = array();
+        foreach ($balance as $id => $balanceData) {
+            foreach ($balanceData as $userName => $userData) {
+                if (! isset($total[$userName])) {
+                    $total[$userName] = [
+                        'expense' => 0,
+                        'payment' => 0,
+                        'amountToPay' => 0,
+                        'balance' => 0
+                    ];
+                }
+                $total[$userName]['expense'] += $userData['expense'];
+                $total[$userName]['payment'] += $userData['payment'];
+                $total[$userName]['amountToPay'] += $userData['amountToPay'];
+                $total[$userName]['balance'] += $userData['balance'];
+            }
+        }
+
+        return $this->render('operationList.html.twig', [
+            'event' => $event[0],
+            'balance' => $balance,
+            'total' => $total
+        ]);
     }
 
     /**
      * @Route("/operation/create/{eventId}/{userId}", name="operation_create")
+     * @throws \Exception
      */
     public function operationCreate(Request $request, $eventId, $userId): Response
     {
+        /** @var  EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
         /** @var Event[] $event */
-        $event = $this->getDoctrine()->getRepository(Event::class)->getEventUsers($eventId);
+        $event = $eventRepo->getEventUsers($eventId);
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
