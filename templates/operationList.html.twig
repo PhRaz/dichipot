@@ -85,19 +85,33 @@
         </div>
     {% endfor %}
     <div class="row">
-        <div class="col-9"></div>
+        <div class="col-9 text-right">
+            <strong>Total</strong>
+        </div>
         <div class="col-3 text-right">
             <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
         </div>
     </div>
     <div>
         <table class="table table-sm">
+            <thead class="bg-light">
+            <tr>
+                <th colspan="2">Balance</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for user, data in total %}
+                {% if data.balance >= 0 %}
+                    {% set color = "text-success" %}
+                {% else %}
+                    {% set color = "text-danger" %}
+                {% endif %}
                 <tr>
                     <th>{{ user }}</th>
-                    <td>{{ data.balance }}</td>
+                    <td class="{{ color }}">{{ data.balance|number_format('2', ',', ' ') }} €</td>
                 </tr>
             {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}
