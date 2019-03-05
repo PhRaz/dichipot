@@ -188,7 +188,7 @@ class MainController extends AbstractController
                 $amountToPay = $totalExpense / $totalPayment * $balance[$id][$userName]['payment'];
                 $balance[$id][$userName] = array_merge($balance[$id][$userName], [
                     'amountToPay' => $amountToPay,
-                    'balance' => $amountToPay - $balance[$id][$userName]['expense']
+                    'balance' => $balance[$id][$userName]['expense'] - $amountToPay
                 ]);
             }
         }
@@ -257,7 +257,7 @@ class MainController extends AbstractController
             $entityManager->persist($operation);
             $entityManager->flush();
 
-            return $this->render('operationList.html.twig', ['event' => $event[0]]);
+            return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
         return $this->render("operationCreate.html.twig", ['form' => $form->createView(), 'event' => $event]);
