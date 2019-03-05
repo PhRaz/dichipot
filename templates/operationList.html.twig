@@ -91,19 +91,13 @@
         </div>
     </div>
     <div>
-        <table class="table">
-            <thead>
-            <tr>
-                {% for user, data in total %}
+        <table class="table table-sm">
+            {% for user, data in total %}
+                <tr>
                     <th>{{ user }}</th>
-                {% endfor %}
-            </tr>
-            </thead>
-            <tr>
-                {% for user, data in total %}
                     <td>{{ data.balance }}</td>
-                {% endfor %}
-            </tr>
+                </tr>
+            {% endfor %}
         </table>
     </div>
 {% endblock %}
