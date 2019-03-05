@@ -108,7 +108,7 @@
                 {% endif %}
                 <tr>
                     <th>{{ user }}</th>
-                    <td class="{{ color }}">{{ data.balance|number_format('2', ',', ' ') }} €</td>
+                    <td class="{{ color }} text-right">{{ data.balance|number_format('2', ',', ' ') }} €</td>
                 </tr>
             {% endfor %}
             </tbody>
