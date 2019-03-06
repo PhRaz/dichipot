@@ -33,43 +33,29 @@
                             dans {{ operation.category }}</p>
                     </div>
                     <div class="col-6">
-                        {% set total_expense = 0 %}
                         <table class="table table-sm">
                             <thead>
                             <tr>
-                                <th colspan="2">
-                                    Dépense
-                                </th>
+                                <th></th>
+                                <th>Dépense</th>
+                                <th>Paiement</th>
+                                <th>Balance</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for expense in operation.expenses if expense.amount > 0 %}
+                            {% for name, data in balance[operation.id] %}
+                                {% if data.balance >= 0 %}
+                                    {% set color = "text-success" %}
+                                {% else %}
+                                    {% set color = "text-danger" %}
+                                {% endif %}
                                 <tr>
-                                    <td>{{ expense.user.name }}</td>
-                                    <td class="text-right">{{ expense.amount }} €</td>
-                                    {% set total_expense = total_expense + expense.amount %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    {% set total_amount = 0 %}
-                    {% for payment in operation.payments if payment.amount > 0 %}
-                        {% set total_amount  = total_amount + payment.amount %}
-                    {% endfor %}
-                    <div class="col-6">
-                        <table class="table table-sm">
-                            <thead>
-                            <tr>
-                                <th colspan="2">Paiement</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for payment in operation.payments if payment.amount > 0 %}
-                                {% set contribution = total_expense  / total_amount * payment.amount %}
-                                <tr>
-                                    <td>{{ payment.user.name }}</td>
-                                    <td class="text-right">{{ contribution|number_format('2', ',', ' ') }} €</td>
+                                    <th>{{ name }}</th>
+                                    <td class="text-right">{{ data.expense|number_format('2', ',', ' ') }} €</td>
+                                    <td class="text-right">{{ data.amountToPay|number_format('2', ',', ' ') }} €</td>
+                                    <td class="text-right {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
+                                        €
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -84,35 +70,27 @@
             <div class="col-12">aucune opération sur cet évènement</div>
         </div>
     {% endfor %}
+    <div class="row bg-light border-top">
+        <div class="col-12 font-weight-bold">Total</div>
+    </div>
     <div class="row">
-        <div class="col-9 text-right">
-            <strong>Total</strong>
-        </div>
-        <div class="col-3 text-right text-nowrap">
+        <div class="col-12 text-right">
             <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
         </div>
     </div>
-    <div>
-        <table class="table table-sm">
-            <thead class="bg-light">
-            <tr>
-                <th colspan="2">Balance</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user, data in total %}
-                {% if data.balance >= 0 %}
-                    {% set color = "text-success" %}
-                {% else %}
-                    {% set color = "text-danger" %}
-                {% endif %}
-                <tr>
-                    <th>{{ user }}</th>
-                    <td class="{{ color }} text-right text-nowrap">{{ data.balance|number_format('2', ',', ' ') }} €</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <div class="row bg-light border-top">
+        <div class="col-12 font-weight-bold">Balance</div>
+    </div>
+    <div class="row">
+        {% for user, data in total %}
+            {% if data.balance >= 0 %}
+                {% set color = "text-success" %}
+            {% else %}
+                {% set color = "text-danger" %}
+            {% endif %}
+            <div class="col-6">{{ user }}</div>
+            <div class="col-6 {{ color }} text-right">{{ data.balance|number_format('2', ',', ' ') }} €</div>
+        {% endfor %}
     </div>
 {% endblock %}
 
