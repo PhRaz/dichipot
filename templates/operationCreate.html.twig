@@ -33,8 +33,15 @@
         </div>
     {% endfor %}
 
-    <button type="submit" class="btn btn-success">Save</button>
-
+    <div class="row">
+        <div class="col-6">
+            <a class="btn btn-block btn-danger btn-lg" href="{{ path("operation_list", {'eventId': event[0].id}) }}"
+               role="button">Cancel</a>
+        </div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-block btn-success btn-lg">Save</button>
+        </div>
+    </div>
     {{ form_end(form) }}
 
 {% endblock body %}
