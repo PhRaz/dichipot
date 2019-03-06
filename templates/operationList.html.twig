@@ -89,7 +89,9 @@
                 {% set color = "text-danger" %}
             {% endif %}
             <div class="col-6">{{ user }}</div>
-            <div class="col-6 {{ color }} text-right">{{ data.balance|number_format('2', ',', ' ') }} €</div>
+            <div class="col-6 {{ color }} text-right">
+                <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
