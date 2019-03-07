@@ -9,12 +9,14 @@
                     <div class="card-header">
                         <h4>{{ event.name }}</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body shadow-sm">
                         <p class="lead">{{ event.description }}</p>
-                        {% for userEvent2 in event.userEvents %}
-                            {% set user2 = userEvent2.user %}
-                            <p>{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
-                        {% endfor %}
+                        <div class="mb-4">
+                            {% for userEvent2 in event.userEvents %}
+                                {% set user2 = userEvent2.user %}
+                                <p class="mb-0">{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
+                            {% endfor %}
+                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <a class="btn btn-block btn-primary btn-sm"
