@@ -262,4 +262,12 @@ class MainController extends AbstractController
 
         return $this->render("operationCreate.html.twig", ['form' => $form->createView(), 'event' => $event]);
     }
+
+    /**
+     * @route("/operation/update/{operationId}", name="operation_update")
+     */
+    public function operationUpdate($operationId)
+    {
+        return new Response();
+    }
 }
