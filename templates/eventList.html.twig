@@ -15,15 +15,14 @@
                             {% set user2 = userEvent2.user %}
                             <p>{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
                         {% endfor %}
-
                         <div class="row">
                             <div class="col-6">
-                                <a class="btn btn-block btn-primary"
+                                <a class="btn btn-block btn-primary btn-sm"
                                    href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}"
                                    role="button">+ participant</a>
                             </div>
                             <div class="col-6">
-                                <a class="btn btn-block btn-primary"
+                                <a class="btn btn-block btn-primary btn-sm"
                                    href="{{ path("operation_list", {'eventId': event.id}) }}" role="button">Opérations</a>
                             </div>
                         </div>

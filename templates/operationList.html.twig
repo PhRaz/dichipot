@@ -27,39 +27,54 @@
         </a>
         <div class="row border-top bg-light">
             <div class="col-12 hidden">
-                <div class="row accordion-body collapse small" id="operation_{{ operation.id }}">
-                    <div class="col-12">
-                        <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
-                            dans {{ operation.category }}</p>
+                <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
+                                dans {{ operation.category }}</p>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <table class="table table-sm">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Dépense</th>
-                                <th>Paiement</th>
-                                <th>Balance</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for name, data in balance[operation.id] %}
-                                {% if data.balance >= 0 %}
-                                    {% set color = "text-success" %}
-                                {% else %}
-                                    {% set color = "text-danger" %}
-                                {% endif %}
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-sm">
+                                <thead>
                                 <tr>
-                                    <th>{{ name }}</th>
-                                    <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }} €</td>
-                                    <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }} €</td>
-                                    <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
-                                        €
-                                    </td>
+                                    <th></th>
+                                    <th>Dépense</th>
+                                    <th>Paiement</th>
+                                    <th>Balance</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for name, data in balance[operation.id] %}
+                                    {% if data.balance >= 0 %}
+                                        {% set color = "text-success" %}
+                                    {% else %}
+                                        {% set color = "text-danger" %}
+                                    {% endif %}
+                                    <tr>
+                                        <th>{{ name }}</th>
+                                        <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
+                                            €
+                                        </td>
+                                        <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }}
+                                            €
+                                        </td>
+                                        <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
+                                            €
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a class="btn btn-block btn-primary btn-sm mb-2"
+                               href="{{ path("operation_update", {'operationId': operation.id}) }}"
+                               role="button">Modification</a>
+                        </div>
                     </div>
                 </div>
             </div>
