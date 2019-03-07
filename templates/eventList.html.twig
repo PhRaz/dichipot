@@ -1,24 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul>
+    <div class="row">
         {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
             {% set event = userEvent.event %}
-            <h3>
-                <a href="{{ path("operation_list", {'eventId': event.id}) }}">{{ event.name }}</a>: {{ event.description }}
-            </h3>
-            <ul class="list-group">
-                {% for userEvent2 in event.userEvents %}
-                    {% set user2 = userEvent2.user %}
-                    <li class="list-group-item">{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</li>
-                {% endfor %}
-                <a href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}">Ajouter un
-                    participant</a>
-            </ul>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="card mt-2 mb-2">
+                    <div class="card-header">
+                        <h4>{{ event.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">{{ event.description }}</p>
+                        {% for userEvent2 in event.userEvents %}
+                            {% set user2 = userEvent2.user %}
+                            <p>{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
+                        {% endfor %}
+
+                        <div class="row">
+                            <div class="col-6">
+                                <a class="btn btn-block btn-primary"
+                                   href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}"
+                                   role="button">+ participant</a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-block btn-primary"
+                                   href="{{ path("operation_list", {'eventId': event.id}) }}" role="button">Opérations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% else %}
             <p>aucun évènement</p>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock body %}
 
 {% block navbar %}
