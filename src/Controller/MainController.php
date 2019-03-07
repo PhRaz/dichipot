@@ -196,7 +196,7 @@ class MainController extends AbstractController
         $total = array();
         foreach ($balance as $id => $balanceData) {
             foreach ($balanceData as $userName => $userData) {
-                if (! isset($total[$userName])) {
+                if (!isset($total[$userName])) {
                     $total[$userName] = [
                         'expense' => 0,
                         'payment' => 0,
@@ -265,9 +265,28 @@ class MainController extends AbstractController
 
     /**
      * @route("/operation/update/{operationId}", name="operation_update")
+     * @param Request $request
+     * @param integer $operationId
+     * @return Response
      */
-    public function operationUpdate($operationId)
+    public function operationUpdate(Request $request, $operationId)
     {
-        return new Response();
+        $operationRepo = $this->getDoctrine()->getRepository(Operation::class);
+        /** @var Operation $operation */
+        $operation = $operationRepo->find($operationId);
+
+        $form = $this->createForm(OperationType::class, $operation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            $eventId = $operation->getEvent()->getId();
+
+            return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
+        }
+
+        return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
     }
 }
