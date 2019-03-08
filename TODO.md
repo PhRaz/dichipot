@@ -10,7 +10,7 @@
   * nom de domaine 
   * https
 * user story
-  * modification/suppression opération
+  * ~~modification~~/suppression opération
   * modification/suppression évènement
   * modification/suppression participant
   * intégration Cognito
@@ -24,7 +24,7 @@
     * utiliser une font responsive
     * prévoir la version tablette et desktop
 * code
-  * --check non optimal queryBuilder returned data as array[]--
+  * ~~check non optimal queryBuilder returned data as array[]~~
   * mettre le code dans un service
   * merger les entitées expense et payment
   * contrôle autorisation des URLs
