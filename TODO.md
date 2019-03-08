@@ -24,5 +24,10 @@
 * code
   * check non optimal queryBuilder returned data as array[]
   * mettre le code dans un service
+  * merger les entitées expense et payment
+  * contrôle autorisation des URLs
 * PWA
   * mode offline
+    * modification opération sans requête àpartir des données de la liste, 
+      une requête pour mise à jour uniquement
+    * idem pour modification des évènements
