@@ -19,20 +19,23 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <a class="btn btn-block btn-primary btn-sm"
+                                <a class="btn btn-block btn-primary btn-sm shadow-sm"
                                    href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}"
                                    role="button">+ participant</a>
                             </div>
                             <div class="col-6">
-                                <a class="btn btn-block btn-primary btn-sm"
-                                   href="{{ path("operation_list", {'eventId': event.id}) }}" role="button">Opérations</a>
+                                <a class="btn btn-block btn-primary btn-sm shadow-sm"
+                                   href="{{ path("operation_list", {'eventId': event.id}) }}"
+                                   role="button">Opérations</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         {% else %}
-            <p>aucun évènement</p>
+            <div class="col-12">
+                <p>aucun évènement</p>
+            </div>
         {% endfor %}
     </div>
 {% endblock body %}
