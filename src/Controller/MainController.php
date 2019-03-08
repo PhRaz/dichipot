@@ -23,8 +23,9 @@ class MainController extends AbstractController
 {
     /**
      * @route("/", name="home")
+     * @return Response
      */
-    public function home()
+    public function home() : Response
     {
 
         return $this->render("home.html.twig");
@@ -32,6 +33,7 @@ class MainController extends AbstractController
 
     /**
      * @route("/user/list", name="user_list")
+     * @return Response
      */
     public function userList(): Response
     {
@@ -71,6 +73,7 @@ class MainController extends AbstractController
      * @route("/event/list/{userId}", name="event_list")
      * @param $userId
      * @return Response
+     * @throws \Exception
      */
     public function eventList($userId): Response
     {
@@ -78,7 +81,7 @@ class MainController extends AbstractController
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->getUserEvents($userId);
 
-        return $this->render("eventList.html.twig", ['user' => $user[0]]);
+        return $this->render("eventList.html.twig", ['user' => $user]);
     }
 
     /**
@@ -156,6 +159,9 @@ class MainController extends AbstractController
 
     /**
      * @route("/operation/list/{eventId}", name="operation_list")
+     * @param integer $eventId
+     * @return Response
+     * @throws \Exception
      */
     public function operationList($eventId)
     {
@@ -168,7 +174,7 @@ class MainController extends AbstractController
          */
         $balance = array();
         $grandTotal = 0;
-        foreach ($event[0]->getOperations() as $operation) {
+        foreach ($event->getOperations() as $operation) {
             $id = $operation->getId();
 
             $totalExpense = 0;
@@ -212,7 +218,7 @@ class MainController extends AbstractController
         }
 
         return $this->render('operationList.html.twig', [
-            'event' => $event[0],
+            'event' => $event,
             'balance' => $balance,
             'total' => $total
         ]);
@@ -226,7 +232,7 @@ class MainController extends AbstractController
     {
         /** @var  EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
-        /** @var Event[] $event */
+        /** @var Event $event */
         $event = $eventRepo->getEventUsers($eventId);
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
@@ -234,9 +240,9 @@ class MainController extends AbstractController
         $operation = new Operation();
         $operation->setUser($user);
         $operation->setDate(new \DateTime());
-        $operation->setEvent($event[0]);
+        $operation->setEvent($event);
 
-        foreach ($event[0]->getUserEvents() as $userEvent) {
+        foreach ($event->getUserEvents() as $userEvent) {
             $expense = new Expense();
             $expense->setUser($userEvent->getUser());
             $expense->setAmount(0);

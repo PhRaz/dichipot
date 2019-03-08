@@ -23,9 +23,10 @@ class UserRepository extends ServiceEntityRepository
      * Retourne les évènements pour userId, chaque évènement contient la liste des participants.
      *
      * @param $userId integer
-     * @return array
+     * @return User
+     * @throws \Exception
      */
-    public function getUserEvents($userId) : array
+    public function getUserEvents($userId) : User
     {
         return $this->createQueryBuilder('u')
             ->leftJoin('u.userEvents', 'ue')
@@ -39,6 +40,6 @@ class UserRepository extends ServiceEntityRepository
             ->addSelect('u2')
             ->setParameter('userId', $userId)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }
