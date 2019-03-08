@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Event;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -22,9 +21,10 @@ class EventRepository extends ServiceEntityRepository
 
     /**
      * @param $eventId integer
-     * @return Event[]
+     * @return Event
+     * @throws \Exception
      */
-    public function getEventOperations($eventId) : array
+    public function getEventOperations($eventId) : Event
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.userEvents', 'ue')
@@ -45,14 +45,15 @@ class EventRepository extends ServiceEntityRepository
             ->addSelect('p')
             ->setParameter('eventId', $eventId)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     /**
      * @param $eventId
-     * @return array
+     * @return Event
+     * @throws \Exception
      */
-    public function getEventUsers($eventId) : array
+    public function getEventUsers($eventId) : Event
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.userEvents', 'ue')
@@ -62,6 +63,6 @@ class EventRepository extends ServiceEntityRepository
             ->addSelect('u')
             ->setParameter('eventId', $eventId)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }
