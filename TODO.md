@@ -15,6 +15,8 @@
   * modification/suppression participant
   * intégration Cognito
     * intégration participants sur un évènement
+      * envoie d'un mail pour autorisation avec un token
+      * gestion des droits (le créateur de l'event est administrateur)
     * signup / login
     * page de gestion de configuration du compte
   * revoir le design en mobile first
@@ -22,7 +24,7 @@
     * utiliser une font responsive
     * prévoir la version tablette et desktop
 * code
-  * check non optimal queryBuilder returned data as array[]
+  * --check non optimal queryBuilder returned data as array[]--
   * mettre le code dans un service
   * merger les entitées expense et payment
   * contrôle autorisation des URLs
