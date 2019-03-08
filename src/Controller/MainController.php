@@ -11,10 +11,10 @@ use App\Entity\UserEvent;
 use App\Form\OperationType;
 use App\Form\UserType;
 use App\Form\EventType;
+use App\Repository\OperationRepository;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -268,12 +268,14 @@ class MainController extends AbstractController
      * @param Request $request
      * @param integer $operationId
      * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function operationUpdate(Request $request, $operationId)
     {
+        /** @var OperationRepository $operationRepo */
         $operationRepo = $this->getDoctrine()->getRepository(Operation::class);
         /** @var Operation $operation */
-        $operation = $operationRepo->find($operationId);
+        $operation = $operationRepo->findForUpdate($operationId);
 
         $form = $this->createForm(OperationType::class, $operation);
         $form->handleRequest($request);
