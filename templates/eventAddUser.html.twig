@@ -6,7 +6,7 @@
     {{ form_widget(form) }}
     <div class="row">
         <div class="col-6">
-            <a class="btn btn-block btn-danger btn-lg" href="{{ path("user_list") }}"
+            <a class="btn btn-block btn-danger btn-lg" href="{{ path("event_list", {'userId': administrator.id}) }}"
                role="button">Cancel</a>
         </div>
         <div class="col-6">
