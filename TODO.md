@@ -13,6 +13,8 @@
   * modification/suppression opération
   * modification/suppression évènement
   * modification/suppression participant
+  * version imprimable
+  * envoie de mail pour les participants
   * intégration Cognito
     * intégration participants sur un évènement
     * signup / login
