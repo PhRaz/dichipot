@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Expense;
+use Doctrine\DBAL\Types\FloatType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,7 @@ class ExpenseType extends AbstractType
             $expense = $event->getData();
             $form = $event->getForm();
 
-            $form->add('amount', IntegerType::class, ['label' => $expense->getUser()->getName()]);
+            $form->add('amount', FloatType::class, ['label' => $expense->getUser()->getName()]);
         });
     }
 
