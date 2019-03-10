@@ -1,19 +1,24 @@
 
 # TODO
 
-* devops
+## devops
+
   * update container for encore/yarn installation
   * re test the installation from scratch
   * update doc for ec2 installation
   * backup DB
-  * utilisation de Amazon RDS
-  * nom de domaine 
+  * use Amazon RDS
+  * domain name 
   * https
-* user story
+
+## user story
+
+  * validation des données, format et longueur des champs
   * ~~modification~~/suppression opération
-  * modification/suppression évènement
-  * modification/suppression participant
-  * version imprimable
+  * formulaire évènement sur une page pour gestion de l'évènement et des participants 
+    * modification/suppression évènement
+    * modification/suppression participant
+  * version imprimable d'un compte
   * envoie de mail pour les participants
   * intégration Cognito
     * intégration participants sur un évènement
@@ -25,12 +30,17 @@
     * revoir la navigation, utilisation d'icones
     * utiliser une font responsive
     * prévoir la version tablette et desktop
-* code
+      * mettre total et balance dans une 2ème colonne
+
+## code
+
   * ~~check non optimal queryBuilder returned data as array[]~~
   * mettre le code dans un service
   * merger les entitées expense et payment
   * contrôle autorisation des URLs
-* PWA
+
+## PWA
+  
   * mode offline
     * modification opération sans requête àpartir des données de la liste, 
       une requête pour mise à jour uniquement

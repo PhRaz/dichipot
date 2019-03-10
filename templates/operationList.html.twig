@@ -6,108 +6,115 @@
             <h2>{{ event.name }}</h2>
         </div>
     </div>
-    <div class="row bg-light">
-        <div class="col-3 font-weight-bold">Date</div>
-        <div class="col-5 font-weight-bold">Description</div>
-        <div class="col-4 font-weight-bold">Dépense</div>
-    </div>
-    {% set grand_total = 0 %}
-    {% for operation in event.operations if event.operations|length > 0 %}
-        <a data-toggle="collapse" data-target="#operation_{{ operation.id }}" href="#operation_{{ operation.id }}"
-           class="row accordion-toggle border-top" style="text-decoration: none;">
-            <div class="col-3">{{ operation.date|date('d/m/y') }}</div>
-            <div class="col-5 text-truncate">{{ operation.description }}</div>
-            <div class="col-4 text-right text-nowrap">
-                {% set expense_total = 0 %}
-                {% for expense in operation.expenses if expense.amount > 0 %}
-                    {% set expense_total = expense_total + expense.amount %}
-                {% endfor %}
-                {{ expense_total|number_format('2', ',', ' ') }} €
+    <div class="row">
+        <div class="col-12 col-md-8 border-top mb-2">
+            <div class="row bg-light">
+                <div class="col-3 col-md-2 font-weight-bold">Date</div>
+                <div class="col-5 col-md-8 font-weight-bold">Description</div>
+                <div class="col-4 col-md-2 font-weight-bold">Dépense</div>
             </div>
-        </a>
-        <div class="row border-top bg-light">
-            <div class="col-12 hidden">
-                <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
-                                dans {{ operation.category }}</p>
-                        </div>
+            {% set grand_total = 0 %}
+            {% for operation in event.operations if event.operations|length > 0 %}
+                <div class="row">
+                    <div class="col-12 border-top shadow-sm">
+                        <a data-toggle="collapse" data-target="#operation_{{ operation.id }}"
+                          href="#operation_{{ operation.id }}"
+                          class="accordion-toggle" style="text-decoration: none;">
+                            <div class="row">
+                                <div class="col-3 col-md-2">{{ operation.date|date('d/m/y') }}</div>
+                                <div class="col-5 col-md-8 text-truncate">{{ operation.description }}</div>
+                                <div class="col-4 col-md-2 text-right text-nowrap">
+                                    {% set expense_total = 0 %}
+                                    {% for expense in operation.expenses if expense.amount > 0 %}
+                                        {% set expense_total = expense_total + expense.amount %}
+                                    {% endfor %}
+                                    {{ expense_total|number_format('2', ',', ' ') }} €
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <table class="table table-sm">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Dépense</th>
-                                    <th>Paiement</th>
-                                    <th>Balance</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for name, data in balance[operation.id] %}
-                                    {% if data.balance >= 0 %}
-                                        {% set color = "text-success" %}
-                                    {% else %}
-                                        {% set color = "text-danger" %}
-                                    {% endif %}
-                                    <tr>
-                                        <th>{{ name }}</th>
-                                        <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
-                                            €
-                                        </td>
-                                        <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }}
-                                            €
-                                        </td>
-                                        <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
-                                            €
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <a class="btn btn-block btn-primary btn-sm mb-2 shadow-sm"
-                               href="{{ path("operation_update", {'eventId': event.id, 'operationId': operation.id}) }}"
-                               role="button">Modification</a>
+                </div>
+                <div class="row bg-light">
+                    <div class="col-12 hidden">
+                        <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
+                                        dans {{ operation.category }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Dépense</th>
+                                            <th>Paiement</th>
+                                            <th>Balance</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for name, data in balance[operation.id] %}
+                                            {% if data.balance >= 0 %}
+                                                {% set color = "text-success" %}
+                                            {% else %}
+                                                {% set color = "text-danger" %}
+                                            {% endif %}
+                                            <tr>
+                                                <th>{{ name }}</th>
+                                                <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
+                                                    €
+                                                </td>
+                                                <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }}
+                                                    €
+                                                </td>
+                                                <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
+                                                    €
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <a class="btn btn-block btn-primary btn-sm mb-2 shadow-sm"
+                                       href="{{ path("operation_update", {'eventId': event.id, 'operationId': operation.id}) }}"
+                                       role="button">Modification</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {% set grand_total = grand_total + expense_total %}
-    {% else %}
-        <div class="row">
-            <div class="col-12">aucune opération sur cet évènement</div>
-        </div>
-    {% endfor %}
-    <div class="row bg-light border-top">
-        <div class="col-12 font-weight-bold">Total</div>
-    </div>
-    <div class="row">
-        <div class="col-12 text-right">
-            <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
-        </div>
-    </div>
-    <div class="row bg-light border-top">
-        <div class="col-12 font-weight-bold">Balance</div>
-    </div>
-    <div class="row">
-        {% for user, data in total %}
-            {% if data.balance >= 0 %}
-                {% set color = "text-success" %}
+                {% set grand_total = grand_total + expense_total %}
             {% else %}
-                {% set color = "text-danger" %}
-            {% endif %}
-            <div class="col-6">{{ user }}</div>
-            <div class="col-6 {{ color }} text-right">
-                <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
+                <div class="row">
+                    <div class="col-12">aucune opération sur cet évènement</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="row border ml-1 mr-1">
+                <div class="col-12 bg-light font-weight-bold">Total</div>
+                <div class="col-12 text-right border-top">
+                    <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
+                </div>
+                <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
+                {% for user, data in total %}
+                    {% if data.balance >= 0 %}
+                        {% set color = "text-success" %}
+                    {% else %}
+                        {% set color = "text-danger" %}
+                    {% endif %}
+                    <div class="col-6">{{ user }}</div>
+                    <div class="col-6 {{ color }} text-right">
+                        <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
 
