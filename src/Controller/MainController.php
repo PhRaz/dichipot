@@ -9,6 +9,7 @@ use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\UserEvent;
 use App\Form\OperationType;
+use App\Form\UserEventType;
 use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\OperationRepository;
@@ -25,7 +26,7 @@ class MainController extends AbstractController
      * @route("/", name="home")
      * @return Response
      */
-    public function home() : Response
+    public function home(): Response
     {
 
         return $this->render("home.html.twig");
@@ -84,37 +85,54 @@ class MainController extends AbstractController
         return $this->render("eventList.html.twig", ['user' => $user]);
     }
 
+
     /**
      * @route("/event/create/{id}", name="event_create")
      * @param $request Request
-     * @param $user User
+     * @param $admin User
      * @return Response
      * @throws \Exception
      */
-    public function eventCreate(Request $request, User $user)
+    public function eventCreate(Request $request, User $admin)
     {
         $event = new Event();
-        $form = $this->createForm(EventType::class, $event);
+
+        $form = $this->createForm(eventType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
 
             $event->setDate(new \DateTime());
-
-            $userEvent = new UserEvent();
-            $userEvent->setDate(new \DateTime());
-            $userEvent->setAdministrator(true);
-            $userEvent->setUser($user);
-            $userEvent->setEvent($event);
-
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
+
+            foreach ($event->getUserEvents() as $userEvent) {
+                $userEvent
+                    ->setDate(new \DateTime())
+                    ->setAdministrator(false)
+                    ->setEvent($event);
+                $user = $userEvent->getUser();
+                $user->setDate(new \DateTime());
+                $entityManager->persist($userEvent);
+                $entityManager->persist($user);
+            }
+
+            /*
+             * admin is a user for the event he creates
+             */
+            $userEvent = new UserEvent();
+            $userEvent
+                ->setDate(new \DateTime())
+                ->setAdministrator(true)
+                ->setUser($admin)
+                ->setEvent($event);
             $entityManager->persist($userEvent);
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_list', ['userId' => $user->getId()]);
+            return $this->redirectToRoute('event_list', ['userId' => $admin->getId()]);
         }
 
-        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'user' => $user]);
+        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'user' => $admin]);
     }
 
     /**

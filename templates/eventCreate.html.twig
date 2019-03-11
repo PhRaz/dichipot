@@ -3,7 +3,22 @@
 {% block body %}
     <h2>Nouvel evènement pour {{ user.name }}</h2>
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    <div class="userEvents" data-prototype="
+            {% filter escape %}
+                {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
+            {% endfilter %}">
+        {% for userEvent in form.userEvents if form.userEvents|length > 0 %}
+            {{ form_row(userEvent.user.name) }}
+            {{ form_row(userEvent.user.mail) }}
+        {% else %}
+            {% do form.userEvents.setRendered %}
+        {% endfor %}
+    </div>
+
     <div class="row">
         <div class="col-6">
             <a class="btn btn-block btn-danger btn-lg" href="{{ path("event_list", {'userId': user.id}) }}"
@@ -15,3 +30,31 @@
     </div>
     {{ form_end(form) }}
 {% endblock body %}
+
+{% block js %}
+    {{ parent() }}
+
+    <script>
+        var $collectionHolder;
+        var $addTagButton = $('<button type="button" class="add_user_link">Ajouter un participant</button>');
+
+        jQuery(document).ready(function () {
+            $collectionHolder = $('.userEvents');
+            $collectionHolder.append($addTagButton);
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            $addTagButton.on('click', function (e) {
+                addTagForm($collectionHolder, $addTagButton);
+            });
+        });
+
+        function addTagForm($collectionHolder, $addTagButton) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+            $collectionHolder.data('index', index + 1);
+            $addTagButton.before(newForm);
+        }
+    </script>
+
+{% endblock %}
