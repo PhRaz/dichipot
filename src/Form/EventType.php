@@ -4,7 +4,9 @@ namespace App\Form;
 
 
 use App\Entity\Event;
+use App\Entity\UserEvent;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +16,12 @@ class EventType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description');
+            ->add('description')
+            ->add('userEvents', CollectionType::class, [
+                'entry_type' => UserEventType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

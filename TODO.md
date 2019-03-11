@@ -30,7 +30,7 @@
     * revoir la navigation, utilisation d'icones
     * utiliser une font responsive
     * prévoir la version tablette et desktop
-      * mettre total et balance dans une 2ème colonne
+      * ~~mettre total et balance dans une 2ème colonne~~
 
 ## code
 
