@@ -20,7 +20,8 @@ class EventType extends AbstractType
             ->add('userEvents', CollectionType::class, [
                 'entry_type' => UserEventType::class,
                 'entry_options' => ['label' => false],
-                'allow_add' => true
+                'allow_add' => true,
+                'allow_delete' => true
             ]);
     }
 

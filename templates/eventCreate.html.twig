@@ -12,8 +12,10 @@
                 {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
             {% endfilter %}">
         {% for userEvent in form.userEvents if form.userEvents|length > 0 %}
-            {{ form_row(userEvent.user.name) }}
-            {{ form_row(userEvent.user.mail) }}
+            <div class="user">
+                {{ form_row(userEvent.user.name) }}
+                {{ form_row(userEvent.user.mail) }}
+            </div>
         {% else %}
             {% do form.userEvents.setRendered %}
         {% endfor %}
@@ -36,24 +38,42 @@
 
     <script>
         var $collectionHolder;
-        var $addTagButton = $('<button type="button" class="add_user_link">Ajouter un participant</button>');
+        var $addUserButton = $('<button type="button" class="add_user_link">Ajouter un participant</button>');
 
         jQuery(document).ready(function () {
             $collectionHolder = $('.userEvents');
-            $collectionHolder.append($addTagButton);
-            $collectionHolder.data('index', $collectionHolder.find(':input').length);
-            $addTagButton.on('click', function (e) {
-                addTagForm($collectionHolder, $addTagButton);
+            $collectionHolder.append($addUserButton);
+            $collectionHolder.data('index', $collectionHolder.find('.user').length);
+
+            $addUserButton.on('click', function (e) {
+                addUserForm($collectionHolder, $addUserButton);
             });
+
+            $('.user').each(function() {
+                addUserFormDeleteButton($(this));
+            })
         });
 
-        function addTagForm($collectionHolder, $addTagButton) {
+        function addUserForm($collectionHolder, $addUserButton) {
             var prototype = $collectionHolder.data('prototype');
             var index = $collectionHolder.data('index');
             var newForm = prototype;
+
             newForm = newForm.replace(/__name__/g, index);
             $collectionHolder.data('index', index + 1);
-            $addTagButton.before(newForm);
+
+            $addUserButton.before(newForm);
+
+            addUserFormDeleteButton(newForm);
+        }
+
+        function addUserFormDeleteButton(form) {
+            var $removeUserButton = $('<button type="button" class="add_user_link">Supprimer ce participant</button>');
+            $(form).append($removeUserButton);
+            $(form).append($('<p>coucou</p>'));
+            $removeUserButton.on('click', function(e) {
+               $(form).remove();
+            });
         }
     </script>
 
