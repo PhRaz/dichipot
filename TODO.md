@@ -14,6 +14,8 @@
 ## user story
 
   * validation des données, format et longueur des champs
+  * check unicité adresse mail
+    * mettre les pseudos dans la table userEvents, l'aministrateur peut donner un pseudo à un user pour l'évènement
   * ~~modification~~/suppression opération
   * formulaire évènement sur une page pour gestion de l'évènement et des participants 
     * modification/suppression évènement
