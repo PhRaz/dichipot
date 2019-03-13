@@ -105,6 +105,17 @@ class MainController extends AbstractController
             $event->setDate(new \DateTime());
             $entityManager->persist($event);
 
+            /*
+             * admin is a user on the created event
+             */
+            $userEvent = new UserEvent();
+            $userEvent
+                ->setDate(new \DateTime())
+                ->setAdministrator(true)
+                ->setUser($admin)
+                ->setEvent($event);
+            $entityManager->persist($userEvent);
+
             foreach ($event->getUserEvents() as $userEvent) {
                 $userEvent
                     ->setDate(new \DateTime())
@@ -116,23 +127,12 @@ class MainController extends AbstractController
                 $entityManager->persist($user);
             }
 
-            /*
-             * admin is a user for the event he creates
-             */
-            $userEvent = new UserEvent();
-            $userEvent
-                ->setDate(new \DateTime())
-                ->setAdministrator(true)
-                ->setUser($admin)
-                ->setEvent($event);
-            $entityManager->persist($userEvent);
-
             $entityManager->flush();
 
             return $this->redirectToRoute('event_list', ['userId' => $admin->getId()]);
         }
 
-        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'user' => $admin]);
+        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'admin' => $admin]);
     }
 
     /**
