@@ -1,9 +1,18 @@
-# Gestion de compte
+# Account management
 
-Application de gestion des dépenses de plusieurs personnes autour d'un évènement.
-Cette application permet de gérer, par exemple, les dépenses lors d'un weekend entre amis ou des vacances en famille.
+This application is used to manage expenses of several peoples during an event.
+It allows you to manage, for example, spending on a weekend with friends or a family vacation.
 
-## modèle de donnée
+The user interface design follows the "mobile first" rule, it is based on bootstrap4.
+
+## Cognito 
+
+User authentication and authorisation management is done with AWS Cognito.
+I implemented the solution as explained in this article :
+https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
+
+## Data model
+
    * user
      * id
      * date
