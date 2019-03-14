@@ -39,13 +39,21 @@ class AwsCognitoClient
     public function checkCredentials($username, $password): Result
     {
         return $this->client->adminInitiateAuth([
-            'UserPoolId'     => $this->poolId,
-            'ClientId'       => $this->clientId,
-            'AuthFlow'       => 'ADMIN_NO_SRP_AUTH', // this matches the 'server-based sign-in' checkbox setting from earlier
+            'UserPoolId' => $this->poolId,
+            'ClientId' => $this->clientId,
+            'AuthFlow' => 'ADMIN_NO_SRP_AUTH', // this matches the 'server-based sign-in' checkbox setting from earlier
             'AuthParameters' => [
                 'USERNAME' => $username,
                 'PASSWORD' => $password
             ]
+        ]);
+    }
+
+    public function getRolesForUsername(string $username): Result
+    {
+        return $this->client->adminListGroupsForUser([
+            'UserPoolId' => $this->poolId,
+            'Username' => $username
         ]);
     }
 }

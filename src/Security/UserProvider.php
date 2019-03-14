@@ -42,6 +42,21 @@ class UserProvider implements UserProviderInterface
         $user = new User();
         $user->setEmail($username);
 
+        $groups = $this->cognitoClient->getRolesForUsername(
+            $result['Users'][0]['Username']
+        );
+
+        if (count($groups['Groups']) > 0) {
+            $user->setRoles(
+                array_map(
+                    function ($item) {
+                        return 'ROLE_' . $item['GroupName'];
+                    },
+                    $groups['Groups']
+                )
+            );
+        }
+
         return $user;
     }
 
