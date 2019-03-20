@@ -12,6 +12,11 @@ Here are the blogs entries I find usefull to understand server side Cognito usag
 - https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
 - https://sanderknape.com/2017/02/getting-started-with-aws-cognito/
 
+## Docker
+
+I use the docker configuration as provided here 
+https://github.com/romaricp/kit-starter-symfony-4-docker 
+
 ## Data model
 
    * user
