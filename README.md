@@ -1,15 +1,16 @@
 # Account management
 
-This application allows to manage the expenses of several people during an event by calculating the debts and the credits of each participants. It may be used for any event like a weekend with friends or a family holidays.
+This application allows to manage the expenses of several people during an event by calculating the debts and the credits of each participants against each other. It may be used for any event like a weekend with friends or a family holidays.
 
 The user interface is responsive and follows the "mobile first" rule, it is based on bootstrap4.
 
 ## Cognito 
 
-User authentication and authorisation is managed with AWS Cognito.
-Here are the blogs entries I find usefull to understand Cognito :
-https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
-https://sanderknape.com/2017/02/getting-started-with-aws-cognito/
+User authentication and authorisation is managed with AWS Cognito. 
+The AWS COgnito documentation is not oriented to server side authentication.
+Here are the blogs entries I find usefull to understand server side Cognito usage :
+- https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
+- https://sanderknape.com/2017/02/getting-started-with-aws-cognito/
 
 ## Data model
 
