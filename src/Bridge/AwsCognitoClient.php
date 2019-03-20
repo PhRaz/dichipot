@@ -28,6 +28,34 @@ class AwsCognitoClient
         $this->clientId = $clientId;
     }
 
+    public function signUp($username, $password): Result
+    {
+        return $this->client->signUp([
+            'ClientId' => $this->clientId,
+            'Username' => $username,
+            'Password' => $password,
+            'UserAttributes' => [
+                [
+                    'Name' => 'name',
+                    'Value' => $username
+                ],
+                [
+                    'Name' => 'email',
+                    'Value' => $username
+                ]
+            ]
+        ]);
+    }
+
+    public function confirmSignUp($username, $code): Result
+    {
+        return $this->client->confirmSignUp([
+            'ClientId' => $this->clientId,
+            'Username' => $username,
+            'ConfirmationCode' => $code,
+        ]);
+    }
+
     public function findByUsername(string $username): Result
     {
         return $this->client->listUsers([
@@ -53,6 +81,24 @@ class AwsCognitoClient
     {
         return $this->client->adminListGroupsForUser([
             'UserPoolId' => $this->poolId,
+            'Username' => $username
+        ]);
+    }
+
+    public function forgotPassword($username): Result
+    {
+        return $this->client->forgotPassword([
+            'ClientId' => $this->clientId,
+            'Username' => $username
+        ]);
+    }
+
+    public function confirmForgotPassword($username, $password, $code): Result
+    {
+        return $this->client->confirmForgotPassword([
+            'ClientId' => $this->clientId,
+            'ConfirmationCode' => $code,
+            'Password' => $password,
             'Username' => $username
         ]);
     }
