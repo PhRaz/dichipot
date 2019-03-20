@@ -23,6 +23,22 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @route("/signin", name="app_signup")
+     */
+    public function signin(AuthenticationUtils $authenticationUtils): Response
+    {
+        return new Response("signup");
+    }
+
+    /**
+     * @route("/", name="app_signup")
+     */
+    public function resetPassword(AuthenticationUtils $authenticationUtils): Response
+    {
+        return new Response("resetPassword");
+    }
+
+    /**
      * @route("/logout", name="app_logout")
      */
     public function logout()
