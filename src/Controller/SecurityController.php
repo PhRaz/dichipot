@@ -11,6 +11,8 @@ class SecurityController extends AbstractController
 {
     /**
      * @route("/login", name="app_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -24,6 +26,8 @@ class SecurityController extends AbstractController
 
     /**
      * @route("/signin", name="app_signup")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function signin(AuthenticationUtils $authenticationUtils): Response
     {
@@ -31,7 +35,9 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @route("/", name="app_signup")
+     * @route("/resetpassword", name="app_reset_password")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
      */
     public function resetPassword(AuthenticationUtils $authenticationUtils): Response
     {
@@ -40,8 +46,9 @@ class SecurityController extends AbstractController
 
     /**
      * @route("/logout", name="app_logout")
+     * @return Response
      */
-    public function logout()
+    public function logout(): Response
     {
         return new Response("logout");
     }
