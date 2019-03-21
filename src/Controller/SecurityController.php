@@ -2,13 +2,20 @@
 
 namespace App\Controller;
 
+use App\Bridge\AwsCognitoClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+
 class SecurityController extends AbstractController
 {
+    public function __construct(AwsCognitoClient $cognitoClient)
+    {
+        $this->cognitoClient = $cognitoClient;
+    }
+
     /**
      * @route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
@@ -25,13 +32,27 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @route("/signin", name="app_signup")
+     * @route("/signup", name="app_signup")
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function signin(AuthenticationUtils $authenticationUtils): Response
+    public function signup(AuthenticationUtils $authenticationUtils): Response
     {
-        return new Response("signup");
+        $result = $this->cognitoClient->signUp("testcognito@yopmail.com", "QZ3se'DR5");
+        print_r($result);
+        die();
+    }
+
+    /**
+     * @route("/confirmsignup", name="app_confirm_signup")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
+    public function confirmSignup(AuthenticationUtils $authenticationUtils): Response
+    {
+        $result = $this->cognitoClient->confirmSignUp("testcognito@yopmail.com", "862948");
+        print_r($result);
+        die();
     }
 
     /**
