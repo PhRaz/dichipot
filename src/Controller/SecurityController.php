@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use App\Bridge\AwsCognitoClient;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -11,6 +15,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /** @var AwsCognitoClient */
+    var $cognitoClient;
+
     public function __construct(AwsCognitoClient $cognitoClient)
     {
         $this->cognitoClient = $cognitoClient;
@@ -33,14 +40,29 @@ class SecurityController extends AbstractController
 
     /**
      * @route("/signup", name="app_signup")
-     * @param AuthenticationUtils $authenticationUtils
+     * @param Request $request
      * @return Response
      */
-    public function signup(AuthenticationUtils $authenticationUtils): Response
+    public function signup(Request $request): Response
     {
-        $result = $this->cognitoClient->signUp("testcognito@yopmail.com", "QZ3se'DR5");
-        print_r($result);
-        die();
+        $defaultData = [
+            'email' => '',
+            'password' => ''
+        ];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class)
+            ->add('password', PasswordType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->cognitoClient->signUp($data['email'], $data['password']);
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
     }
 
     /**
