@@ -52,7 +52,6 @@ class SecurityController extends AbstractController
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class)
-            ->add('send', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
@@ -60,21 +59,21 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $this->cognitoClient->signUp($data['email'], $data['password']);
+
             return $this->redirectToRoute('home');
         }
         return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @route("/confirmsignup", name="app_confirm_signup")
-     * @param AuthenticationUtils $authenticationUtils
+     * @route("/confirmsignup/{userName}/{code}", name="app_confirm_signup")
+     * @param string $userName
+     * @param string $code
      * @return Response
      */
-    public function confirmSignup(AuthenticationUtils $authenticationUtils): Response
+    public function confirmSignup($userName, $code): Response
     {
-        $result = $this->cognitoClient->confirmSignUp("testcognito@yopmail.com", "862948");
-        print_r($result);
-        die();
+        $result = $this->cognitoClient->confirmSignUp($userName, $code);
     }
 
     /**
