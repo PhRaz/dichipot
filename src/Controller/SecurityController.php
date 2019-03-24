@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 class SecurityController extends AbstractController
@@ -35,15 +36,16 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'info' => 'coucou vous allez recevoir un mail']);
     }
 
     /**
      * @route("/signup", name="app_signup")
      * @param Request $request
+     * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function signup(Request $request): Response
+    public function signup(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         $defaultData = [
             'email' => '',
@@ -51,7 +53,14 @@ class SecurityController extends AbstractController
         ];
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
+            ->add('password', PasswordType::class, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/',
+                        'htmlPattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
+                    ])
+                ]
+            ])
             ->getForm();
 
         $form->handleRequest($request);
@@ -60,7 +69,12 @@ class SecurityController extends AbstractController
             $data = $form->getData();
             $this->cognitoClient->signUp($data['email'], $data['password']);
 
-            return $this->redirectToRoute('home');
+            $lastUsername = $authenticationUtils->getLastUsername();
+
+            return $this->render('security/login.html.twig', [
+                'last_username' => $lastUsername,
+                'info' => 'Vous allez recevoir un mail qui vous permetra de confirmer votre email.'
+            ]);
         }
         return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
     }
