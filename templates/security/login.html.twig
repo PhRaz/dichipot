@@ -9,6 +9,9 @@
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                 {% endif %}
+                {% if info %}
+                    <div class="alert alert-info">{{ info }}</div>
+                {% endif %}
             </div>
         </div>
         <div class="row">
