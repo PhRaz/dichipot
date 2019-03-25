@@ -95,7 +95,7 @@ class CognitoAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('event_list', ['userId' => 1]));
+        return new RedirectResponse($this->urlGenerator->generate('event_list'));
     }
 
     protected function getLoginUrl()
