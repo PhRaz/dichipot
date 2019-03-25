@@ -19,7 +19,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+/**
+ * Class MainController
+ * @package App\Controller
+ * @IsGranted("ROLE_USER")
+ */
 class MainController extends AbstractController
 {
     /**
@@ -28,7 +35,6 @@ class MainController extends AbstractController
      */
     public function home(): Response
     {
-
         return $this->render("home.html.twig");
     }
 
@@ -71,18 +77,30 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/event/list/{userId}", name="event_list")
-     * @param $userId
+     * @route("/event/list", name="event_list")
      * @return Response
      * @throws \Exception
      */
-    public function eventList($userId): Response
+    public function eventList(): Response
     {
+        /** @var \App\Security\User $loggedUser */
+        $loggedUser = $this->getUser();
+        $mail = $loggedUser->getEmail();
+        print_r($mail);
+
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userRepo->getUserEvents($userId);
+        $user = $userRepo->findOneBy(['mail' => $mail]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            $this->redirectToRoute("home");
+        }
+        $userId = $user->getId();
+        $data = $userRepo->getUserEvents($userId);
 
-        return $this->render("eventList.html.twig", ['user' => $user]);
+        return $this->render("eventList.html.twig", ['user' => $data]);
     }
 
 
@@ -129,7 +147,7 @@ class MainController extends AbstractController
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('event_list', ['userId' => $admin->getId()]);
+            return $this->redirectToRoute('event_list');
         }
 
         return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'admin' => $admin]);
@@ -169,7 +187,7 @@ class MainController extends AbstractController
             $entityManager->persist($userEvent);
             $entityManager->flush();
 
-            return ($this->redirectToRoute('event_list', ['userId' => $administrator->getId()]));
+            return ($this->redirectToRoute('event_list'));
         }
 
         return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event' => $event, 'administrator' => $administrator]);
