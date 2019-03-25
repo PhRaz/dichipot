@@ -27,16 +27,18 @@ class SecurityController extends AbstractController
     /**
      * @route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
+     * @param array $option
      * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        if ($error) {
+            $this->addFlash('error', $error);
+        }
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'info' => 'coucou vous allez recevoir un mail']);
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername]);
     }
 
     /**
@@ -68,13 +70,8 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $this->cognitoClient->signUp($data['email'], $data['password']);
-
-            $lastUsername = $authenticationUtils->getLastUsername();
-
-            return $this->render('security/login.html.twig', [
-                'last_username' => $lastUsername,
-                'info' => 'Vous allez recevoir un mail qui vous permetra de confirmer votre email.'
-            ]);
+            $this->addFlash('success', 'Vous allez recevoir un mail qui vous permetra de confirmer votre email.');
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
     }
