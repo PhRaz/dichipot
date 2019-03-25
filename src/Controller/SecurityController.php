@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Bridge\AwsCognitoClient;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\Regex;
 
 
@@ -69,8 +71,22 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->cognitoClient->signUp($data['email'], $data['password']);
-            $this->addFlash('success', 'Vous allez recevoir un mail qui vous permetra de confirmer votre email.');
+            try {
+                $this->cognitoClient->signUp($data['email'], $data['password']);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $e->getMessage());
+                return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
+            }
+
+            $user = new User();
+            $user->setDate(new \DateTime());
+            $user->setMail($data['email']);
+            $user->setName(explode('@', $data['email'])[0]);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', 'Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.');
             return $this->redirectToRoute('app_login');
         }
         return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
