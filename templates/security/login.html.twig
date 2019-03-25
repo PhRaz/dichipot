@@ -6,12 +6,11 @@
     <form method="post">
         <div class="row">
             <div class="col-12">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
-                {% if info %}
-                    <div class="alert alert-info">{{ info }}</div>
-                {% endif %}
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">{{ message }}</div>
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
         <div class="row">
@@ -50,9 +49,13 @@
             <div class="d-none d-md-block col-md-4"></div>
         </div>
         <div class="row">
-            <div class="col"><hr></div>
+            <div class="col">
+                <hr>
+            </div>
             <div class="col-auto">OU</div>
-            <div class="col"><hr></div>
+            <div class="col">
+                <hr>
+            </div>
         </div>
         <div class="row">
             <div class="d-none d-md-block col-md-4"></div>
@@ -72,9 +75,13 @@
             <div class="d-none d-md-block col-md-4"></div>
         </div>
         <div class="row">
-            <div class="col"><hr></div>
+            <div class="col">
+                <hr>
+            </div>
             <div class="col-auto">OU</div>
-            <div class="col"><hr></div>
+            <div class="col">
+                <hr>
+            </div>
         </div>
         <div class="row">
             <div class="d-none d-md-block col-md-4"></div>
