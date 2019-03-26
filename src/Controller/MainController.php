@@ -86,7 +86,6 @@ class MainController extends AbstractController
         /** @var \App\Security\User $loggedUser */
         $loggedUser = $this->getUser();
         $mail = $loggedUser->getEmail();
-        print_r($mail);
 
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);

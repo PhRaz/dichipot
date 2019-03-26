@@ -47,6 +47,7 @@ class SecurityController extends AbstractController
      * @route("/signup", name="app_signup")
      * @param Request $request
      * @param AuthenticationUtils $authenticationUtils
+     * @throws \Exception
      * @return Response
      */
     public function signup(Request $request, AuthenticationUtils $authenticationUtils): Response

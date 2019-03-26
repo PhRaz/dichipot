@@ -15,6 +15,9 @@ security:
                     - App\Security\CognitoAuthenticator
             logout:
                 path: app_logout
+            form_login:
+                login_path: login
+                check_path: login
 
             # activate different ways to authenticate
 
