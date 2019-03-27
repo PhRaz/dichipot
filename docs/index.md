@@ -14,8 +14,26 @@ Here are the blogs entries I find usefull to understand server side Cognito usag
 
 ## Docker
 
-Dichipot is developped and deployed with the docker configuration as provided here 
+Dichipot is developed and deployed with the docker configuration as provided here 
 https://github.com/romaricp/kit-starter-symfony-4-docker 
+
+## installation
+
+- log in server
+- deploy the git repo
+    <pre>
+    git clone https://github.com/PhRaz/dichipot.git
+    cd dichipot
+    docker-compose build
+    docker-compose up -d
+    docker exec -it sf4_php bash
+    cd sf4
+    composer install
+    php bin/console doctrine:schema:update --force
+    exit
+    </pre>
+- create a cognito user pool 
+- update .env file with cognito user pool configuration
 
 ## Data model
 
