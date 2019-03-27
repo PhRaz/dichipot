@@ -9,7 +9,6 @@ use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\UserEvent;
 use App\Form\OperationType;
-use App\Form\UserEventType;
 use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\OperationRepository;
@@ -19,13 +18,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 /**
  * Class MainController
  * @package App\Controller
- * @IsGranted("ROLE_USER")
  */
 class MainController extends AbstractController
 {
