@@ -19,6 +19,8 @@ https://github.com/romaricp/kit-starter-symfony-4-docker
 
 ## installation
 
+Here is the procedure to install the application on a server.
+
 - log in server
 - deploy the git repo
     <pre>

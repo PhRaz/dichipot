@@ -91,7 +91,8 @@ class MainController extends AbstractController
             /*
              * should never occurs
              */
-            $this->redirectToRoute("home");
+            $this->addFlash('danger', 'The site is under maintenance ! Retry to log in later.');
+            return ($this->redirectToRoute("home"));
         }
         $userId = $user->getId();
         $data = $userRepo->getUserEvents($userId);

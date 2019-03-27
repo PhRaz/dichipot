@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('error', $error);
+            $this->addFlash('danger', $error);
         }
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -72,7 +72,7 @@ class SecurityController extends AbstractController
             try {
                 $this->cognitoClient->signUp($data['email'], $data['password']);
             } catch (\Exception $e) {
-                $this->addFlash('error', $e->getMessage());
+                $this->addFlash('danger', $e->getMessage());
                 return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
             }
 
