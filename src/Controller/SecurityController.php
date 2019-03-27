@@ -7,12 +7,10 @@ use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\Regex;
 
 
@@ -29,7 +27,6 @@ class SecurityController extends AbstractController
     /**
      * @route("/login", name="app_login")
      * @param AuthenticationUtils $authenticationUtils
-     * @param array $option
      * @return Response
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -50,7 +47,7 @@ class SecurityController extends AbstractController
      * @throws \Exception
      * @return Response
      */
-    public function signup(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function signup(Request $request): Response
     {
         $defaultData = [
             'email' => '',
@@ -109,7 +106,7 @@ class SecurityController extends AbstractController
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function resetPassword(AuthenticationUtils $authenticationUtils): Response
+    public function resetPassword(): Response
     {
         return new Response("resetPassword");
     }
