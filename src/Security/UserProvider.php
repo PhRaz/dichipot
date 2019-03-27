@@ -36,7 +36,7 @@ class UserProvider implements UserProviderInterface
         $result = $this->cognitoClient->findByUsername($username);
 
         if (count($result['Users']) === 0) {
-            throw new UsernameNotFoundException();
+            throw new UsernameNotFoundException($username . " not found");
         }
 
         $user = new User();
