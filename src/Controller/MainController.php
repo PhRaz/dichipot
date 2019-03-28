@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Bridge\AwsCognitoClient;
-
+use UsernameExistsException;
 
 /**
  * Class MainController
@@ -98,6 +98,7 @@ class MainController extends AbstractController
             $userEvent
                 ->setDate(new \DateTime())
                 ->setAdministrator(true)
+                ->setPseudo(explode('@', $admin->getMail())[0])
                 ->setUser($admin)
                 ->setEvent($event);
             $entityManager->persist($userEvent);
@@ -109,6 +110,7 @@ class MainController extends AbstractController
                     ->setEvent($event);
                 $user = $userEvent->getUser();
                 $user->setDate(new \DateTime());
+                $user->setName(explode('@', $user->getMail())[0]);
                 $entityManager->persist($userEvent);
                 $entityManager->persist($user);
                 /*
@@ -116,6 +118,8 @@ class MainController extends AbstractController
                  */
                 try {
                     $this->cognitoClient->adminCreateUser($user->getMail());
+                } catch (UsernameExistsException $e) {
+
                 } catch (\Exception $e) {
                     throw new \Exception($e->getMessage());
                 }
