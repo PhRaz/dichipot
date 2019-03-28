@@ -22,17 +22,20 @@ Here is the procedure to install the application on a server.
 
 - log in server
 - deploy the git repo
-    <pre>
     git clone https://github.com/PhRaz/dichipot.git
+- launch the containers
     cd dichipot
     docker-compose build
     docker-compose up -d
+- log in Symfony container
     docker exec -it sf4_php bash
+- install dependancies
     cd sf4
     composer install
+- update DB schema
     php bin/console doctrine:schema:update --force
+- done
     exit
-    </pre>
 - create a cognito user pool 
 - update .env file with cognito user pool configuration
 
