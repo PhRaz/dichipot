@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Bridge\AwsCognitoClient;
 
 
 /**
@@ -26,6 +27,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MainController extends AbstractController
 {
+    /** @var AwsCognitoClient */
+    var $cognitoClient;
+
+    public function __construct(AwsCognitoClient $cognitoClient)
+    {
+        $this->cognitoClient = $cognitoClient;
+    }
+
     /**
      * @route("/", name="home")
      * @return Response
@@ -91,7 +100,7 @@ class MainController extends AbstractController
             /*
              * should never occurs
              */
-            $this->addFlash('danger', 'The site is under maintenance ! Retry to log in later.');
+            $this->addFlash('danger', 'Your account does not exist.');
             return ($this->redirectToRoute("home"));
         }
         $userId = $user->getId();
@@ -140,6 +149,14 @@ class MainController extends AbstractController
                 $user->setDate(new \DateTime());
                 $entityManager->persist($userEvent);
                 $entityManager->persist($user);
+                /*
+                 * TODO manage async operation on user creation
+                 */
+                try {
+                    $this->cognitoClient->adminCreateUser($user->getMail());
+                } catch (\Exception $e) {
+                    throw new \Exception($e->getMessage());
+                }
             }
 
             $entityManager->flush();

@@ -102,4 +102,23 @@ class AwsCognitoClient
             'Username' => $username
         ]);
     }
+
+    public function adminCreateUser($username)
+    {
+        return $this->client->adminCreateUser([
+            'DesiredDeliveryMediums' => ['EMAIL'],
+            'UserAttributes' => [
+                [
+                    'Name' => 'name',
+                    'Value' => $username
+                ],
+                [
+                    'Name' => 'email',
+                    'Value' => $username
+                ]
+            ],
+            'UserPoolId' => $this->poolId,
+            'Username' => $username
+        ]);
+    }
 }
