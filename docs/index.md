@@ -7,8 +7,7 @@ The user interface is responsive and follows the "mobile first" rule, it is base
 ## Cognito 
 
 User authentication and authorisation is managed with AWS Cognito. 
-The AWS COgnito documentation is not oriented to server side authentication.
-Here are the blogs entries I find usefull to understand server side Cognito usage :
+Here are some blogs entries usefull to understand server side Cognito usage :
 - https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
 - https://sanderknape.com/2017/02/getting-started-with-aws-cognito/
 
