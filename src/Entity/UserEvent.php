@@ -27,6 +27,11 @@ class UserEvent
     private $administrator;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $pseudo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userEvents")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -63,6 +68,18 @@ class UserEvent
     public function setAdministrator(bool $administrator): self
     {
         $this->administrator = $administrator;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo($pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

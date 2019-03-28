@@ -45,44 +45,6 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/user/list", name="user_list")
-     * @return Response
-     */
-    public function userList(): Response
-    {
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $users = $userRepo->findAll();
-
-        return $this->render("userList.html.twig", ['users' => $users]);
-    }
-
-    /**
-     * @route("/user/create", name="user_create")
-     * @param $request Request
-     * @return Response
-     * @throws \Exception
-     */
-    public function userCreate(Request $request): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $user->setDate(new \DateTime('now'));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render("userCreate.html.twig", ['form' => $form->createView()]);
-    }
-
-    /**
      * @route("/event/list", name="event_list")
      * @return Response
      * @throws \Exception
@@ -165,46 +127,6 @@ class MainController extends AbstractController
         }
 
         return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'admin' => $admin]);
-    }
-
-    /**
-     * @route("/event/addUser/{eventId}/{userId}", name="event_add_user")
-     * @param Request $request
-     * @param $eventId
-     * @param $userId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
-     */
-    public function eventAddUser(Request $request, $eventId, $userId)
-    {
-        /** @var Event $event */
-        $event = $this->getDoctrine()->getRepository(Event::class)->find($eventId);
-        /** @var User $administrator */
-        $administrator = $this->getDoctrine()->getRepository(User::class)->find($userId);
-
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $user->setDate(new \DateTime());
-
-            $userEvent = new UserEvent();
-            $userEvent->setDate(new \DateTime());
-            $userEvent->setAdministrator(false);
-
-            $userEvent->setUser($user);
-            $userEvent->setEvent($event);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->persist($userEvent);
-            $entityManager->flush();
-
-            return ($this->redirectToRoute('event_list'));
-        }
-
-        return $this->render('eventAddUser.html.twig', ['form' => $form->createView(), 'event' => $event, 'administrator' => $administrator]);
     }
 
     /**
