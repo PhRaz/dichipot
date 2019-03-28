@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -17,6 +18,7 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use App\Bridge\AwsCognitoClient;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
+
 
 class CognitoAuthenticator extends AbstractFormLoginAuthenticator
 {
@@ -65,11 +67,10 @@ class CognitoAuthenticator extends AbstractFormLoginAuthenticator
 
         // Load / create our user however you need.
         // You can do this by calling the user provider, or with custom logic here.
-        $user = $userProvider->loadUserByUsername($credentials['email']);
-
-        if (!$user) {
-            // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        try {
+            $user = $userProvider->loadUserByUsername($credentials['email']);
+        } catch (UsernameNotFoundException $e) {
+            throw new CustomUserMessageAuthenticationException('User could not be found.');
         }
 
         return $user;
