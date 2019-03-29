@@ -24,32 +24,39 @@ class EventRepository extends ServiceEntityRepository
      * @return Event
      * @throws \Exception
      */
-    public function getEventOperations($eventId) : Event
+    public function getEventOperations($eventId): ?Event
     {
-        return $this->createQueryBuilder('e')
+        $result =  $this->createQueryBuilder('e')
             ->andWhere('e.id = :eventId')
+
             ->leftJoin('e.operations', 'o')
+            ->addSelect('o')
+
             ->leftJoin('o.user', 'ou')
+            ->addSelect('ou')
+
             ->leftJoin('o.expenses', 'ex')
+            ->addSelect('ex')
+
             ->leftJoin('ex.user', 'exu')
+            ->addSelect('exu')
+
             ->leftJoin('o.payments', 'p')
-            ->leftJoin('p.user', 'pu')
+            ->addSelect('p')
 
             ->leftJoin('ou.userEvents', 'oue') // operation author pseudo
+            ->addSelect('oue')
             ->andWhere('oue.event = e')
 
             ->leftJoin('exu.userEvents', 'ue') // expense author pseudo
+            ->addSelect('ue')
             ->andWhere('ue.event = e')
 
-            ->addSelect('o')
-            ->addSelect('ex')
-            ->addSelect('exu')
-            ->addSelect('p')
-            ->addSelect('pu')
-            ->addSelect('ue')
             ->setParameter('eventId', $eventId)
             ->getQuery()
             ->getOneOrNullResult();
+
+        return $result;
     }
 
     /**

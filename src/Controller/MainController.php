@@ -224,7 +224,10 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/operation/create/{eventId}/{userId}", name="operation_create")
+     * @Route("/operation/create/{eventId}", name="operation_create")
+     * @param Request $request
+     * @param $eventId
+     * @return Response
      * @throws \Exception
      */
     public function operationCreate(Request $request, $eventId): Response
