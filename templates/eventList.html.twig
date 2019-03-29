@@ -13,8 +13,7 @@
                         <p class="lead">{{ event.description }}</p>
                         <div class="mb-4">
                             {% for userEvent2 in event.userEvents %}
-                                {% set user2 = userEvent2.user %}
-                                <p class="mb-0">{{ user2.name }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
+                                <p class="mb-0">{{ userEvent2.pseudo }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}</p>
                             {% endfor %}
                         </div>
                         <div class="row">

@@ -39,7 +39,7 @@
                         <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="font-weight-light">Opération enregistrée par {{ operation.user.name }}
+                                    <p class="font-weight-light">Opération enregistrée par {{ operation.user.userEvents[0].pseudo }}
                                         dans {{ operation.category }}</p>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                                 {% set color = "text-danger" %}
                                             {% endif %}
                                             <tr>
-                                                <th>{{ name }}</th>
+                                                <th>{{ data.pseudo }} ({{ name }})</th>
                                                 <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
                                                     €
                                                 </td>

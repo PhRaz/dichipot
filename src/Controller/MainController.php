@@ -52,6 +52,8 @@ class MainController extends AbstractController
      */
     public function eventList(): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         /** @var \App\Security\User $loggedUser */
         $loggedUser = $this->getUser();
         $mail = $loggedUser->getEmail();
@@ -145,6 +147,8 @@ class MainController extends AbstractController
      */
     public function operationList($eventId)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         /** @var \App\Security\User $authenticatedUser */
         $authenticatedUser = $this->getUser();
 
@@ -166,13 +170,16 @@ class MainController extends AbstractController
         $balance = array();
         $grandTotal = 0;
         foreach ($event->getOperations() as $operation) {
+
             $id = $operation->getId();
 
             $totalExpense = 0;
             foreach ($operation->getExpenses() as $expense) {
+                $pseudo = $expense->getUser()->getUserEvents()[0]->getPseudo();
                 $grandTotal += $expense->getAmount();
                 $totalExpense += $expense->getAmount();
                 $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getAmount();
+                $balance[$id][$expense->getUser()->getName()]['pseudo'] = $pseudo;
             }
 
             $totalPayment = 0;
@@ -220,16 +227,24 @@ class MainController extends AbstractController
      * @Route("/operation/create/{eventId}/{userId}", name="operation_create")
      * @throws \Exception
      */
-    public function operationCreate(Request $request, $eventId, $userId): Response
+    public function operationCreate(Request $request, $eventId): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+
         /** @var  EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
         /** @var Event $event */
         $event = $eventRepo->getEventUsers($eventId);
-
-        /** @var User $user */
-        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
         $operation = new Operation();
         $operation->setUser($user);
@@ -274,6 +289,7 @@ class MainController extends AbstractController
     {
         /** @var OperationRepository $operationRepo */
         $operationRepo = $this->getDoctrine()->getRepository(Operation::class);
+
         /** @var Operation $operation */
         $operation = $operationRepo->findForUpdate($operationId);
 
