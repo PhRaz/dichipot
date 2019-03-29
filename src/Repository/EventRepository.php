@@ -27,22 +27,26 @@ class EventRepository extends ServiceEntityRepository
     public function getEventOperations($eventId) : Event
     {
         return $this->createQueryBuilder('e')
-            ->innerJoin('e.userEvents', 'ue')
-            ->innerJoin('ue.user', 'u')
+            ->andWhere('e.id = :eventId')
             ->leftJoin('e.operations', 'o')
+            ->leftJoin('o.user', 'ou')
             ->leftJoin('o.expenses', 'ex')
             ->leftJoin('ex.user', 'exu')
             ->leftJoin('o.payments', 'p')
             ->leftJoin('p.user', 'pu')
-            ->andWhere('e.id = :eventId')
-            ->andWhere('ue.administrator = true')
-            ->addSelect('ue')
-            ->addSelect('u')
+
+            ->leftJoin('ou.userEvents', 'oue') // operation author pseudo
+            ->andWhere('oue.event = e')
+
+            ->leftJoin('exu.userEvents', 'ue') // expense author pseudo
+            ->andWhere('ue.event = e')
+
             ->addSelect('o')
             ->addSelect('ex')
             ->addSelect('exu')
-            ->addSelect('pu')
             ->addSelect('p')
+            ->addSelect('pu')
+            ->addSelect('ue')
             ->setParameter('eventId', $eventId)
             ->getQuery()
             ->getOneOrNullResult();
