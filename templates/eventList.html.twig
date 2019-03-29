@@ -18,12 +18,7 @@
                             {% endfor %}
                         </div>
                         <div class="row">
-                            <div class="col-6">
-                                <a class="btn btn-block btn-primary btn-sm shadow-sm"
-                                   href="{{ path('event_add_user', {'eventId': userEvent.event.id, 'userId': user.id}) }}"
-                                   role="button">+ participant</a>
-                            </div>
-                            <div class="col-6">
+                               <div class="col-12">
                                 <a class="btn btn-block btn-primary btn-sm shadow-sm"
                                    href="{{ path("operation_list", {'eventId': event.id}) }}"
                                    role="button">Opérations</a>
