@@ -19,7 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Bridge\AwsCognitoClient;
-use UsernameExistsException;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
+
 
 /**
  * Class MainController
@@ -118,10 +119,13 @@ class MainController extends AbstractController
                  */
                 try {
                     $this->cognitoClient->adminCreateUser($user->getMail());
-                } catch (UsernameExistsException $e) {
-
-                } catch (\Exception $e) {
-                    throw new \Exception($e->getMessage());
+                } catch (CognitoIdentityProviderException $e) {
+                    if ($e->getCode() != 'UsernameExistsException') {
+                        /*
+                         * already known user
+                         */
+                        throw($e);
+                    }
                 }
             }
 
