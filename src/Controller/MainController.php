@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Bridge\AwsCognitoClient;
 use App\Entity\Event;
 use App\Entity\Expense;
 use App\Entity\Payment;
@@ -14,12 +15,11 @@ use App\Form\EventType;
 use App\Repository\OperationRepository;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Bridge\AwsCognitoClient;
-use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 
 
 /**
@@ -122,7 +122,7 @@ class MainController extends AbstractController
                 } catch (CognitoIdentityProviderException $e) {
                     if ($e->getCode() != 'UsernameExistsException') {
                         /*
-                         * already known user
+                         * already known user, not an error
                          */
                         throw($e);
                     }
@@ -145,8 +145,19 @@ class MainController extends AbstractController
      */
     public function operationList($eventId)
     {
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+
+        /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
         /*
@@ -198,6 +209,7 @@ class MainController extends AbstractController
         }
 
         return $this->render('operationList.html.twig', [
+            'user' => $user,
             'event' => $event,
             'balance' => $balance,
             'total' => $total
@@ -212,8 +224,10 @@ class MainController extends AbstractController
     {
         /** @var  EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+
         /** @var Event $event */
         $event = $eventRepo->getEventUsers($eventId);
+
         /** @var User $user */
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
