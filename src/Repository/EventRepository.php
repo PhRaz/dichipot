@@ -26,31 +26,31 @@ class EventRepository extends ServiceEntityRepository
      */
     public function getEventOperations($eventId): ?Event
     {
-        $result =  $this->createQueryBuilder('e')
-            ->andWhere('e.id = :eventId')
+        $result =  $this->createQueryBuilder('event')
+            ->andWhere('event.id = :eventId')
 
-            ->leftJoin('e.operations', 'o')
-            ->addSelect('o')
+            ->leftJoin('event.operations', 'operations')
+            ->addSelect('operations')
 
-            ->leftJoin('o.user', 'ou')
-            ->addSelect('ou')
+            ->leftJoin('operations.user', 'operations_authors')
+            ->addSelect('operations_authors')
 
-            ->leftJoin('o.expenses', 'ex')
-            ->addSelect('ex')
+//            ->leftJoin('operations_authors.userEvents', 'operations_authors_pseudos') // operation author pseudo
+//            ->addSelect('operations_authors_pseudos')
+//            ->andWhere('operations_authors_pseudos.event = event')
 
-            ->leftJoin('ex.user', 'exu')
-            ->addSelect('exu')
+            ->leftJoin('operations.expenses', 'operations_expenses')
+            ->addSelect('operations_expenses')
 
-            ->leftJoin('o.payments', 'p')
-            ->addSelect('p')
+            ->leftJoin('operations_expenses.user', 'expenses_authors')
+            ->addSelect('expenses_authors')
 
-            ->leftJoin('ou.userEvents', 'oue') // operation author pseudo
-            ->addSelect('oue')
-            ->andWhere('oue.event = e')
+//            ->leftJoin('expenses_authors.userEvents', 'expenses_authors_pseudos') // expense author pseudo
+//            ->addSelect('expenses_authors_pseudos')
+//            ->andWhere('expenses_authors_pseudos.event = event')
 
-            ->leftJoin('exu.userEvents', 'ue') // expense author pseudo
-            ->addSelect('ue')
-            ->andWhere('ue.event = e')
+            ->leftJoin('operations.payments', 'operations_payments')
+            ->addSelect('operations_payments')
 
             ->setParameter('eventId', $eventId)
             ->getQuery()
