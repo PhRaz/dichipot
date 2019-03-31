@@ -176,9 +176,9 @@ class MainController extends AbstractController
             $totalExpense = 0;
             foreach ($operation->getExpenses() as $expense) {
                 $pseudo = $expense->getUser()->getUserEvents()[0]->getPseudo();
-                $grandTotal += $expense->getAmount();
-                $totalExpense += $expense->getAmount();
-                $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getAmount();
+                $grandTotal += $expense->getExpense();
+                $totalExpense += $expense->getExpense();
+                $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getExpense();
                 $balance[$id][$expense->getUser()->getName()]['pseudo'] = $pseudo;
             }
 
@@ -257,7 +257,7 @@ class MainController extends AbstractController
         foreach ($event->getUserEvents() as $userEvent) {
             $expense = new Expense();
             $expense->setUser($userEvent->getUser());
-            $expense->setAmount(0);
+            $expense->setExpense(0);
             $expense->setOperation($operation);
             $operation->getExpenses()->add($expense);
             $payment = new Payment();

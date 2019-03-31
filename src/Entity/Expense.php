@@ -25,7 +25,12 @@ class Expense
     /**
      * @ORM\Column(type="float")
      */
-    private $amount;
+    private $expense;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $payment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Operation", inversedBy="expenses")
@@ -50,14 +55,14 @@ class Expense
         return $this;
     }
 
-    public function getAmount(): ?float
+    public function getExpense(): ?float
     {
-        return $this->amount;
+        return $this->expense;
     }
 
-    public function setAmount(float $amount): self
+    public function setExpense(float $expense): self
     {
-        $this->amount = $amount;
+        $this->expense = $expense;
 
         return $this;
     }
@@ -70,6 +75,18 @@ class Expense
     public function setOperation(?Operation $operation): self
     {
         $this->operation = $operation;
+
+        return $this;
+    }
+
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    public function setPayment($payment): self
+    {
+        $this->payment = $payment;
 
         return $this;
     }
