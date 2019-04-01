@@ -25,8 +25,8 @@
                                 <div class="col-5 col-md-8 text-truncate">{{ operation.description }}</div>
                                 <div class="col-4 col-md-2 text-right text-nowrap">
                                     {% set expense_total = 0 %}
-                                    {% for expense in operation.expenses if expense.amount > 0 %}
-                                        {% set expense_total = expense_total + expense.amount %}
+                                    {% for expense in operation.expenses if expense.expense > 0 %}
+                                        {% set expense_total = expense_total + expense.expense %}
                                     {% endfor %}
                                     {{ expense_total|number_format('2', ',', ' ') }} €
                                 </div>

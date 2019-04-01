@@ -22,13 +22,13 @@
     {% for expense in form.expenses %}
         <div class="form-group row">
             <div class="col-form-label col-4">
-                <div>{{ form_label(expense.amount) }}</div>
+                <div>{{ form_label(expense.expense) }}</div>
             </div>
             <div class="col-5">
-                {{ form_widget(expense.amount) }}
+                {{ form_widget(expense.expense) }}
             </div>
             <div class="col-3">
-                {{ form_widget(form.payments[loop.index0].amount) }}
+                {{ form_widget(expense.payment) }}
             </div>
         </div>
     {% endfor %}

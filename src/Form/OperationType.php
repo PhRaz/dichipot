@@ -25,11 +25,6 @@ class OperationType extends AbstractType
             'entry_type' => ExpenseType::class,
             'entry_options' => ['label' => false],
         ]);
-
-        $builder->add('payments', CollectionType::class, [
-            'entry_type' => PaymentType::class,
-            'entry_options' => ['label' => false],
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
