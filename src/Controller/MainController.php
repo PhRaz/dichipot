@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Bridge\AwsCognitoClient;
 use App\Entity\Event;
 use App\Entity\Expense;
-use App\Entity\Payment;
 use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\UserEvent;
@@ -31,9 +30,13 @@ class MainController extends AbstractController
     /** @var AwsCognitoClient */
     var $cognitoClient;
 
-    public function __construct(AwsCognitoClient $cognitoClient)
+    /** @var Operation */
+    var $operation;
+
+    public function __construct(AwsCognitoClient $cognitoClient, Operation $operation)
     {
         $this->cognitoClient = $cognitoClient;
+        $this->operation = $operation;
     }
 
     /**
@@ -164,56 +167,7 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
-        /*
-         * compute balance
-         */
-        $balance = array();
-        $grandTotal = 0;
-        foreach ($event->getOperations() as $operation) {
-
-            $id = $operation->getId();
-
-            $totalExpense = 0;
-            foreach ($operation->getExpenses() as $expense) {
-                $pseudo = $expense->getUser()->getUserEvents()[0]->getPseudo();
-                $grandTotal += $expense->getExpense();
-                $totalExpense += $expense->getExpense();
-                $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getExpense();
-                $balance[$id][$expense->getUser()->getName()]['pseudo'] = $pseudo;
-            }
-
-            $totalPayment = 0;
-            foreach ($operation->getPayments() as $payment) {
-                $totalPayment += $payment->getAmount();
-                $balance[$id][$payment->getUser()->getName()]['payment'] = $payment->getAmount();
-            }
-
-            foreach ($balance[$id] as $userName => $data) {
-                $amountToPay = $totalExpense / $totalPayment * $balance[$id][$userName]['payment'];
-                $balance[$id][$userName] = array_merge($balance[$id][$userName], [
-                    'amountToPay' => $amountToPay,
-                    'balance' => $balance[$id][$userName]['expense'] - $amountToPay
-                ]);
-            }
-        }
-
-        $total = array();
-        foreach ($balance as $id => $balanceData) {
-            foreach ($balanceData as $userName => $userData) {
-                if (!isset($total[$userName])) {
-                    $total[$userName] = [
-                        'expense' => 0,
-                        'payment' => 0,
-                        'amountToPay' => 0,
-                        'balance' => 0
-                    ];
-                }
-                $total[$userName]['expense'] += $userData['expense'];
-                $total[$userName]['payment'] += $userData['payment'];
-                $total[$userName]['amountToPay'] += $userData['amountToPay'];
-                $total[$userName]['balance'] += $userData['balance'];
-            }
-        }
+        list($balance, $total) = $this->operation->getBalance($event);
 
         return $this->render('operationList.html.twig', [
             'user' => $user,
@@ -258,13 +212,9 @@ class MainController extends AbstractController
             $expense = new Expense();
             $expense->setUser($userEvent->getUser());
             $expense->setExpense(0);
+            $expense->setPayment(1);
             $expense->setOperation($operation);
             $operation->getExpenses()->add($expense);
-            $payment = new Payment();
-            $payment->setUser($userEvent->getUser());
-            $payment->setAmount(1);
-            $payment->setOperation($operation);
-            $operation->getPayments()->add($payment);
         }
 
         $form = $this->createForm(OperationType::class, $operation);

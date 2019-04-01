@@ -32,25 +32,25 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('event.operations', 'operations')
             ->addSelect('operations')
 
-            ->leftJoin('operations.user', 'operations_authors')
-            ->addSelect('operations_authors')
+//            ->leftJoin('operations.user', 'operations_authors')
+//            ->addSelect('operations_authors')
 
 //            ->leftJoin('operations_authors.userEvents', 'operations_authors_pseudos') // operation author pseudo
 //            ->addSelect('operations_authors_pseudos')
 //            ->andWhere('operations_authors_pseudos.event = event')
 
-            ->leftJoin('operations.expenses', 'operations_expenses')
-            ->addSelect('operations_expenses')
+//            ->leftJoin('operations.expenses', 'operations_expenses')
+//            ->addSelect('operations_expenses')
 
-            ->leftJoin('operations_expenses.user', 'expenses_authors')
-            ->addSelect('expenses_authors')
+//            ->leftJoin('operations_expenses.user', 'expenses_authors')
+//            ->addSelect('expenses_authors')
 
 //            ->leftJoin('expenses_authors.userEvents', 'expenses_authors_pseudos') // expense author pseudo
 //            ->addSelect('expenses_authors_pseudos')
 //            ->andWhere('expenses_authors_pseudos.event = event')
 
-            ->leftJoin('operations.payments', 'operations_payments')
-            ->addSelect('operations_payments')
+//            ->leftJoin('operations.payments', 'operations_payments')
+//            ->addSelect('operations_payments')
 
             ->setParameter('eventId', $eventId)
             ->getQuery()
