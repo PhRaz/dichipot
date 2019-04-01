@@ -19,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Helper;
 
 
 /**
@@ -30,13 +31,14 @@ class MainController extends AbstractController
     /** @var AwsCognitoClient */
     var $cognitoClient;
 
-    /** @var Operation */
-    var $operation;
+    /** @var Helper */
+    var $helper;
 
-    public function __construct(AwsCognitoClient $cognitoClient, Operation $operation)
+    public function __construct(AwsCognitoClient $cognitoClient, Helper $helper
+    )
     {
         $this->cognitoClient = $cognitoClient;
-        $this->operation = $operation;
+        $this->helper = $helper;
     }
 
     /**
@@ -167,7 +169,7 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
-        list($balance, $total) = $this->operation->getBalance($event);
+        list($balance, $total) = $this->helper->getBalance($event);
 
         return $this->render('operationList.html.twig', [
             'user' => $user,
@@ -258,6 +260,6 @@ class MainController extends AbstractController
             return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
-        return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
+        return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'Helper' => $operation]);
     }
 }

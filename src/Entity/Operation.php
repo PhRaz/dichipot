@@ -45,11 +45,6 @@ class Operation
     private $expenses;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="operation", orphanRemoval=true, cascade={"persist", "remove"})
-     */
-    private $payments;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="operations")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -58,7 +53,6 @@ class Operation
     public function __construct()
     {
         $this->expenses = new ArrayCollection();
-        $this->payments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,37 +133,6 @@ class Operation
             // set the owning side to null (unless already changed)
             if ($expense->getOperation() === $this) {
                 $expense->setOperation(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Payment[]
-     */
-    public function getPayments(): Collection
-    {
-        return $this->payments;
-    }
-
-    public function addPayment(Payment $payment): self
-    {
-        if (!$this->payments->contains($payment)) {
-            $this->payments[] = $payment;
-            $payment->setOperation($this);
-        }
-
-        return $this;
-    }
-
-    public function removePayment(Payment $payment): self
-    {
-        if ($this->payments->contains($payment)) {
-            $this->payments->removeElement($payment);
-            // set the owning side to null (unless already changed)
-            if ($payment->getOperation() === $this) {
-                $payment->setOperation(null);
             }
         }
 
