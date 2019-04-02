@@ -46,7 +46,8 @@ class EventRepository extends ServiceEntityRepository
                 ->addSelect('expenses_authors')
                 ->leftJoin('expenses_authors.userEvents', 'expenses_authors_pseudos')// expense author pseudo
                 ->addSelect('expenses_authors_pseudos')
-                ->andWhere('expenses_authors_pseudos.event = event');
+                ->andWhere('expenses_authors_pseudos.event = event')
+                ->orderBy('expenses_authors_pseudos.pseudo', 'ASC');
         }
 
         $result = $query
