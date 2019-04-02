@@ -169,7 +169,12 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
-        list($balance, $total) = $this->helper->getBalance($event);
+        $balance = array();
+        $total = array();
+        if (count($event->getOperations()) > 0) {
+            $event = $eventRepo->getEventOperations($eventId, true);
+            list($balance, $total) = $this->helper->getBalance($event);
+        }
 
         return $this->render('operationList.html.twig', [
             'user' => $user,
@@ -260,6 +265,6 @@ class MainController extends AbstractController
             return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
-        return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'Helper' => $operation]);
+        return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
     }
 }
