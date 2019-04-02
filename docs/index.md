@@ -83,10 +83,6 @@ Here is the procedure to install the application on a server.
    * expense
      * id
      * user (n-1)
-     * amount
-     * operation (n-1)
-   * payment
-     * id
-     * user (n-1)
-     * amount
+     * expense
+     * payment
      * operation (n-1)
