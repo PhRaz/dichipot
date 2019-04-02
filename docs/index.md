@@ -53,36 +53,38 @@ Here is the procedure to install the application on a server.
 
 ## Data model
 
-   * user
-     * id
-     * date
-     * name
-     * mail
-     * users_events (1-n)
-   * user_event
-     * id
-     * date
-     * administrator
-     * event (n-1)
-     * user (n-1)
-   * event
-     * id
-     * date
-     * name
-     * users_events (1-n)
-     * operations (1-n)
-   * operation
-     * id
-     * user (n-1)
-     * date
-     * description
-     * category
-     * expenses (1-n)
-     * payments (1-n)
-     * event (n-1)
-   * expense
-     * id
-     * user (n-1)
-     * expense
-     * payment
-     * operation (n-1)
+  ```
+  * user                             a user may be included in many events
+    * id
+    * date
+    * name
+    * mail
+    * users_events (1-n)             
+  * user_event                       many to many relation with attributes
+    * id
+    * date
+    * administrator                  the administrator creates the event
+    * pseudo                         each user has a pseudo in an event
+    * event (n-1)
+    * user (n-1)
+  * event                            an event may include many user
+    * id                             an event embeds many operations
+    * date
+    * name
+    * users_events (1-n)
+    * operations (1-n)
+  * operation                        an operation is created by an user (of the event)
+    * id                             an operation has many expenses
+    * user (n-1)
+    * date
+    * description
+    * category
+    * expenses (1-n)
+    * event (n-1)
+  * expense                          an expense is done by an user (of the event)
+    * id
+    * user (n-1)
+    * expense
+    * payment
+    * operation (n-1)
+  ```
