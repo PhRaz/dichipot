@@ -34,8 +34,7 @@ class MainController extends AbstractController
     /** @var Helper */
     var $helper;
 
-    public function __construct(AwsCognitoClient $cognitoClient, Helper $helper
-    )
+    public function __construct(AwsCognitoClient $cognitoClient, Helper $helper)
     {
         $this->cognitoClient = $cognitoClient;
         $this->helper = $helper;
@@ -89,6 +88,8 @@ class MainController extends AbstractController
      */
     public function eventCreate(Request $request, User $admin)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $event = new Event();
 
         $form = $this->createForm(eventType::class, $event);
@@ -247,6 +248,8 @@ class MainController extends AbstractController
      */
     public function operationUpdate(Request $request, $operationId)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         /** @var OperationRepository $operationRepo */
         $operationRepo = $this->getDoctrine()->getRepository(Operation::class);
 
