@@ -1,9 +1,11 @@
 <?php
 
+namespace App\Service;
+
 use App\Entity\Event;
 
 
-Class Operation {
+Class Helper {
 
     /**
      * Compute event account balance.
@@ -18,17 +20,14 @@ Class Operation {
             $id = $operation->getId();
 
             $totalExpense = 0;
-            foreach ($operation->getExpenses() as $expense) {
-                $pseudo = $expense->getUser()->getUserEvents()[0]->getPseudo();
-                $totalExpense += $expense->getExpense();
-                $balance[$id][$expense->getUser()->getName()]['expense'] = $expense->getExpense();
-                $balance[$id][$expense->getUser()->getName()]['pseudo'] = $pseudo;
-            }
-
             $totalPayment = 0;
-            foreach ($operation->getPayments() as $payment) {
-                $totalPayment += $payment->getAmount();
-                $balance[$id][$payment->getUser()->getName()]['payment'] = $payment->getAmount();
+            foreach ($operation->getExpenses() as $expense) {
+                $totalExpense += $expense->getExpense();
+                $totalPayment += $expense->getPayment();
+                $userName = $expense->getUser()->getName();
+                $balance[$id][$userName]['expense'] = $expense->getExpense();
+                $balance[$id][$userName]['payment'] = $expense->getPayment();
+                $balance[$id][$userName]['pseudo'] = $expense->getUser()->getUserEvents()[0]->getPseudo();
             }
 
             foreach ($balance[$id] as $userName => $data) {
