@@ -23,8 +23,8 @@ class ExpenseType extends AbstractType
             $expense = $event->getData();
             $form = $event->getForm();
 
-            $form->add('expense', MoneyType::class, ['label' => $expense->getUser()->getName()]);
-
+            $form->add('expense', MoneyType::class, [
+                'label' => $expense->getUser()->getUserEvents()[0]->getPseudo()]);
         });
     }
 

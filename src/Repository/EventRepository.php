@@ -21,38 +21,35 @@ class EventRepository extends ServiceEntityRepository
 
     /**
      * @param $eventId integer
+     * @param $full
      * @return Event
      * @throws \Exception
      */
-    public function getEventOperations($eventId): ?Event
+    public function getEventOperations($eventId, $full = false): ?Event
     {
-        $result =  $this->createQueryBuilder('event')
+        $query = $this->createQueryBuilder('event')
             ->andWhere('event.id = :eventId')
-
             ->leftJoin('event.operations', 'operations')
             ->addSelect('operations')
+            ->setParameter('eventId', $eventId);
 
-//            ->leftJoin('operations.user', 'operations_authors')
-//            ->addSelect('operations_authors')
+        if ($full) {
+            $query
+                ->leftJoin('operations.user', 'operations_authors')
+                ->addSelect('operations_authors')
+                ->leftJoin('operations_authors.userEvents', 'operations_authors_pseudos')// operation author pseudo
+                ->addSelect('operations_authors_pseudos')
+                ->andWhere('operations_authors_pseudos.event = event')
+                ->leftJoin('operations.expenses', 'operations_expenses')
+                ->addSelect('operations_expenses')
+                ->leftJoin('operations_expenses.user', 'expenses_authors')
+                ->addSelect('expenses_authors')
+                ->leftJoin('expenses_authors.userEvents', 'expenses_authors_pseudos')// expense author pseudo
+                ->addSelect('expenses_authors_pseudos')
+                ->andWhere('expenses_authors_pseudos.event = event');
+        }
 
-//            ->leftJoin('operations_authors.userEvents', 'operations_authors_pseudos') // operation author pseudo
-//            ->addSelect('operations_authors_pseudos')
-//            ->andWhere('operations_authors_pseudos.event = event')
-
-//            ->leftJoin('operations.expenses', 'operations_expenses')
-//            ->addSelect('operations_expenses')
-
-//            ->leftJoin('operations_expenses.user', 'expenses_authors')
-//            ->addSelect('expenses_authors')
-
-//            ->leftJoin('expenses_authors.userEvents', 'expenses_authors_pseudos') // expense author pseudo
-//            ->addSelect('expenses_authors_pseudos')
-//            ->andWhere('expenses_authors_pseudos.event = event')
-
-//            ->leftJoin('operations.payments', 'operations_payments')
-//            ->addSelect('operations_payments')
-
-            ->setParameter('eventId', $eventId)
+        $result = $query
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -64,7 +61,7 @@ class EventRepository extends ServiceEntityRepository
      * @return Event
      * @throws \Exception
      */
-    public function getEventUsers($eventId) : Event
+    public function getEventUsers($eventId): ?Event
     {
         return $this->createQueryBuilder('e')
             ->innerJoin('e.userEvents', 'ue')
