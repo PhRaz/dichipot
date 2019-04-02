@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('danger', $error);
+            $this->addFlash('danger', 'Login ou mot de passe incorrect.');
         }
         $lastUsername = $authenticationUtils->getLastUsername();
 
