@@ -5,18 +5,25 @@
 
     {{ form_start(form) }}
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-
+    <div class="form-group">
+        {{ form_widget(form.name, {'attr': {'class': 'form-control-sm', 'placeholder': 'nom'}} ) }}
+        {{ form_errors(form.name, {'attr': {'class': 'form-control-sm'}} ) }}
+    </div>
+    <div class="form-group">
+        {{ form_widget(form.description, {'attr': {'class': 'form-control-sm', 'placeholder': 'description'}} ) }}
+        {{ form_errors(form.description, {'attr': {'class': 'form-control-sm'}} ) }}
+    </div>
     <div class="form-group">Administrateur</div>
     <div class="form-group row">
         <div class="col-8">
-            <input type="text" id="adminName" class="form-control form-control-sm" placeholder="{{ admin.name }}" disabled>
+            <input type="text" id="adminName" class="form-control form-control-sm" placeholder="{{ admin.name }}"
+                   disabled>
         </div>
     </div>
     <div class="form-group row">
         <div class="col-8">
-            <input type="text" id="adminMail" class="form-control form-control-sm" placeholder="{{ admin.mail }}" disabled>
+            <input type="text" id="adminMail" class="form-control form-control-sm" placeholder="{{ admin.mail }}"
+                   disabled>
         </div>
     </div>
 
@@ -26,8 +33,8 @@
             {% endfilter %}">
         {% for userEvent in form.userEvents if form.userEvents|length > 0 %}
             <div class="user">
-                {{ form_row(userEvent.admin.name) }}
-                {{ form_row(userEvent.admin.mail) }}
+                {{ form_row(userEvent.pseudo) }}
+                {{ form_row(userEvent.user.mail) }}
             </div>
         {% else %}
             {% do form.userEvents.setRendered %}
