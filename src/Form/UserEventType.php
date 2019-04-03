@@ -18,8 +18,7 @@ class UserEventType extends AbstractType
             ->add('user', UserType::class, [
                 'label' => false
             ])
-            ->add('pseudo')
-            ->add('administrator', HiddenType::class);
+            ->add('pseudo');
     }
 
     public function configureOptions(OptionsResolver $resolver)
