@@ -6,23 +6,23 @@
     {{ form_start(form) }}
 
     <div class="form-group">
-        {{ form_widget(form.name, {'attr': {'class': 'form-control-sm', 'placeholder': 'nom'}} ) }}
-        {{ form_errors(form.name, {'attr': {'class': 'form-control-sm'}} ) }}
+        {{ form_widget(form.name, {'attr': {'placeholder': 'nom'}} ) }}
+        {{ form_errors(form.name) }}
     </div>
     <div class="form-group">
-        {{ form_widget(form.description, {'attr': {'class': 'form-control-sm', 'placeholder': 'description'}} ) }}
-        {{ form_errors(form.description, {'attr': {'class': 'form-control-sm'}} ) }}
+        {{ form_widget(form.description, {'attr': {'placeholder': 'description'}} ) }}
+        {{ form_errors(form.description) }}
     </div>
     <div class="form-group">Administrateur</div>
     <div class="form-group row">
         <div class="col-8">
-            <input type="text" id="adminName" class="form-control form-control-sm" placeholder="{{ admin.name }}"
+            <input type="text" id="adminName" class="form-control" placeholder="{{ admin.name }}"
                    disabled>
         </div>
     </div>
     <div class="form-group row">
         <div class="col-8">
-            <input type="text" id="adminMail" class="form-control form-control-sm" placeholder="{{ admin.mail }}"
+            <input type="text" id="adminMail" class="form-control" placeholder="{{ admin.mail }}"
                    disabled>
         </div>
     </div>
