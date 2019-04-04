@@ -92,36 +92,34 @@ class MainController extends AbstractController
 
         $event = new Event();
 
+        /*
+         * admin is a predefined user on the created event
+         */
+        $userEvent = new UserEvent();
+        $userEvent->setAdministrator(true);
+        $admin->addUserEvent($userEvent);
+        $event->setDate(new \DateTime());
+        $event->addUserEvent($userEvent);
+
         $form = $this->createForm(eventType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
-            $event->setDate(new \DateTime());
-            $entityManager->persist($event);
-
-            /*
-             * admin is a user on the created event
-             */
-            $userEvent = new UserEvent();
-            $userEvent
-                ->setDate(new \DateTime())
-                ->setAdministrator(true)
-                ->setPseudo(explode('@', $admin->getMail())[0])
-                ->setUser($admin)
-                ->setEvent($event);
-            $entityManager->persist($userEvent);
-
             foreach ($event->getUserEvents() as $userEvent) {
                 $userEvent
                     ->setDate(new \DateTime())
-                    ->setAdministrator(false)
                     ->setEvent($event);
+                if ($userEvent->getAdministrator() === null) {
+                    $userEvent->setAdministrator(false);
+                }
                 $user = $userEvent->getUser();
                 $user->setDate(new \DateTime());
                 $user->setName(explode('@', $user->getMail())[0]);
+
+                $entityManager->persist($event);
                 $entityManager->persist($userEvent);
                 $entityManager->persist($user);
+
                 /*
                  * TODO manage async operation on user creation
                  */
@@ -132,7 +130,8 @@ class MainController extends AbstractController
                         /*
                          * already known user, not an error
                          */
-                        throw($e);
+                        $this->addFlash('danger', 'adminCreateUser on cognito ' . $user->getMail());
+                        throw $e;
                     }
                 }
             }
@@ -142,7 +141,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('event_list');
         }
 
-        return $this->render('eventCreate.html.twig', ['form' => $form->createView(), 'admin' => $admin]);
+        return $this->render('eventCreate.html.twig', ['form' => $form->createView()]);
     }
 
     /**

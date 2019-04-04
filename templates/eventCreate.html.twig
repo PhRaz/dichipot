@@ -14,27 +14,26 @@
         {{ form_errors(form.description) }}
     </div>
     <div class="form-group">Administrateur</div>
-    <div class="form-group row">
-        <div class="col-10">
-            <input type="text" id="adminName" class="form-control" placeholder="{{ admin.name }}"
-                   disabled>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-10">
-            <input type="text" id="adminMail" class="form-control" placeholder="{{ admin.mail }}"
-                   disabled>
-        </div>
-    </div>
 
     <div class="userEvents" data-prototype="
             {% filter escape %}
                 {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
             {% endfilter %}">
-        {% for userEvent in form.userEvents if form.userEvents|length > 0 %}
+        {% for index, userEvent in form.userEvents if form.userEvents|length > 0 %}
+
             <div class="user">
-                {{ form_row(userEvent.pseudo) }}
-                {{ form_row(userEvent.user.mail) }}
+                <div class="form-group">
+                    {{ form_widget(userEvent.pseudo, {'attr': {'placeholder': 'pseudo'}} ) }}
+                    {{ form_errors(userEvent.pseudo) }}
+                </div>
+                <div class="form-group">
+                    {% if form.vars.value.userEvents[index].administrator is same as (true) %}
+                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email', 'readonly': true}} ) }}
+                    {% else %}
+                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'}} ) }}
+                    {% endif %}
+                    {{ form_errors(userEvent.user.mail) }}
+                </div>
             </div>
         {% else %}
             {% do form.userEvents.setRendered %}
@@ -63,7 +62,7 @@
         jQuery(document).ready(function () {
             $collectionHolder = $('.userEvents');
             $collectionHolder.append($addUserButton);
-            $collectionHolder.data('index', $collectionHolder.find('.admin').length);
+            $collectionHolder.data('index', $collectionHolder.find('.user').length);
 
             $addUserButton.on('click', function (e) {
                 addUserForm($collectionHolder, $addUserButton);
