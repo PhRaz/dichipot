@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Regex;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 
 
 class SecurityController extends AbstractController
@@ -71,8 +72,8 @@ class SecurityController extends AbstractController
             $data = $form->getData();
             try {
                 $this->cognitoClient->signUp($data['email'], $data['password']);
-            } catch (\Exception $e) {
-                $this->addFlash('danger', $e->getMessage());
+            } catch (CognitoIdentityProviderException $e) {
+                $this->addFlash('danger', $e->getAwsErrorMessage());
                 return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
             }
 
