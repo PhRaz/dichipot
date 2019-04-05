@@ -126,13 +126,7 @@ class MainController extends AbstractController
                 try {
                     $this->cognitoClient->adminCreateUser($user->getMail());
                 } catch (CognitoIdentityProviderException $e) {
-                    if ($e->getCode() != 'UsernameExistsException') {
-                        /*
-                         * already known user, not an error
-                         */
-                        $this->addFlash('danger', 'adminCreateUser on cognito ' . $user->getMail());
-                        throw $e;
-                    }
+                    $this->addFlash('danger', $e->getAwsErrorMessage());
                 }
             }
 
