@@ -2,9 +2,11 @@ _Dichipot is a simple solution to share expenses._
 
 ## Account management
 
-This web application manages the expenses of several people during an event by calculating the debts and the credits of each participants against each other. It may be used for any event like a weekend with friends or a family holidays.
+This web application manages the expenses of several people during an event by calculating the share of each participants in the global budget. It may be used for any event like a weekend with friends or a family holidays.
 
 The user interface is responsive and follows the "mobile first" rule, it is based on bootstrap4.
+
+# Technical information
 
 ## Cognito 
 
@@ -52,6 +54,15 @@ Here is the procedure to install the application on a server.
     ```
 - create a cognito user pool 
 - update .env file with cognito user pool configuration
+
+## reset the db
+
+To recreate an empty database : 
+```
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+```
 
 ## Data model
 
