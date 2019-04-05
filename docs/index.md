@@ -1,3 +1,5 @@
+_Dichipot is a simple solution to share expenses._
+
 ## Account management
 
 This web application manages the expenses of several people during an event by calculating the debts and the credits of each participants against each other. It may be used for any event like a weekend with friends or a family holidays.
