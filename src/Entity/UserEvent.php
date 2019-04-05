@@ -28,6 +28,8 @@ class UserEvent
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
+     * @Assert\Length(max=32)
      */
     private $pseudo;
 
