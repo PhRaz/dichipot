@@ -47,7 +47,8 @@ Class Helper {
                         'expense' => 0,
                         'payment' => 0,
                         'amountToPay' => 0,
-                        'balance' => 0
+                        'balance' => 0,
+                        'pseudo' => $userData['pseudo']
                     ];
                 }
                 $total[$userName]['expense'] += $userData['expense'];
