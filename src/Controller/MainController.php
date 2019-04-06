@@ -196,26 +196,34 @@ class MainController extends AbstractController
         $userRepo = $this->getDoctrine()->getRepository(User::class);
 
         /** @var User $user */
-        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        $admin = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
 
-        /** @var  EventRepository $eventRepo */
-        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        /** @var array $users */
+        $users = $userRepo->getEventUsers($eventId);
+
+        /** @var Operation $operation */
+        $operation = new Operation();
 
         /** @var Event $event */
-        $event = $eventRepo->getEventUsers($eventId);
+        $event = $users[0]->getUserEvents()[0]->getEvent();
 
-        $operation = new Operation();
-        $operation->setUser($user);
+        /*
+         * init operation and relate to the event
+         */
+        $operation->setUser($admin);
         $operation->setDate(new \DateTime());
-        $operation->setEvent($event);
+        $event->addOperation($operation);
 
-        foreach ($event->getUserEvents() as $userEvent) {
+        foreach ($users as $user) {
+            /*
+             * for each user attach an expense to the operation,
+             * users are ordered on pseudo field
+             */
             $expense = new Expense();
-            $expense->setUser($userEvent->getUser());
+            $expense->setUser($user);
             $expense->setExpense(0);
             $expense->setPayment(1);
-            $expense->setOperation($operation);
-            $operation->getExpenses()->add($expense);
+            $operation->addExpense($expense);
         }
 
         $form = $this->createForm(OperationType::class, $operation);

@@ -56,22 +56,4 @@ class EventRepository extends ServiceEntityRepository
 
         return $result;
     }
-
-    /**
-     * @param $eventId
-     * @return Event
-     * @throws \Exception
-     */
-    public function getEventUsers($eventId): ?Event
-    {
-        return $this->createQueryBuilder('e')
-            ->innerJoin('e.userEvents', 'ue')
-            ->innerJoin('ue.user', 'u')
-            ->andWhere('e.id = :eventId')
-            ->addSelect('ue')
-            ->addSelect('u')
-            ->setParameter('eventId', $eventId)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

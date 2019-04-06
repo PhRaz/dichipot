@@ -102,13 +102,13 @@
                     <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
                 </div>
                 <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
-                {% for user, data in total %}
+                {% for data in total %}
                     {% if data.balance >= 0 %}
                         {% set color = "text-success" %}
                     {% else %}
                         {% set color = "text-danger" %}
                     {% endif %}
-                    <div class="col-6">{{ user }}</div>
+                    <div class="col-6">{{ data['pseudo'] }}</div>
                     <div class="col-6 {{ color }} text-right">
                         <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
                     </div>

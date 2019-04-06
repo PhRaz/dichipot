@@ -26,20 +26,36 @@ class UserRepository extends ServiceEntityRepository
      * @return User
      * @throws \Exception
      */
-    public function getUserEvents($userId) : User
+    public function getUserEvents($userId): User
     {
         return $this->createQueryBuilder('u')
             ->leftJoin('u.userEvents', 'ue')
             ->leftJoin('ue.event', 'e')
             ->leftJoin('e.userEvents', 'ue2')
             ->leftJoin('ue2.user', 'u2')
-            ->andWhere('u.id = :userId')
             ->addSelect('ue')
             ->addSelect('e')
             ->addSelect('ue2')
             ->addSelect('u2')
+            ->andWhere('u.id = :userId')
             ->setParameter('userId', $userId)
+            ->addOrderBy('e.date', 'DESC')
+            ->addOrderBy('ue2.pseudo', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getEventUsers($eventId)
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.userEvents', 'ue')
+            ->innerJoin('ue.event', 'e')
+            ->addSelect('ue')
+            ->addSelect('e')
+            ->andWhere('e.id = :eventId')
+            ->setParameter('eventId', $eventId)
+            ->addOrderBy('ue.pseudo')
+            ->getQuery()
+            ->getResult();
     }
 }
