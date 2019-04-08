@@ -237,7 +237,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
-        return $this->render("operationCreate.html.twig", ['form' => $form->createView(), 'event' => $event]);
+        return $this->render("operationCreate.html.twig", ['form' => $form->createView(), 'eventId' => $event->getId()]);
     }
 
     /**
