@@ -39,7 +39,8 @@
                         <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="font-weight-light">Opération enregistrée par {{ operation.user.userEvents[0].pseudo }}
+                                    <p class="font-weight-light">Opération enregistrée
+                                        par {{ operation.user.userEvents[0].pseudo }}
                                         dans {{ operation.category }}</p>
                                 </div>
                             </div>
@@ -94,6 +95,9 @@
                     <div class="col-12">aucune opération sur cet évènement</div>
                 </div>
             {% endfor %}
+        </div>
+        <div class="col-12 d-md-none">
+            <hr>
         </div>
         <div class="col-12 col-md-4">
             <div class="row border ml-1 mr-1">
