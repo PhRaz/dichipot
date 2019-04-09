@@ -9,9 +9,10 @@ This web application manages the expenses of several people during an event by c
 The user interface is responsive and works well on any device.
 
 ## Usage
-1) create an event
-2) invite participants
-3) participants can record expenses and share payments on the group
+
+1. create an event
+2. invite participants
+3. participants can record expenses and share payments on the group
 
 # Technical information
 
@@ -32,32 +33,32 @@ https://github.com/romaricp/kit-starter-symfony-4-docker
 Here is the procedure to install the application on a server.
 - log in server
 - deploy the git repo
-```
+  ```
   git clone https://github.com/PhRaz/dichipot.git
-```
+  ```
 - launch the containers
-```
+  ```
   cd dichipot
   docker-compose build
   docker-compose up -d
-```
+  ```
 - log in Symfony container
-```
+  ```
   docker exec -it sf4_php bash
-```
+  ```
 - install dependancies
-```
+  ```
   cd sf4
   composer install
-```
+  ```
 - update DB schema
-```
+  ```
   php bin/console doctrine:schema:update --force
-```
+  ```
 - done
-```
+  ```
   exit
-```
+  ```
 - create a cognito user pool 
 - update .env file with cognito user pool configuration
 
@@ -65,14 +66,14 @@ Here is the procedure to install the application on a server.
 
 Thisprocedure recreate a empty DB schema.
 
-```
+  ```
   php bin/console doctrine:database:drop --force
   php bin/console doctrine:database:create
   php bin/console doctrine:schema:update --force
-```
+  ```
 
 ## Data model
-```
+  ```
   * user                             a user may be included in many events
     * id
     * date
@@ -106,4 +107,4 @@ Thisprocedure recreate a empty DB schema.
     * expense
     * payment
     * operation (n-1)
-```
+  ```
