@@ -40,11 +40,13 @@ class Event
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserEvent", mappedBy="event")
+     * @ORM\OrderBy({"pseudo" = "ASC"})
      */
     private $userEvents;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Operation", mappedBy="event", orphanRemoval=true)
+     * @ORM\OrderBy({"date" = "ASC"})
      */
     private $operations;
 
