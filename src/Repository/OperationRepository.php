@@ -36,6 +36,7 @@ class OperationRepository extends ServiceEntityRepository
             ->andWhere('o.id = :operationId')
             ->andWhere('ue.event = o.event')
             ->setParameter('operationId', $operationId)
+            ->addOrderBy('ue.pseudo', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
     }
