@@ -1,10 +1,18 @@
 _Dichipot is a simple solution to share expenses._
 
-## Account management
+# Dichipot
+
+## Presentation
 
 This web application manages the expenses of several people during an event by calculating the share of each participants in the global budget. It may be used for any event like a weekend with friends or a family holidays.
 
-The user interface is responsive and follows the "mobile first" rule, it is based on bootstrap4.
+The user interface is responsive and works well on any device.
+
+## Usage
+
+1. create an event
+2. invite participants
+3. participants can record expenses and share payments on the group
 
 # Technical information
 
@@ -23,49 +31,48 @@ https://github.com/romaricp/kit-starter-symfony-4-docker
 ## installation
 
 Here is the procedure to install the application on a server.
-
 - log in server
 - deploy the git repo
-    ```
-    git clone https://github.com/PhRaz/dichipot.git
-    ```
+  ```
+  git clone https://github.com/PhRaz/dichipot.git
+  ```
 - launch the containers
-    ```
-    cd dichipot
-    docker-compose build
-    docker-compose up -d
-    ```
+  ```
+  cd dichipot
+  docker-compose build
+  docker-compose up -d
+  ```
 - log in Symfony container
-    ```
-    docker exec -it sf4_php bash
-    ```
+  ```
+  docker exec -it sf4_php bash
+  ```
 - install dependancies
-    ```
-    cd sf4
-    composer install
-    ```
+  ```
+  cd sf4
+  composer install
+  ```
 - update DB schema
-    ```
-    php bin/console doctrine:schema:update --force
-    ```
+  ```
+  php bin/console doctrine:schema:update --force
+  ```
 - done
-    ```
-    exit
-    ```
+  ```
+  exit
+  ```
 - create a cognito user pool 
 - update .env file with cognito user pool configuration
 
 ## reset the db
 
-To recreate an empty database : 
-```
-php bin/console doctrine:database:drop --force
-php bin/console doctrine:database:create
-php bin/console doctrine:schema:update --force
-```
+Thisprocedure recreate a empty DB schema.
+
+  ```
+  php bin/console doctrine:database:drop --force
+  php bin/console doctrine:database:create
+  php bin/console doctrine:schema:update --force
+  ```
 
 ## Data model
-
   ```
   * user                             a user may be included in many events
     * id
