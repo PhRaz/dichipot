@@ -14,12 +14,13 @@ use App\Form\EventType;
 use App\Repository\OperationRepository;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
+use App\Service\Helper;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\Helper;
 
 
 /**
@@ -276,5 +277,38 @@ class MainController extends AbstractController
         }
 
         return $this->render("operationUpdate.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
+    }
+
+    /**
+     * @route("/operation/remove/{operationId}", name="operation_remove")
+     * @param Request $request
+     * @param integer $operationId
+     * @return Response
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function operationRemove(Request $request, $operationId)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var OperationRepository $operationRepo */
+        $operationRepo = $this->getDoctrine()->getRepository(Operation::class);
+
+        /** @var Operation $operation */
+        $operation = $operationRepo->findForUpdate($operationId);
+
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $eventId = $operation->getEvent()->getId();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($operation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
+        }
+
+        return $this->render("operationRemove.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
     }
 }
