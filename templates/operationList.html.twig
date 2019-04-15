@@ -80,7 +80,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-3">
+                                    <a class="btn btn-block btn-danger btn-sm mb-2 shadow-sm"
+                                       href="{{ path("operation_remove", {"operationId" : operation.id}) }}"
+                                       role="button">X</a>
+                                </div>
+                                <div class="col-9">
                                     <a class="btn btn-block btn-primary btn-sm mb-2 shadow-sm"
                                        href="{{ path("operation_update", {'eventId': event.id, 'operationId': operation.id}) }}"
                                        role="button">Modification</a>

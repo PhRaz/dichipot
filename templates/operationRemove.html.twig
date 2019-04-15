@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Suppression opération</h2>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-4"><strong>Date</strong></div>
+        <div class="col-8">{{ operation.date|date('d/m/Y') }}</div>
+    </div>
+    <div class="row">
+        <div class="col-4"><strong>Description</strong></div>
+        <div class="col-8">{{ operation.description }}</div>
+    </div>
+    <div class="row">
+        <div class="col-4"><strong>Catégorie</strong></div>
+        <div class="col-8">{{ operation.category }}</div>
+    </div>
+
+    <div class="mt-3 row">
+        <div class="col-4"></div>
+        <div class="col-4"><strong>Dépenses</strong></div>
+            <div class="col-4"><strong>Parts</strong></div>
+    </div>
+    {% for expense in operation.expenses %}
+        <div class="row">
+            <div class="col-4">
+                <strong>{{ expense.user.userEvents[0].pseudo }}</strong>
+            </div>
+            <div class="col-4">
+                {{ expense.expense }}
+            </div>
+            <div class="col-4">
+                {{ expense.payment }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="mt-3 row">
+        <div class="col-6">
+            <a class="btn btn-block btn-danger btn-lg"
+               href="{{ path("operation_list", {'eventId': operation.event.id}) }}"
+               role="button">Cancel</a>
+        </div>
+        <div class="col-6">
+            <button type="submit" class="btn btn-block btn-success btn-lg">Supprime</button>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
