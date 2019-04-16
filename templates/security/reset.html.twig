@@ -6,7 +6,10 @@
     <h2>Reset du mot de passe</h2>
     <p>Confirmez votre adresse mail.</p>
     {{ form_start(form) }}
-    {{ form_row(form.email) }}
+    <div class="form-group">
+        {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}} ) }}
+        {{ form_errors(form.email) }}
+    </div>
     <div class="row">
         <div class="col-6">
             <a class="btn btn-block btn-danger btn-lg" href="{{ path("app_login") }}"
