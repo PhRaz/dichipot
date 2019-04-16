@@ -47,15 +47,6 @@ class AwsCognitoClient
         ]);
     }
 
-    public function confirmSignUp($username, $code): Result
-    {
-        return $this->client->confirmSignUp([
-            'ClientId' => $this->clientId,
-            'Username' => $username,
-            'ConfirmationCode' => $code,
-        ]);
-    }
-
     public function findByUsername(string $username): Result
     {
         return $this->client->listUsers([
