@@ -18,24 +18,32 @@
         <div class="col-8">{{ operation.category }}</div>
     </div>
 
-    <div class="mt-3 row">
-        <div class="col-4"></div>
-        <div class="col-4"><strong>Dépenses</strong></div>
-            <div class="col-4"><strong>Parts</strong></div>
-    </div>
-    {% for expense in operation.expenses %}
-        <div class="row">
-            <div class="col-4">
-                <strong>{{ expense.user.userEvents[0].pseudo }}</strong>
-            </div>
-            <div class="col-4">
-                {{ expense.expense }}
-            </div>
-            <div class="col-4">
-                {{ expense.payment }}
-            </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Dépenses</th>
+                    <th>Parts</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for expense in operation.expenses %}
+                    <tr>
+                        <th>{{ expense.user.userEvents[0].pseudo }}</th>
+                        <td class="text-right text-nowrap">{{ expense.expense|number_format('2', ',', ' ') }}
+                            €
+                        </td>
+                        <td class="text-right text-nowrap">{{ expense.payment|number_format('2', ',', ' ') }}
+                            €
+                        </td>
+                     </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-    {% endfor %}
+    </div>
 
     <div class="mt-3 row">
         <div class="col-6">
