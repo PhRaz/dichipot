@@ -4,15 +4,16 @@ namespace App\Controller;
 
 use App\Bridge\AwsCognitoClient;
 use App\Entity\User;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Regex;
-use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 
 
 class SecurityController extends AbstractController
@@ -92,24 +93,89 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @route("/confirmsignup/{userName}/{code}", name="app_confirm_signup")
-     * @param string $userName
-     * @param string $code
-     * @return Response
-     */
-    public function confirmSignup($userName, $code): Response
-    {
-        $result = $this->cognitoClient->confirmSignUp($userName, $code);
-    }
-
-    /**
      * @route("/resetpassword", name="app_reset_password")
+     * @param Request $request
      * @param AuthenticationUtils $authenticationUtils
      * @return Response
      */
-    public function resetPassword(): Response
+    public function resetPassword(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        return new Response("resetPassword");
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $defaultData = [
+            'email' => $lastUsername
+        ];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class, [
+                'label' => 'Email'
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            try {
+                $this->cognitoClient->forgotPassword($data['email']);
+            } catch (CognitoIdentityProviderException $e) {
+                $message = $e->getAwsErrorMessage();
+                if (is_null($message)) {
+                    $message = $e->getMessage();
+                }
+                $this->addFlash('danger', $message);
+                return $this->redirectToRoute('app_reset_password');
+            }
+
+            $this->addFlash('success', 'Vous allez recevoir un mail avec le code de confirmation à utiliser ici.');
+            return $this->redirectToRoute('app_reset_password_confirm');
+        }
+        return $this->render('security/reset.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @route("/resetpasswordConfirm", name="app_reset_password_confirm")
+     * @param Request $request
+     * @return Response
+     */
+    public function resetPasswordConfirm(Request $request, AuthenticationUtils $authenticationUtils): Response
+    {
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $defaultData = [
+            'email' => $lastUsername,
+            'newPassword' => '',
+            'code' => ''
+        ];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class, [
+                'label' => 'Email'
+            ])
+            ->add('newPassword', PasswordType::class, [
+                'label' => 'Nouveau mot de passe'
+            ])
+            ->add('code', TextType::class, [
+                'label' => 'Code de confirmation'
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            try {
+                $this->cognitoClient->confirmForgotPassword($data['email'], $data['newPassword'], $data['code']);
+            } catch (CognitoIdentityProviderException $e) {
+                $message = $e->getAwsErrorMessage();
+                if (is_null($message)) {
+                    $message = $e->getMessage();
+                }
+                $this->addFlash('danger', $message);
+                return $this->render('security/confirmReset.html.twig', ['form' => $form->createView()]);
+            }
+            return $this->redirectToRoute('app_login');
+        }
+        return $this->render('security/confirmReset.html.twig', ['form' => $form->createView()]);
     }
 
     /**
