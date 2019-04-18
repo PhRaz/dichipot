@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OperationRepository")
@@ -46,6 +47,7 @@ class Operation
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Expense", mappedBy="operation", orphanRemoval=true, cascade={"persist", "remove"})
+     * @CustomAssert\PartSumNotNull
      */
     private $expenses;
 
