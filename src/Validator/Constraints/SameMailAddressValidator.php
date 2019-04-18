@@ -3,11 +3,9 @@
 namespace App\Validator\Constraints;
 
 use App\Entity\UserEvent;
-use Aws\CostandUsageReportService\Exception\CostandUsageReportServiceException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class SameMailAddressValidator extends ConstraintValidator
 {
@@ -26,19 +24,22 @@ class SameMailAddressValidator extends ConstraintValidator
 
         $counter = [];
         /** @var UserEvent $userEvent */
-        foreach ($value as $userEvent) {
+        foreach ($value as $index => $userEvent) {
             $email = $userEvent->getUser()->getMail();
             if (array_key_exists($email, $counter)) {
-                $counter[$email]++;
+                $counter[$email]['count']++;
             } else {
-                $counter[$email] = 1;
+                $counter[$email] = [
+                    'count' => 1,
+                    'index' => $index
+                ];
             }
         }
-
-        foreach ($counter as $email => $count) {
-            if ($count > 1) {
+        foreach ($counter as $email => $item) {
+            if ($item['count'] > 1) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ email }}', $email)
+                    ->atPath('[' . $item['index'] . '].user.mail')
                     ->addViolation();
             }
         }
