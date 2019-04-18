@@ -7,12 +7,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class SameMailAddressValidator extends ConstraintValidator
+class UniquePseudoValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof SameMailAddress) {
-            throw new UnexpectedTypeException($constraint, SameMailAddress::class);
+        if (!$constraint instanceof UniquePseudo) {
+            throw new UnexpectedTypeException($constraint, UniquePseudo::class);
         }
 
         if (count($value) < 2) {
@@ -25,21 +25,21 @@ class SameMailAddressValidator extends ConstraintValidator
         $counter = [];
         /** @var UserEvent $userEvent */
         foreach ($value as $index => $userEvent) {
-            $email = $userEvent->getUser()->getMail();
-            if (array_key_exists($email, $counter)) {
-                $counter[$email]['count']++;
+            $pseudo = $userEvent->getPseudo();
+            if (array_key_exists($pseudo, $counter)) {
+                $counter[$pseudo]['count']++;
             } else {
-                $counter[$email] = [
+                $counter[$pseudo] = [
                     'count' => 1,
                     'index' => $index
                 ];
             }
         }
-        foreach ($counter as $email => $item) {
+        foreach ($counter as $pseudo => $item) {
             if ($item['count'] > 1) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ email }}', $email)
-                    ->atPath('[' . $item['index'] . '].user.mail')
+                    ->setParameter('{{ pseudo }}', $pseudo)
+                    ->atPath('[' . $item['index'] . '].pseudo')
                     ->addViolation();
             }
         }
