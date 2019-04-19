@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+        .jumbotron {
+            background-image: url("{{ asset('build/background.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-4">Dichipot</h1>
@@ -14,34 +21,31 @@
     </div>
     <div class="container text-center">
         <h3>Comment ça marche ?</h3><br>
-        <div class="row">
-            <div class="col-sm-4">
-                <p>1. Créez un évènement.</p>
-                <img src="{{ asset('images/step1.png') }}" class="img-responsive" style="width:100%" alt="Image">
+        <div class="card-group">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="{{ asset('build/step1.png') }}" alt="Card image cap">
+                    <h5 class="card-title mt-5">1. Créez un évènement.</h5>
+                    <p class="card-text">Vous en serez l'administrateur.</p>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <p>2. Invitez les participants.</p>
-                <img src="{{ asset('images/step2.png') }}" class="img-responsive" style="width:100%" alt="Image">
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="{{ asset('build/step2.png') }}" alt="Card image cap">
+                    <h5 class="card-title mt-5">2. Invitez les participants.</h5>
+                    <p class="card-text">Les participants reçoivent un mail d'information les invitant à se
+                        connecter.</p>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <p>
-                    3. Les participants peuvent enregistrer des dépenses et effectuer le partage des paiements sur
-                    le groupe.
-                </p>
-                <img src="{{ asset('images/step3.jpg') }}" class="img-responsive" style="width:100%" alt="Image">
-
+            <div class="card">
+                <div class="card-body">
+                    <img class="card-img-top" src="{{ asset('build/step3.jpg') }}" alt="Card image cap">
+                    <h5 class="card-title mt-5">3. Enregistrez les dépenses.</h5>
+                    <p class="card-text">Tous les participants peuvent enregistrer des dépenses et effectuer le
+                        partage des paiements sur
+                        le groupe.</p>
+                </div>
             </div>
-        </div>
-        <div class="well">
-            <p>
-                La répartition du paiement se fait par distribution de parts, si on met 1 partout la dépense
-                est payée à part égale par tout le monde. On peut utiliser la précision que l’on veut, par
-                exemple on peut
-                indiquer les parts en euros. Il est possible d’indiquer une part de 0 pour ceux qui ne participent
-                pas à une dépense.
-                le calcul de la répartition est mis à jour après chaque opération, en rouge ceux qui doivent de
-                l’argent au
-                groupe, en vert ceux qui doivent récupérer de l’argent du groupe.</p>
         </div>
     </div>
 {% endblock %}
