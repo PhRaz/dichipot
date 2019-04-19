@@ -12,6 +12,38 @@
                 d'information</a>
         </div>
     </div>
+    <div class="container text-center">
+        <h3>Comment ça marche ?</h3><br>
+        <div class="row">
+            <div class="col-sm-4">
+                <p>1. Créez un évènement.</p>
+                <img src="{{ asset('images/step1.png') }}" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+            <div class="col-sm-4">
+                <p>2. Invitez les participants.</p>
+                <img src="{{ asset('images/step2.png') }}" class="img-responsive" style="width:100%" alt="Image">
+            </div>
+            <div class="col-sm-4">
+                <p>
+                    3. Les participants peuvent enregistrer des dépenses et effectuer le partage des paiements sur
+                    le groupe.
+                </p>
+                <img src="{{ asset('images/step3.jpg') }}" class="img-responsive" style="width:100%" alt="Image">
+
+            </div>
+        </div>
+        <div class="well">
+            <p>
+                La répartition du paiement se fait par distribution de parts, si on met 1 partout la dépense
+                est payée à part égale par tout le monde. On peut utiliser la précision que l’on veut, par
+                exemple on peut
+                indiquer les parts en euros. Il est possible d’indiquer une part de 0 pour ceux qui ne participent
+                pas à une dépense.
+                le calcul de la répartition est mis à jour après chaque opération, en rouge ceux qui doivent de
+                l’argent au
+                groupe, en vert ceux qui doivent récupérer de l’argent du groupe.</p>
+        </div>
+    </div>
 {% endblock %}
 
 {% block navbar %}
