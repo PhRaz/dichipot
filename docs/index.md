@@ -62,18 +62,32 @@ Here is the procedure to install the application on a server.
 - create a cognito user pool 
 - update .env file with cognito user pool configuration
 
+## deployement of a new release
+
+Log in server and then :
+
+```
+docker exec -ti sf4_php bash
+cd sf4
+git pull
+composer install --no-dev --optimize-autoloader
+yarn encore production
+php bin/console cache:clear
+```
+
 ## reset the db
 
-Thisprocedure recreate a empty DB schema.
+This procedure recreate a empty DB schema.
 
-  ```
-  php bin/console doctrine:database:drop --force
-  php bin/console doctrine:database:create
-  php bin/console doctrine:schema:update --force
-  ```
+```
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+```
 
 ## Data model
-  ```
+
+```
   * user                             a user may be included in many events
     * id
     * date
@@ -107,4 +121,4 @@ Thisprocedure recreate a empty DB schema.
     * expense
     * payment
     * operation (n-1)
-  ```
+```
