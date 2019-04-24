@@ -113,13 +113,27 @@ class MainController extends AbstractController
                 if ($userEvent->getAdministrator() === null) {
                     $userEvent->setAdministrator(false);
                 }
-                $user = $userEvent->getUser();
-                $user->setDate(new \DateTime());
-                $user->setName(explode('@', $user->getMail())[0]);
 
-                $entityManager->persist($event);
+                /** @var User $user */
+                $user = $userEvent->getUser();
+                /** @var UserRepository $userRepo */
+                $userRepo = $this->getDoctrine()->getRepository(User::class);
+                /** @var User $userCheck */
+                $userCheck = $userRepo->findOneBy(['mail' => $user->getMail()]);
+                if (is_null($userCheck)) {
+                    /*
+                     * it is a new user
+                     */
+                    $user->setDate(new \DateTime());
+                    $user->setName(explode('@', $user->getMail())[0]);
+                    $entityManager->persist($user);
+                } else {
+                    /*
+                     * the user exists already
+                     */
+                    $userCheck->addUserEvent($userEvent);
+                }
                 $entityManager->persist($userEvent);
-                $entityManager->persist($user);
 
                 /*
                  * TODO manage async operation on user creation
@@ -137,6 +151,7 @@ class MainController extends AbstractController
                 }
             }
 
+            $entityManager->persist($event);
             $entityManager->flush();
 
             return $this->redirectToRoute('event_list');
