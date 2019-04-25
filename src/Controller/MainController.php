@@ -70,15 +70,13 @@ class MainController extends AbstractController
             /*
              * should never occurs
              */
-            $this->addFlash('danger', 'Your account does not exist.');
-            return ($this->redirectToRoute("home"));
+            return ($this->redirectToRoute("app_logout"));
         }
         $userId = $user->getId();
         $data = $userRepo->getUserEvents($userId);
 
         return $this->render("eventList.html.twig", ['user' => $data]);
     }
-
 
     /**
      * @route("/event/create/{id}", name="event_create")
