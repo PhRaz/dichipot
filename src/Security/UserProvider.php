@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use App\Bridge\AwsCognitoClient;
+use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 
 class UserProvider implements UserProviderInterface
 {
@@ -33,7 +34,11 @@ class UserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $result = $this->cognitoClient->findByUsername($username);
+        try {
+            $result = $this->cognitoClient->findByUsername($username);
+        } catch (CognitoIdentityProviderException $e) {
+            throw new UsernameNotFoundException("erreur de connexion du client cognito");
+        }
 
         if (count($result['Users']) === 0) {
             throw new UsernameNotFoundException($username . " not found");
