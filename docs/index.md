@@ -32,6 +32,17 @@ https://github.com/romaricp/kit-starter-symfony-4-docker
 
 Here is the procedure to install the application on a server.
 - log in server
+- install git and docker
+  ```
+  sudo yum install git -y
+  sudo yum install docker -y
+  sudo service docker start
+  sudo usermod -a -G docker ec2-user
+  sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
+  ```
+  Logout and re-login for the ec2-user new group to apply.
+  
 - deploy the git repo
   ```
   git clone https://github.com/PhRaz/dichipot.git
@@ -72,6 +83,7 @@ cd sf4
 git pull
 composer install --no-dev --optimize-autoloader
 yarn encore production
+php bin/console doctrine:schema:update --force
 php bin/console cache:clear
 ```
 
