@@ -13,7 +13,7 @@ COPY php.ini /usr/local/etc/php/php.ini
 COPY php-fpm-pool.conf 	/usr/local/etc/php/pool.d/www.conf
 
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
-	mv composer.phar /usr/local/bin/composer
+    mv composer.phar /usr/local/bin/composer
 
 RUN wget --no-check-certificate https://phar.phpunit.de/phpunit-6.5.3.phar && \
     mv phpunit*.phar phpunit.phar && \
@@ -21,13 +21,13 @@ RUN wget --no-check-certificate https://phar.phpunit.de/phpunit-6.5.3.phar && \
     mv phpunit.phar /usr/local/bin/phpunit
 
 RUN	echo "deb https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
-	wget -nv -O -  https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-	echo "deb-src https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
+    wget -nv -O -  https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    echo "deb-src https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sources.list.d/nodejs.list && \
     apt-get update && \
-	apt-get install -y --force-yes nodejs && \
-	rm -f /etc/apt/sources.list.d/nodejs.list
+    apt-get install -y --force-yes nodejs && \
+    rm -f /etc/apt/sources.list.d/nodejs.list
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+RUN curl -sSk https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
     apt-get install yarn
 
@@ -43,7 +43,6 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 RUN echo "dev ALL=(ALL) ALL" > /etc/sudoers
 
 WORKDIR /home/wwwroot/
-##</romaricp>##
 
 EXPOSE 9000
 CMD ["php-fpm"]
