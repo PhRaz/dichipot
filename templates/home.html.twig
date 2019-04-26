@@ -51,7 +51,9 @@
 {% endblock %}
 
 {% block navbar %}
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path("event_list") }}">Evènements</a>
-    </li>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path("event_list") }}">Evènements</a>
+        </li>
+    {% endif %}
 {% endblock %}

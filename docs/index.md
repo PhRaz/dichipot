@@ -61,6 +61,7 @@ Here is the procedure to install the application on a server.
   ```
   cd sf4
   composer install
+  yarn install
   ```
 - update DB schema
   ```

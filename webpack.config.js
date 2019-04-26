@@ -54,8 +54,8 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-// enables Sass/SCSS support
-//.enableSassLoader()
+    // enables Sass/SCSS support
+    .enableSassLoader()
 
 // uncomment if you use TypeScript
 //.enableTypeScriptLoader()
