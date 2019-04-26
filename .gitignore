@@ -10,7 +10,6 @@
 
 /.docker/data/
 /.idea
-.env
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
