@@ -62,6 +62,17 @@ Here is the procedure to install the application on a server.
   cd sf4
   composer install
   yarn install
+  
+  yarn install problem :
+  
+  apt remove cmdtest
+  apt remove yarn
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+  apt-get update && apt-get install yarn
+  yarn install
+  
+  yarn encore production
   ```
 - update DB schema
   ```
