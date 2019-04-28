@@ -23,7 +23,7 @@ module.exports = function () {
     };
 
     let $collectionHolder;
-    let $addUserButton = $('<div class="form-group row"><div class="col-12"><button type="button" class="btn btn-block btn-primary shadow-sm">Ajouter un participant</button></div></div>');
+    let $addUserButton = $('<div class="form-group row"><div class="col-12"><button type="button" class="btn btn-block btn-primary shadow-sm"><i class="fas fa-user-plus"></i></button></div></div>');
 
     $collectionHolder = $('.userEvents');
     $collectionHolder.append($addUserButton);
