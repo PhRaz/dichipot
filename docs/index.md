@@ -8,6 +8,8 @@ This web application manages the expenses of several people during an event by c
 
 The user interface is responsive and works well on any device.
 
+This application is available online at http://dichipot.com.
+
 ## Usage
 
 1. create an event
