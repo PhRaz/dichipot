@@ -63,6 +63,7 @@ Here is the procedure to install the application on a server.
   ```
   cd sf4
   composer install
+  composer install --optimize-autoloader --no-dev
   yarn install
   
   yarn install problem :
