@@ -105,7 +105,7 @@ php bin/console doctrine:schema:update --force
 php bin/console cache:clear
 ```
 
-## reset the db
+## reset the DB
 
 This procedure recreate a empty DB schema.
 
@@ -113,6 +113,24 @@ This procedure recreate a empty DB schema.
 php bin/console doctrine:database:drop --force
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
+```
+
+## backup the DB
+
+Command to put in crontab :
+
+```
+docker exec -it sf4_mysql mysqldump -uroot -proot sf4 2>/dev/null | gzip - | aws s3 cp - s3://dichipot/$(date +%Y%m%d%H%M)
+```
+TODO : fix password on command line
+
+## restore the DB
+
+```
+aws s3 cp s3://dichipot/201905061434.sql.gz .
+gunzip 201905061434.sql.gz
+docker exec -it sf4_mysql bash
+mysql -uroot -proot sf4 </var/lib/mysql/201905061434.sql
 ```
 
 ## Data model
