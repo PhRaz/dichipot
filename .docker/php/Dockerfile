@@ -29,7 +29,7 @@ RUN	echo "deb https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sourc
 
 RUN curl -sSk https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
-    apt-get install yarn
+    apt-get install -y --force-yes yarn
 
 RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m

@@ -73,6 +73,9 @@ Here is the procedure to install the application on a server.
   yarn install
   
   yarn encore production
+  
+  swap problem on installation :
+  https://getcomposer.org/doc/articles/troubleshooting.md#proc-open-fork-failed-errors
   ```
 - update DB schema
   ```
