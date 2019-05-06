@@ -8,7 +8,7 @@ This web application manages the expenses of several people during an event by c
 
 The user interface is responsive and works well on any device.
 
-This application is available online at http://dichipot.com.
+This application is available online at <http://dichipot.com>.
 
 ## Usage
 
@@ -22,13 +22,13 @@ This application is available online at http://dichipot.com.
 
 User authentication and authorisation is managed with AWS Cognito. 
 Here are some blogs entries usefull to understand server side Cognito usage :
-- https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/
-- https://sanderknape.com/2017/02/getting-started-with-aws-cognito/
+- <https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/>
+- <https://sanderknape.com/2017/02/getting-started-with-aws-cognito/>
 
 ## Docker
 
 Dichipot is developed and deployed with the docker configuration as provided here 
-https://github.com/romaricp/kit-starter-symfony-4-docker 
+<https://github.com/romaricp/kit-starter-symfony-4-docker>
 
 ## installation
 
