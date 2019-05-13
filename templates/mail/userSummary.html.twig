@@ -1,0 +1,103 @@
+{% extends 'mail/mail.html.twig' %}
+
+{% block body %}
+    <h1>dichipot</h1>
+    <h2>{{ event.name }}</h2>
+    <p>{{ event.description }}</p>
+
+    <h3>Votre bilan</h3>
+
+    <table>
+        <tr>
+            <td>Pour cet évènement les participants ont payé un total de :</td>
+            <td align="right">{{ event.grandTotal|number_format('2', ',', ' ') }} €</td>
+        </tr>
+        <tr>
+            <td>Vous devez participer à hauteur de :</td>
+            <td align="right">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €</td>
+        </tr>
+        <tr>
+            {% if event.summary[user.id].expense > 0 %}
+                <td>Vous avez déjà payé un total de :</td>
+                <td align="right">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €</td>
+            {% endif %}
+        </tr>
+        <tr>
+            {% set totalBalance = event.summary[user.id].balance %}
+            {% if totalBalance >= 0 %}
+                {% set color = "green" %}
+                <td>Le groupe vous dois donc la somme de :</td>
+            {% else %}
+                {% set color = "red" %}
+                <td>Vous devez donc au groupe la somme de :</td>
+            {% endif %}
+            <td align="right" style="color:{{ color }}">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
+                €
+            </td>
+        </tr>
+    </table>
+
+    <h3>Détail des opérations</h3>
+
+    <table border="0" width="100%" cellpadding="3"
+           style="border-collapse: collapse;">
+        <thead>
+        <tr style="background-color: lightgray">
+            <th align="left">Date</th>
+            <th align="left">Description</th>
+            <th align="right">Dépense</th>
+            <th align="right">Dû</th>
+            <th align="right">Paiement</th>
+            <th align="right">Balance</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for operation in event.operations if event.operations|length > 0 %}
+            <tr>
+                <td>{{ operation.date|date('d/m/y') }}</td>
+                <td>{{ operation.description }}</td>
+                <td align="right">
+                    {{ operation.totalExpense|number_format('2', ',', ' ') }} €
+                </td>
+                <td align="right">
+                    {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
+                </td>
+                {% set expense = operation['details'][user.id].expense %}
+                {% if expense == 0 %}
+                    {% set color = "lightgray" %}
+                {% else %}
+                    {% set color = "black" %}
+                {% endif %}
+                <td align="right" style="color:{{ color }}">
+                    {{ expense|number_format('2', ',', ' ') }} €
+                </td>
+                {% set balance = operation['details'][user.id].balance %}
+                {% if balance >= 0 %}
+                    {% set color = "green" %}
+                {% else %}
+                    {% set color = "red" %}
+                {% endif %}
+                <td align="right" style="color:{{ color }}">
+                    {{ balance|number_format('2', ',', ' ') }} €
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr style="background-color: lightgray">
+            <td></td>
+            <td></td>
+            <th align="right">{{ event.grandTotal|number_format('2', ',', ' ') }} €</th>
+            <th align="right">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €</th>
+            <th align="right">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €</th>
+            {% set totalBalance = event.summary[user.id].balance %}
+            {% if totalBalance >= 0 %}
+                {% set color = "green" %}
+            {% else %}
+                {% set color = "red" %}
+            {% endif %}
+            <th align="right" style="color:{{ color }}">{{ totalBalance|number_format('2', ',', ' ') }} €</th>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
