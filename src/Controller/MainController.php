@@ -14,7 +14,7 @@ use App\Form\EventType;
 use App\Repository\OperationRepository;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
-use App\Service\Helper;
+use App\Service\EventHelper;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -32,13 +32,9 @@ class MainController extends AbstractController
     /** @var AwsCognitoClient */
     var $cognitoClient;
 
-    /** @var Helper */
-    var $helper;
-
-    public function __construct(AwsCognitoClient $cognitoClient, Helper $helper)
+    public function __construct(AwsCognitoClient $cognitoClient)
     {
         $this->cognitoClient = $cognitoClient;
-        $this->helper = $helper;
     }
 
     /**
@@ -187,14 +183,12 @@ class MainController extends AbstractController
         $total = array();
         if (count($event->getOperations()) > 0) {
             $event = $eventRepo->getEventOperations($eventId, true);
-            list($balance, $total) = $this->helper->getBalance($event);
+            $eventHelper = new EventHelper($event);
         }
 
         return $this->render('operationList.html.twig', [
             'user' => $user,
-            'event' => $event,
-            'balance' => $balance,
-            'total' => $total
+            'event' => $eventHelper
         ]);
     }
 
@@ -323,5 +317,58 @@ class MainController extends AbstractController
         }
 
         return $this->render("operationRemove.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
+    }
+
+    /**
+     * @route("/user/summary/{eventId}", name="user_summary")
+     * @param integer $eventId
+     * @param \Swift_Mailer $mailer
+     * @return Response
+     * @throws \Exception
+     */
+    public function userSummary($eventId, \Swift_Mailer $mailer)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+
+        /** @var EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+
+        /** @var Event $event */
+        $event = $eventRepo->getEventOperations($eventId);
+
+        if (count($event->getOperations()) === 0) {
+            throw new \Exception("no operation found");
+        }
+
+        $event = $eventRepo->getEventOperations($eventId, true);
+        $eventHelper = new EventHelper($event);
+
+        $mailResponse = $this->render('userSummary.html.twig', [
+            'user' => $user,
+            'event' => $eventHelper,
+        ]);
+
+        /*
+        $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
+            ->setFrom('admin@dichipot.com')
+            ->setTo('philippe.razavet@gmail.com')
+            ->setBody(
+                $mailResponse,
+                'text/html'
+            );
+
+        $nbMail = $mailer->send($message);
+        */
+
+        return $mailResponse;
     }
 }
