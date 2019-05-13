@@ -13,7 +13,6 @@
                 <div class="col-5 col-md-8 font-weight-bold">Description</div>
                 <div class="col-4 col-md-2 font-weight-bold">Dépense</div>
             </div>
-            {% set grand_total = 0 %}
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row">
                     <div class="col-12 border-top shadow-sm">
@@ -24,11 +23,7 @@
                                 <div class="col-3 col-md-2">{{ operation.date|date('d/m/y') }}</div>
                                 <div class="col-5 col-md-8 text-truncate">{{ operation.description }}</div>
                                 <div class="col-4 col-md-2 text-right text-nowrap">
-                                    {% set expense_total = 0 %}
-                                    {% for expense in operation.expenses if expense.expense > 0 %}
-                                        {% set expense_total = expense_total + expense.expense %}
-                                    {% endfor %}
-                                    {{ expense_total|number_format('2', ',', ' ') }} €
+                                    {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                                 </div>
                             </div>
                         </a>
@@ -40,7 +35,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <p class="font-weight-light">Opération enregistrée
-                                        par {{ operation.user.userEvents[0].pseudo }}
+                                        par {{ operation.pseudo }}
                                         dans {{ operation.category }}</p>
                                 </div>
                             </div>
@@ -56,7 +51,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for name, data in balance[operation.id] %}
+                                        {% for data in operation.details %}
                                             {% if data.balance >= 0 %}
                                                 {% set color = "text-success" %}
                                             {% else %}
@@ -94,7 +89,6 @@
                         </div>
                     </div>
                 </div>
-                {% set grand_total = grand_total + expense_total %}
             {% else %}
                 <div class="row">
                     <div class="col-12">aucune opération sur cet évènement</div>
@@ -108,16 +102,16 @@
             <div class="row border ml-1 mr-1">
                 <div class="col-12 bg-light font-weight-bold">Total</div>
                 <div class="col-12 text-right border-top">
-                    <strong>{{ grand_total|number_format('2', ',', ' ') }} €</strong>
+                    <strong>{{ event.grandTotal|number_format('2', ',', ' ') }} €</strong>
                 </div>
                 <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
-                {% for data in total %}
+                {% for data in event.summary %}
                     {% if data.balance >= 0 %}
                         {% set color = "text-success" %}
                     {% else %}
                         {% set color = "text-danger" %}
                     {% endif %}
-                    <div class="col-6">{{ data['pseudo'] }}</div>
+                    <div class="col-6">{{ data.pseudo }}</div>
                     <div class="col-6 {{ color }} text-right">
                         <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
                     </div>
@@ -135,5 +129,8 @@
         <a class="nav-link"
            href="{{ path("operation_create", {'eventId': event.id}) }}">
             Nouvelle opération</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path("user_summary", {'eventId': event.id}) }}">Mon bilan</a>
     </li>
 {% endblock %}
