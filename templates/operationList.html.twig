@@ -90,6 +90,13 @@
                     <div class="col-12">aucune opération sur cet évènement</div>
                 </div>
             {% endfor %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    <a class="btn btn-block btn-primary btn-sm shadow-sm"
+                       href="{{ path("operation_create", {'eventId': event.id}) }}"
+                       role="button"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
             <div class="row border mt-3 shadow-sm">
                 <div class="col-12 bg-light font-weight-bold">Total</div>
                 <div class="col-12 text-right border-top">
@@ -108,20 +115,18 @@
                     </div>
                 {% endfor %}
             </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <a class="btn btn-block btn-primary btn-lg"
+                       href="{{ path("event_list") }}"
+                       role="button"><i class="fas fa-arrow-left"></i></a>
+                </div>
+                <div class="col-6">
+                    <a class="btn btn-block btn-primary btn-lg"
+                       href="{{ path("user_summary", {'eventId': event.id}) }}"
+                       role="button"><i class="fas fa-user-check"></i></a>
+                </div>
+            </div>
         </div>
     </div>
-{% endblock %}
-
-{% block navbar %}
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path("event_list") }}">Evènements</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link"
-           href="{{ path("operation_create", {'eventId': event.id}) }}">
-            Nouvelle opération</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path("user_summary", {'eventId': event.id}) }}">Mon bilan</a>
-    </li>
 {% endblock %}
