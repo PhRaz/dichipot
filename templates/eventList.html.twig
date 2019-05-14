@@ -33,16 +33,16 @@
                     </div>
                 </div>
             </div>
-        {% else %}
-            <div class="col-12">
-                <p>aucun évènement</p>
-            </div>
         {% endfor %}
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="card mt-2 mb-2">
+                <div class="card-body shadow">
+                    <p class="lead">Créez un nouvel événement.</p>
+                    <a class="btn btn-block btn-primary btn-lg"
+                       href="{{ path('event_create', {'id': user.id}) }}"
+                       role="button"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock body %}
-
-{% block navbar %}
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('event_create', {'id': user.id}) }}">Créer un nouvel évènement</a>
-    </li>
-{% endblock %}

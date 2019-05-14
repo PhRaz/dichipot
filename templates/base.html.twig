@@ -10,29 +10,21 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand navbar-light bg-light sticky-top">
     <a class="navbar-brand" href="{{ path('home') }}">Dichipot</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            {% block navbar %}
-            {% endblock %}
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Login</a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
+    <ul class="navbar-nav ml-auto">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <li class="nav-item">
+                <a class="btn btn-block btn-light" href="{{ path('app_logout') }}"><i
+                            class="fas fa-sign-out-alt fa-lg"></i></a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="btn btn-block btn-light" href="{{ path('app_login') }}"><i
+                            class="fas fa-sign-in-alt fa-lg"></i></a>
+            </li>
+        {% endif %}
+    </ul>
 </nav>
 
 <div class="container-fluid">
