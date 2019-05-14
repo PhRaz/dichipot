@@ -9,29 +9,29 @@
 
     <table>
         <tr>
-            <td>Pour cet évènement les participants ont payé un total de :</td>
-            <td align="right">{{ event.grandTotal|number_format('2', ',', ' ') }} €</td>
+            <td>Pour cet évènement les participants ont payé un total de&nbsp;:</td>
+            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.grandTotal|number_format('2', ',', ' ') }} €</td>
         </tr>
         <tr>
-            <td>Vous devez participer à hauteur de :</td>
-            <td align="right">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €</td>
+            <td>Vous devez participer à hauteur de&nbsp;:</td>
+            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €</td>
         </tr>
         <tr>
             {% if event.summary[user.id].expense > 0 %}
-                <td>Vous avez déjà payé un total de :</td>
-                <td align="right">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €</td>
+                <td>Vous avez déjà payé un total de&nbsp;:</td>
+                <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €</td>
             {% endif %}
         </tr>
         <tr>
             {% set totalBalance = event.summary[user.id].balance %}
             {% if totalBalance >= 0 %}
                 {% set color = "green" %}
-                <td>Le groupe vous dois donc la somme de :</td>
+                <td>Le groupe vous dois donc la somme de&nbsp;:</td>
             {% else %}
                 {% set color = "red" %}
-                <td>Vous devez donc au groupe la somme de :</td>
+                <td>Vous devez donc au groupe la somme de&nbsp;:</td>
             {% endif %}
-            <td align="right" style="color:{{ color }}">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
+            <td style="color:{{ color }};white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
                 €
             </td>
         </tr>
