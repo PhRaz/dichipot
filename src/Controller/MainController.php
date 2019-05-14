@@ -371,4 +371,56 @@ class MainController extends AbstractController
 
         return $mailResponse;
     }
+
+    /**
+     * @route("/user/summary/{eventId}/{userId}", name="user_summary_mail")
+     * @param integer $eventId
+     * @param integer $userId
+     * @param \Swift_Mailer $mailer
+     * @return Response
+     * @throws \Exception
+     */
+    public function userSummaryMail($eventId, $userId, \Swift_Mailer $mailer)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+
+        /** @var EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+
+        /** @var Event $event */
+        $event = $eventRepo->getEventOperations($eventId);
+
+        if (count($event->getOperations()) === 0) {
+            throw new \Exception("no operation found");
+        }
+
+        $event = $eventRepo->getEventOperations($eventId, true);
+        $eventHelper = new EventHelper($event);
+
+        $mailResponse = $this->render('mail/userSummary.html.twig', [
+            'user' => $user,
+            'event' => $eventHelper,
+        ]);
+
+        $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
+            ->setFrom('admin@dichipot.com')
+            ->setTo('philippe.razavet@gmail.com')
+            ->setBody(
+                $mailResponse,
+                'text/html'
+            );
+
+        $nbMail = $mailer->send($message);
+
+        return new Response($nbMail . " mail envoyé");
+    }
 }
