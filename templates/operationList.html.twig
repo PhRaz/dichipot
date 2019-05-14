@@ -2,12 +2,8 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6 offset-md-3 mb-2">
             <h2>{{ event.name }}</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-8 border-top mb-2">
             <div class="row bg-light">
                 <div class="col-3 col-md-2 font-weight-bold">Date</div>
                 <div class="col-5 col-md-8 font-weight-bold">Description</div>
@@ -94,12 +90,7 @@
                     <div class="col-12">aucune opération sur cet évènement</div>
                 </div>
             {% endfor %}
-        </div>
-        <div class="col-12 d-md-none">
-            <hr>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="row border ml-1 mr-1">
+            <div class="row border mt-3 shadow-sm">
                 <div class="col-12 bg-light font-weight-bold">Total</div>
                 <div class="col-12 text-right border-top">
                     <strong>{{ event.grandTotal|number_format('2', ',', ' ') }} €</strong>
