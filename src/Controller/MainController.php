@@ -9,7 +9,6 @@ use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\UserEvent;
 use App\Form\OperationType;
-use App\Form\UserType;
 use App\Form\EventType;
 use App\Repository\OperationRepository;
 use App\Repository\UserRepository;
@@ -17,7 +16,6 @@ use App\Repository\EventRepository;
 use App\Service\EventHelper;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -179,8 +177,6 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
-        $balance = array();
-        $total = array();
         if (count($event->getOperations()) > 0) {
             $event = $eventRepo->getEventOperations($eventId, true);
             $eventHelper = new EventHelper($event);
@@ -218,8 +214,11 @@ class MainController extends AbstractController
         /** @var Operation $operation */
         $operation = new Operation();
 
+        /** @var UserEvent $userEvent */
+        $userEvent = $users[0]->getUserEvents()[0];
+
         /** @var Event $event */
-        $event = $users[0]->getUserEvents()[0]->getEvent();
+        $event = $userEvent->getEvent();
 
         /*
          * init operation and relate to the event
@@ -322,11 +321,10 @@ class MainController extends AbstractController
     /**
      * @route("/user/summary/{eventId}", name="user_summary")
      * @param integer $eventId
-     * @param \Swift_Mailer $mailer
      * @return Response
      * @throws \Exception
      */
-    public function userSummary($eventId, \Swift_Mailer $mailer)
+    public function userSummary($eventId)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -352,35 +350,21 @@ class MainController extends AbstractController
         $event = $eventRepo->getEventOperations($eventId, true);
         $eventHelper = new EventHelper($event);
 
-        $mailResponse = $this->render('userSummary.html.twig', [
+        return $this->render('userSummary.html.twig', [
             'user' => $user,
             'event' => $eventHelper,
         ]);
-
-        /*
-        $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
-            ->setFrom('admin@dichipot.com')
-            ->setTo('philippe.razavet@gmail.com')
-            ->setBody(
-                $mailResponse,
-                'text/html'
-            );
-
-        $nbMail = $mailer->send($message);
-        */
-
-        return $mailResponse;
     }
 
     /**
-     * @route("/user/summary/{eventId}/{userId}", name="user_summary_mail")
+     * @route("/user/summary/mail/{eventId}", name="user_summary_mail")
+     * @param Request $request
      * @param integer $eventId
-     * @param integer $userId
      * @param \Swift_Mailer $mailer
      * @return Response
      * @throws \Exception
      */
-    public function userSummaryMail($eventId, $userId, \Swift_Mailer $mailer)
+    public function userSummaryMail(Request $request, $eventId, \Swift_Mailer $mailer)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -399,28 +383,49 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
 
+        /*
+         * security check on user participating to the event
+         * todo use voters
+         */
+        if (!$event->isUserParticipant($user)) {
+            throw $this->createAccessDeniedException();
+        }
+
         if (count($event->getOperations()) === 0) {
             throw new \Exception("no operation found");
         }
 
-        $event = $eventRepo->getEventOperations($eventId, true);
-        $eventHelper = new EventHelper($event);
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        $mailResponse = $this->render('mail/userSummary.html.twig', [
-            'user' => $user,
-            'event' => $eventHelper,
-        ]);
+            $event = $eventRepo->getEventOperations($eventId, true);
+            $eventHelper = new EventHelper($event);
 
-        $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
-            ->setFrom('admin@dichipot.com')
-            ->setTo('philippe.razavet@gmail.com')
-            ->setBody(
-                $mailResponse,
-                'text/html'
-            );
+            $mailResponse = $this->render('mail/userSummary.html.twig', [
+                'user' => $user,
+                'event' => $eventHelper,
+            ]);
 
-        $nbMail = $mailer->send($message);
+            $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
+                ->setFrom('admin@dichipot.com')
+                ->setTo($user->getMail())
+                ->setBody(
+                    $mailResponse,
+                    'text/html'
+                );
 
-        return new Response($nbMail . " mail envoyé");
+            $nbMail = $mailer->send($message);
+
+            if ($nbMail == 1) {
+                $this->addFlash('success', "Un résume des dépenses vous a été envoyé par mail à " . $user->getMail() . ".");
+            } else {
+                $this->addFlash('notice', "Une erreur a empéché l'envoi d'un mail à " . $user->getMail() . ".");
+            }
+
+            return $this->redirectToRoute('user_summary', ['eventId' => $eventId]);
+        }
+
+        return $this->render("userSendMail.html.twig", ['form' => $form->createView(), 'user' => $user, 'event' => $event]);
     }
 }
