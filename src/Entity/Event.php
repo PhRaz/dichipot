@@ -165,4 +165,15 @@ class Event
 
         return $this;
     }
+
+    public function isUserParticipant(User $user): bool
+    {
+        /** @var UserEvent $userEvent */
+        foreach($this->getUserEvents() as $userEvent) {
+            if ($userEvent->getUser() === $user) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
