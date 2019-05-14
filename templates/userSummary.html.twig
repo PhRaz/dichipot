@@ -9,110 +9,119 @@
             <h3>Votre bilan</h3>
             <table class="table table-borderless">
                 <tr class="">
-                    <td class="">Pour cet évènement les participants ont payé un total de :</td>
-                    <td class="text-nowrap text-right align-bottom font-weight-bold">{{ event.grandTotal|number_format('2', ',', ' ') }}
+                    <td class="small">Pour cet évènement les participants ont payé un total de :</td>
+                    <td class="text-nowrap text-right font-weight-bold">{{ event.grandTotal|number_format('2', ',', ' ') }}
                         €
                     </td>
                 </tr>
                 <tr class="">
-                    <td class="">Vous devez participer à hauteur de :</td>
-                    <td class="text-nowrap text-right align-bottom font-weight-bold">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }}
+                    <td class="small">Vous devez participer à hauteur de :</td>
+                    <td class="text-nowrap text-right font-weight-bold">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }}
                         €
                     </td>
                 </tr>
                 <tr class="">
                     {% if event.summary[user.id].expense > 0 %}
-                        <td class="">Vous avez déjà payé un total de :</td>
-                        <td class="text-nowrap text-right align-bottom font-weight-bold">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }}
+                        <td class="small">Vous avez déjà payé un total de :</td>
+                        <td class="text-nowrap text-right font-weight-bold">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }}
                             €
                         </td>
                     {% endif %}
                 </tr>
                 <tr class="">
-                    {% set totalBalance = event.summary[user.id].balance %}
-                    {% if totalBalance >= 0 %}
-                        {% set color = "text-success" %}
-                        <td class="">Le groupe vous dois donc la somme de :</td>
-                    {% else %}
-                        {% set color = "text-danger" %}
-                        <td class="">Vous devez donc au groupe la somme de :</td>
-                    {% endif %}
-                    <td class="text-nowrap text-right align-bottom font-weight-bold {{ color }}">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
+                    <td class="small">
+                        {% set totalBalance = event.summary[user.id].balance %}
+                        {% if totalBalance >= 0 %}
+                            {% set color = "text-success" %}
+                            Le groupe vous dois donc la somme de :
+                        {% else %}
+                            {% set color = "text-danger" %}
+                            Vous devez donc au groupe la somme de :
+                        {% endif %}
+                    </td>
+                    <td class="text-nowrap text-right font-weight-bold {{ color }}">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
                         €
                     </td>
                 </tr>
             </table>
-        </div>
-    </div>
-
-
-    <div class="row small">
-        <div class="col-12 col-md-6 offset-md-3 border-top mb-2">
             <h3>Détail des opérations</h3>
-            <div class="row bg-light">
+            <div class="row bg-light border-top">
                 <div class="col-12 font-weight-bold small text-muted">Date Description</div>
+            </div>
+            <div class="row">
                 <div class="col-3 font-weight-bold text-right">Dépense</div>
                 <div class="col-3 font-weight-bold text-right">Dû</div>
                 <div class="col-3 font-weight-bold text-right">Paiement</div>
                 <div class="col-3 font-weight-bold text-right">Balance</div>
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
+                <div class="row  bg-light border-top">
+                    <div class="col-12 small text-muted">
+                        {{ operation.date|date('d/m/y') }} {{ operation.description }}
+                    </div>
+                </div>
                 <div class="row">
-                    <div class="col-12 border-top">
-                        <div class="row">
-                            <div class="col-12 small text-muted">
-                                {{ operation.date|date('d/m/y') }} {{ operation.description }}
-                            </div>
-                            <div class="col-3 text-right text-nowrap">
-                                {{ operation.totalExpense|number_format('2', ',', ' ') }} €
-                            </div>
-                            <div class="col-3 text-right text-nowrap">
-                                {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
-                            </div>
-                            {% set expense = operation['details'][user.id].expense %}
-                            {% if expense == 0 %}
-                                {% set color = "text-muted" %}
-                            {% else %}
-                                {% set color = "text-dark" %}
-                            {% endif %}
-                            <div class="col-3 text-right text-nowrap {{ color }}">
-                                {{ expense|number_format('2', ',', ' ') }} €
-                            </div>
-                            {% set balance = operation['details'][user.id].balance %}
-                            {% if balance >= 0 %}
-                                {% set color = "text-success" %}
-                            {% else %}
-                                {% set color = "text-dnager" %}
-                            {% endif %}
-                            <div class="col-3 text-right text-nowrap {{ color }}">
-                                {{ balance|number_format('2', ',', ' ') }} €
-                            </div>
-                        </div>
+                    <div class="col-3 text-right text-nowrap">
+                        {{ operation.totalExpense|number_format('2', ',', ' ') }} €
+                    </div>
+                    <div class="col-3 text-right text-nowrap">
+                        {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
+                    </div>
+                    {% set expense = operation['details'][user.id].expense %}
+                    {% if expense == 0 %}
+                        {% set color = "text-muted" %}
+                    {% else %}
+                        {% set color = "text-dark" %}
+                    {% endif %}
+                    <div class="col-3 text-right text-nowrap {{ color }}">
+                        {{ expense|number_format('2', ',', ' ') }} €
+                    </div>
+                    {% set balance = operation['details'][user.id].balance %}
+                    {% if balance >= 0 %}
+                        {% set color = "text-success" %}
+                    {% else %}
+                        {% set color = "text-danger" %}
+                    {% endif %}
+                    <div class="col-3 text-right text-nowrap {{ color }}">
+                        {{ balance|number_format('2', ',', ' ') }} €
                     </div>
                 </div>
             {% endfor %}
-            <div class="row">
-                <div class="col-12 border-top">
-                    <div class="row bg-light">
-                        <div class="col-3 text-right font-weight-bold text-nowrap">
-                            {{ event.grandTotal|number_format('2', ',', ' ') }} €
-                        </div>
-                        <div class="col-3 text-right font-weight-bold text-nowrap">
-                            {{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €
-                        </div>
-                        <div class="col-3 text-right font-weight-bold text-nowrap">
-                            {{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €
-                        </div>
-                        {% set totalBalance = event.summary[user.id].balance %}
-                        {% if totalBalance >= 0 %}
-                            {% set color = "text-success" %}
-                        {% else %}
-                            {% set color = "text-danger" %}
-                        {% endif %}
-                        <div class="col-3 text-right font-weight-bold text-nowrap {{ color }}">{{ totalBalance|number_format('2', ',', ' ') }}
-                            €
-                        </div>
-                    </div>
+            <div class="row bg-light border-top">
+                <div class="col-12 small text-muted">
+                    Totaux
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-3 text-right font-weight-bold text-nowrap">
+                    {{ event.grandTotal|number_format('2', ',', ' ') }} €
+                </div>
+                <div class="col-3 text-right font-weight-bold text-nowrap">
+                    {{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €
+                </div>
+                <div class="col-3 text-right font-weight-bold text-nowrap">
+                    {{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €
+                </div>
+                {% set totalBalance = event.summary[user.id].balance %}
+                {% if totalBalance >= 0 %}
+                    {% set color = "text-success" %}
+                {% else %}
+                    {% set color = "text-danger" %}
+                {% endif %}
+                <div class="col-3 text-right font-weight-bold text-nowrap {{ color }}">{{ totalBalance|number_format('2', ',', ' ') }}
+                    €
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <a class="btn btn-block btn-primary btn-lg"
+                       href="{{ path("operation_list", {'eventId': event.id}) }}"
+                       role="button"><i class="fas fa-arrow-left"></i></a>
+                </div>
+                <div class="col-6">
+                    <a class="btn btn-block btn-primary btn-lg"
+                       href="{{ path("user_summary_mail", {'eventId': event.id, 'userId': user.id}) }}"
+                       role="button"><i class="fas fa-share-square"></i></a>
                 </div>
             </div>
         </div>
