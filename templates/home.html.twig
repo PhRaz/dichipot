@@ -8,52 +8,51 @@
             background-repeat: no-repeat;
         }
     </style>
-    <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-4">Dichipot</h1>
-            <p class="lead">Une solution simple pour partager les dépenses.</p>
-            <hr class="my-4">
-            <p>Cette application web fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur
-                de bureau.</p>
-            <a class="btn btn-primary btn-lg" href="https://phraz.github.io/dichipot/" role="button">Plus
-                d'information</a>
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2 mb-2">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1 class="display-4">dichipot</h1>
+                    <p class="lead">Une solution simple pour partager les dépenses.</p>
+                    <hr class="my-4">
+                    <p>Cette application web fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur
+                        de bureau.</p>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes événements</a>
+                    {% else %}
+                        <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="container text-center">
+                <h3>Comment ça marche ?</h3><br>
+                <div class="card-group">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ asset('build/step1.png') }}" alt="Card image cap">
+                            <h5 class="card-title mt-5">1. Créez un évènement.</h5>
+                            <p class="card-text">Vous en serez l'administrateur.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ asset('build/step2.png') }}" alt="Card image cap">
+                            <h5 class="card-title mt-5">2. Invitez les participants.</h5>
+                            <p class="card-text">Les participants reçoivent un mail d'information les invitant à se
+                                connecter.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card-img-top" src="{{ asset('build/step3.jpg') }}" alt="Card image cap">
+                            <h5 class="card-title mt-5">3. Enregistrez les dépenses.</h5>
+                            <p class="card-text">Tous les participants peuvent enregistrer des dépenses et effectuer le
+                                partage des paiements sur
+                                le groupe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="container text-center">
-        <h3>Comment ça marche ?</h3><br>
-        <div class="card-group">
-            <div class="card">
-                <div class="card-body">
-                    <img class="card-img-top" src="{{ asset('build/step1.png') }}" alt="Card image cap">
-                    <h5 class="card-title mt-5">1. Créez un évènement.</h5>
-                    <p class="card-text">Vous en serez l'administrateur.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <img class="card-img-top" src="{{ asset('build/step2.png') }}" alt="Card image cap">
-                    <h5 class="card-title mt-5">2. Invitez les participants.</h5>
-                    <p class="card-text">Les participants reçoivent un mail d'information les invitant à se
-                        connecter.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <img class="card-img-top" src="{{ asset('build/step3.jpg') }}" alt="Card image cap">
-                    <h5 class="card-title mt-5">3. Enregistrez les dépenses.</h5>
-                    <p class="card-text">Tous les participants peuvent enregistrer des dépenses et effectuer le
-                        partage des paiements sur
-                        le groupe.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block navbar %}
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path("event_list") }}">Evènements</a>
-        </li>
-    {% endif %}
 {% endblock %}
