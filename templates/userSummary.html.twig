@@ -8,7 +8,7 @@
             <h3>{{ event.name }}</h3>
             <p>{{ event.description }}</p>
             <h3>Votre bilan</h3>
-            <table class="table table-borderless">
+            <table class="table table-sm table-borderless">
                 <tr class="">
                     <td class="small">Pour cet évènement les participants ont payé un total de :</td>
                     <td class="text-nowrap text-right font-weight-bold">{{ event.grandTotal|number_format('2', ',', ' ') }}
@@ -51,8 +51,8 @@
             </div>
             <div class="row">
                 <div class="col-3 font-weight-bold text-right">Dépense</div>
-                <div class="col-3 font-weight-bold text-right">Dû</div>
                 <div class="col-3 font-weight-bold text-right">Paiement</div>
+                <div class="col-3 font-weight-bold text-right">Dû</div>
                 <div class="col-3 font-weight-bold text-right">Balance</div>
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
@@ -65,9 +65,6 @@
                     <div class="col-3 text-right text-nowrap">
                         {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                     </div>
-                    <div class="col-3 text-right text-nowrap">
-                        {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
-                    </div>
                     {% set expense = operation['details'][user.id].expense %}
                     {% if expense == 0 %}
                         {% set color = "text-muted" %}
@@ -76,6 +73,9 @@
                     {% endif %}
                     <div class="col-3 text-right text-nowrap {{ color }}">
                         {{ expense|number_format('2', ',', ' ') }} €
+                    </div>
+                    <div class="col-3 text-right text-nowrap">
+                        {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
                     </div>
                     {% set balance = operation['details'][user.id].balance %}
                     {% if balance >= 0 %}
@@ -98,10 +98,10 @@
                     {{ event.grandTotal|number_format('2', ',', ' ') }} €
                 </div>
                 <div class="col-3 text-right font-weight-bold text-nowrap">
-                    {{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €
+                    {{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €
                 </div>
                 <div class="col-3 text-right font-weight-bold text-nowrap">
-                    {{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €
+                    {{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €
                 </div>
                 {% set totalBalance = event.summary[user.id].balance %}
                 {% if totalBalance >= 0 %}
