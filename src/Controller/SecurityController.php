@@ -63,7 +63,8 @@ class SecurityController extends AbstractController
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/',
                         'htmlPattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
                     ])
-                ]
+                ],
+                'help' => 'coucou'
             ])
             ->getForm();
 

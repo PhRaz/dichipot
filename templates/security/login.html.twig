@@ -3,94 +3,83 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <form action="{{ path('app_login') }}" method="post">
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="col-12 col-md-4">
-                <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous SVP !</h1>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
+    <div class="row">
+        <div class="col-12 col-md-4 offset-md-4">
+            <form action="{{ path('app_login') }}" method="post">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous SVP !</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="inputEmail" class="sr-only">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                               class="form-control"
+                               placeholder="Email" required autofocus>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="inputPassword" class="sr-only">Mot de passe</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control"
+                               placeholder="Password"
+                               required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <button class="btn btn-lg btn-block btn-primary" type="submit">
+                            Login
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <hr>
+                    </div>
+                    <div class="col-auto">OU</div>
+                    <div class="col">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="h3 mb-3 font-weight-normal">Créez un compte</h1>
+                        <p>Si vous n'avez pas de compte vous pouvez en créer un.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_signup') }}">
+                            Signup
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <hr>
+                    </div>
+                    <div class="col-auto">OU</div>
+                    <div class="col">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="h3 mb-3 font-weight-normal">Mot de passe perdu</h1>
+                        <p>Demandez un reset de votre mot de passe.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_reset_password') }}">
+                            Reset mot de passe
+                        </a>
+                    </div>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </form>
         </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="form-group col-12 col-md-4">
-                <label for="inputEmail" class="sr-only">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
-                       placeholder="Email" required autofocus>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="form-group col-12 col-md-4">
-                <label for="inputPassword" class="sr-only">Mot de passe</label>
-                <input type="password" name="password" id="inputPassword" class="form-control"
-                       placeholder="Password"
-                       required>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="form-group col-12 col-md-4">
-                <button class="btn btn-lg btn-block btn-primary" type="submit">
-                    Login
-                </button>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col-auto">OU</div>
-            <div class="col">
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="col-12 col-md-4">
-                <h1 class="h3 mb-3 font-weight-normal">Créez un compte</h1>
-                <p>Si vous n'avez pas de compte vous pouvez en créer un.</p>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="form-group col-12 col-md-4">
-                <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_signup') }}">
-                    Signup
-                </a>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-            <div class="col-auto">OU</div>
-            <div class="col">
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="col-12 col-md-4">
-                <h1 class="h3 mb-3 font-weight-normal">Mot de passe perdu</h1>
-                <p>Demandez un reset de votre mot de passe.</p>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <div class="row">
-            <div class="d-none d-md-block col-md-4"></div>
-            <div class="form-group col-12 col-md-4">
-                <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_reset_password') }}">
-                    Reset mot de passe
-                </a>
-            </div>
-            <div class="d-none d-md-block col-md-4"></div>
-        </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    </form>
+    </div>
 {% endblock %}
