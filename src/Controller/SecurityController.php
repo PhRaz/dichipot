@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
                         'htmlPattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
                     ])
                 ],
-                'help' => 'coucou'
+                'help' => 'Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.'
             ])
             ->getForm();
 
