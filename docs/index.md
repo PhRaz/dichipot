@@ -18,6 +18,12 @@ This application is available online at <http://dichipot.com>.
 
 # Technical information
 
+## CGU 
+
+The document 'conditions générale d'utilisation' of the site (CGU) have been produce by :
+
+https://www.legalplace.fr/contrats/conditions-generales-d-utilisation/
+
 ## Cognito 
 
 User authentication and authorisation is managed with AWS Cognito. 
