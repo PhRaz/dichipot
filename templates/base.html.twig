@@ -11,7 +11,10 @@
 <body>
 
 <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="{{ path('home') }}">dichipot</a>
+    <a class="navbar-brand" href="{{ path('home') }}">
+        <img src="{{ asset('build/dichipot_icon_color.svg') }}" height="24" class="d-inline-block align-top" alt="dichipot">
+        dichipot
+    </a>
     <ul class="navbar-nav ml-auto">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
