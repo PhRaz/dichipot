@@ -98,6 +98,8 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            /** @var UserRepository $userRepo */
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
             foreach ($event->getUserEvents() as $userEvent) {
                 $userEvent
                     ->setDate(new \DateTime())
@@ -108,8 +110,6 @@ class MainController extends AbstractController
 
                 /** @var User $user */
                 $user = $userEvent->getUser();
-                /** @var UserRepository $userRepo */
-                $userRepo = $this->getDoctrine()->getRepository(User::class);
                 /** @var User $userCheck */
                 $userCheck = $userRepo->findOneBy(['mail' => $user->getMail()]);
                 if (is_null($userCheck)) {
@@ -121,7 +121,7 @@ class MainController extends AbstractController
                     $entityManager->persist($user);
                 } else {
                     /*
-                     * the user exists already
+                     * the user exists already, link to this new event
                      */
                     $userCheck->addUserEvent($userEvent);
                 }
@@ -150,6 +150,99 @@ class MainController extends AbstractController
         }
 
         return $this->render('eventCreate.html.twig', ['form' => $form->createView()]);
+    }
+
+
+    /**
+     * @route("/event/update/{eventId}", name="event_update")
+     * @param Request $request
+     * @param $eventId
+     * @return Response
+     * @throws \Exception
+     */
+    public function eventUpdate(Request $request, $eventId)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $user */
+        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+
+        /** @var EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+
+        /** @var Event $event */
+        $event = $eventRepo->getEventOperations($eventId);
+
+        $form = $this->createForm(eventType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            /** @var UserRepository $userRepo */
+            $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+            foreach ($event->getUserEvents() as $userEvent) {
+
+                /*
+                 * check if new user added to event
+                 */
+                if (! $entityManager->contains($userEvent)) {
+
+                    $userEvent
+                        ->setDate(new \DateTime())
+                        ->setEvent($event);
+                    if ($userEvent->getAdministrator() === null) {
+                        $userEvent->setAdministrator(false);
+                    }
+
+                    /** @var User $user */
+                    $user = $userEvent->getUser();
+
+                    /** @var User $userCheck */
+                    $userCheck = $userRepo->findOneBy(['mail' => $user->getMail()]);
+                    if (is_null($userCheck)) {
+                        /*
+                         * it is a new user
+                         */
+                        $user->setDate(new \DateTime());
+                        $user->setName(explode('@', $user->getMail())[0]);
+                        $entityManager->persist($user);
+                    } else {
+                        /*
+                         * the user exists already, link to this new event
+                         */
+                        $userCheck->addUserEvent($userEvent);
+                    }
+                    $entityManager->persist($userEvent);
+
+                    /*
+                     * TODO manage async operation on user creation
+                     */
+                    try {
+                        $this->cognitoClient->adminCreateUser($user->getMail());
+                    } catch (CognitoIdentityProviderException $e) {
+                        if ($e->getAwsErrorCode() == 'UsernameExistsException') {
+                            /*
+                             * TODO send a mail for information to the user (if admin / if user)
+                             */
+                        } else {
+                            $this->addFlash('danger', $e->getAwsErrorMessage() . " (" . $user->getMail() . ")");
+                        }
+                    }
+                }
+            }
+
+            $entityManager->flush();
+            return $this->redirectToRoute('event_list');
+        }
+
+        return $this->render('eventUpdate.html.twig', ['form' => $form->createView()]);
     }
 
     /**
