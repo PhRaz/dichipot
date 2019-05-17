@@ -16,24 +16,32 @@
                 {{ form_errors(form.description) }}
             </div>
 
-            <div class="form-group">Administrateur</div>
             <div class="userEvents" data-prototype="
             {% filter escape %}
                 {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
             {% endfilter %}">
                 {% for index, userEvent in form.userEvents if form.userEvents|length > 0 %}
                     <div class="user">
-                        <div class="form-group">
-                            {{ form_widget(userEvent.pseudo, {'attr': {'placeholder': 'pseudo'}} ) }}
-                            {{ form_errors(userEvent.pseudo) }}
-                        </div>
-                        <div class="form-group">
-                            {% if form.vars.value.userEvents[index].administrator is same as (true) %}
-                                {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email', 'readonly': true}} ) }}
-                            {% else %}
-                                {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'}} ) }}
-                            {% endif %}
-                            {{ form_errors(userEvent.user.mail) }}
+                        <hr>
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="col-11">
+
+                                <div class="form-group">
+                                    {{ form_widget(userEvent.pseudo, {'attr': {'placeholder': 'pseudo'}} ) }}
+                                    {{ form_errors(userEvent.pseudo) }}
+                                </div>
+                                <div class="form-group">
+                                    {% if form.vars.value.userEvents[index].administrator is same as (true) %}
+                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email', 'readonly': true}} ) }}
+                                    {% else %}
+                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'}} ) }}
+                                    {% endif %}
+                                    {{ form_errors(userEvent.user.mail) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% else %}
