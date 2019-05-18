@@ -65,27 +65,39 @@
                     <div class="col-3 text-right text-nowrap">
                         {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                     </div>
-                    {% set expense = operation['details'][user.id].expense %}
-                    {% if expense == 0 %}
-                        {% set color = "text-muted" %}
+                    {% if operation['details'][user.id] is defined %}
+                        {% set expense = operation['details'][user.id].expense %}
+                        {% if expense == 0 %}
+                            {% set color = "text-muted" %}
+                        {% else %}
+                            {% set color = "text-dark" %}
+                        {% endif %}
+                        <div class="col-3 text-right text-nowrap {{ color }}">
+                            {{ expense|number_format('2', ',', ' ') }} €
+                        </div>
+                        <div class="col-3 text-right text-nowrap">
+                            {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
+                        </div>
+                        {% set balance = operation['details'][user.id].balance %}
+                        {% if balance >= 0 %}
+                            {% set color = "text-success" %}
+                        {% else %}
+                            {% set color = "text-danger" %}
+                        {% endif %}
+                        <div class="col-3 text-right text-nowrap {{ color }}">
+                            {{ balance|number_format('2', ',', ' ') }} €
+                        </div>
                     {% else %}
-                        {% set color = "text-dark" %}
+                        <div class="col-3 text-right text-nowrap text-muted">
+                            0,00 €
+                        </div>
+                        <div class="col-3 text-right text-nowrap text-muted">
+                            0,00 €
+                        </div>
+                        <div class="col-3 text-right text-nowrap text-muted">
+                            0,00 €
+                        </div>
                     {% endif %}
-                    <div class="col-3 text-right text-nowrap {{ color }}">
-                        {{ expense|number_format('2', ',', ' ') }} €
-                    </div>
-                    <div class="col-3 text-right text-nowrap">
-                        {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
-                    </div>
-                    {% set balance = operation['details'][user.id].balance %}
-                    {% if balance >= 0 %}
-                        {% set color = "text-success" %}
-                    {% else %}
-                        {% set color = "text-danger" %}
-                    {% endif %}
-                    <div class="col-3 text-right text-nowrap {{ color }}">
-                        {{ balance|number_format('2', ',', ' ') }} €
-                    </div>
                 </div>
             {% endfor %}
             <div class="row bg-light border-top">
