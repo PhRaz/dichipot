@@ -192,7 +192,7 @@ class MainController extends AbstractController
                 /*
                  * check if new user added to event
                  */
-                if (! $entityManager->contains($userEvent)) {
+                if (!$entityManager->contains($userEvent)) {
 
                     $userEvent
                         ->setDate(new \DateTime())
@@ -220,20 +220,23 @@ class MainController extends AbstractController
                         $userCheck->addUserEvent($userEvent);
                     }
                     $entityManager->persist($userEvent);
+                }
 
-                    /*
-                     * TODO manage async operation on user creation
-                     */
-                    try {
-                        $this->cognitoClient->adminCreateUser($user->getMail());
-                    } catch (CognitoIdentityProviderException $e) {
-                        if ($e->getAwsErrorCode() == 'UsernameExistsException') {
-                            /*
-                             * TODO send a mail for information to the user (if admin / if user)
-                             */
-                        } else {
-                            $this->addFlash('danger', $e->getAwsErrorMessage() . " (" . $user->getMail() . ")");
-                        }
+                /*
+                 * TODO manage async operation on user creation
+                 */
+                try {
+                    $this->cognitoClient->adminCreateUser($user->getMail());
+                } catch (CognitoIdentityProviderException $e) {
+                    if ($e->getAwsErrorCode() == 'UsernameExistsException') {
+                        /*
+                         * TODO send a mail for information to the user (if admin / if user)
+                         *
+                         * comment faire pour gérer les changements de mail de participants ?
+                         * voir sur event update entity user
+                         */
+                    } else {
+                        $this->addFlash('danger', $e->getAwsErrorMessage() . " (" . $user->getMail() . ")");
                     }
                 }
             }
@@ -450,6 +453,15 @@ class MainController extends AbstractController
     }
 
     /**
+     * @route("/cgu", name="cgu")
+     * @return Response
+     */
+    public function cgu()
+    {
+        return $this->render('cgu.html.twig');
+    }
+
+    /**
      * @route("/user/summary/mail/{eventId}", name="user_summary_mail")
      * @param Request $request
      * @param integer $eventId
@@ -495,13 +507,16 @@ class MainController extends AbstractController
             $event = $eventRepo->getEventOperations($eventId, true);
             $eventHelper = new EventHelper($event);
 
+            $message = new \Swift_Message('[dichipot] résumé ' . $event->getName());
+            $logo = $message->embed(new \Swift_Image('build/dichipot_logo_height_64.png'));
+
             $mailResponse = $this->render('mail/userSummary.html.twig', [
                 'user' => $user,
                 'event' => $eventHelper,
+                'logo' => $logo
             ]);
 
-            $message = (new \Swift_Message('[dichipot] résumé ' . $event->getName()))
-                ->setFrom('admin@dichipot.com')
+            $message->setFrom('admin@dichipot.com')
                 ->setTo($user->getMail())
                 ->setBody(
                     $mailResponse,
