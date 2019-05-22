@@ -21,6 +21,10 @@ Encore
         pattern: /\.(png|jpg|jpeg|svg)$/
     })
 
+    .copyFiles({
+        from:'./assets/favicon'
+    })
+
     /*
      * ENTRY CONFIG
      *
