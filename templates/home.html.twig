@@ -1,22 +1,16 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
-    <style>
-        .jumbotron {
-            background-image: url("{{ asset('build/background.jpg') }}");
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-    </style>
     <div class="row">
         <div class="col-12 col-md-8 offset-md-2 mb-2">
             <div class="jumbotron">
                 <div class="container">
-                    <h1 class="display-4">
+                    <h1 class="display-4 text-center">
                         <img src="{{ asset('build/dichipot_logo_color.svg') }}" height="64"
                              class="d-inline-block align-top" alt="dichipot">
                     </h1>
-                    <p class="lead">Une solution simple pour partager les dépenses.</p>
+                    <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
                     <hr class="my-4">
                     <p>Cette application web vous permet de gérer des dépenses communes. Utile pour
                     <ul class="list-unstyled">
