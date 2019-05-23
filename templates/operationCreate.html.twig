@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form _self %}
+{# Disable errors shown on form labels #}
+{% block form_label_errors %}{% endblock form_label_errors %}
+
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
@@ -58,15 +62,12 @@
                     <div class="col-3">
                         {{ form_widget(expense.payment) }}
                     </div>
-                </div>
-            {% endfor %}
-            <div class="form-group row">
-                {% for expense in form.expenses %}
-                    <div class="col-12">
+                    <div class="col-8 offset-4">
+                        {{ form_errors(expense.expense) }}
                         {{ form_errors(expense.payment) }}
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
             <div class="row">
                 <div class="col-6">
                     <a class="btn btn-block btn-danger btn-lg" href="{{ path("operation_list", {'eventId': eventId}) }}"
