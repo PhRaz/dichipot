@@ -10,16 +10,22 @@
     <table>
         <tr>
             <td>Pour cet évènement les participants ont payé un total de&nbsp;:</td>
-            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.grandTotal|number_format('2', ',', ' ') }} €</td>
+            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.grandTotal|number_format('2', ',', ' ') }}
+                €
+            </td>
         </tr>
         <tr>
             <td>Vous devez participer à hauteur de&nbsp;:</td>
-            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }} €</td>
+            <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }}
+                €
+            </td>
         </tr>
         <tr>
             {% if event.summary[user.id].expense > 0 %}
                 <td>Vous avez déjà payé un total de&nbsp;:</td>
-                <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }} €</td>
+                <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }}
+                    €
+                </td>
             {% endif %}
         </tr>
         <tr>
@@ -59,27 +65,39 @@
                 <td align="right">
                     {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                 </td>
-                <td align="right">
-                    {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
-                </td>
-                {% set expense = operation['details'][user.id].expense %}
-                {% if expense == 0 %}
-                    {% set color = "lightgray" %}
+                {% if operation['details'][user.id] is defined %}
+                    <td align="right">
+                        {{ operation['details'][user.id].amountToPay|number_format('2', ',', ' ') }} €
+                    </td>
+                    {% set expense = operation['details'][user.id].expense %}
+                    {% if expense == 0 %}
+                        {% set color = "lightgray" %}
+                    {% else %}
+                        {% set color = "black" %}
+                    {% endif %}
+                    <td align="right" style="color:{{ color }}">
+                        {{ expense|number_format('2', ',', ' ') }} €
+                    </td>
+                    {% set balance = operation['details'][user.id].balance %}
+                    {% if balance >= 0 %}
+                        {% set color = "green" %}
+                    {% else %}
+                        {% set color = "red" %}
+                    {% endif %}
+                    <td align="right" style="color:{{ color }}">
+                        {{ balance|number_format('2', ',', ' ') }} €
+                    </td>
                 {% else %}
-                    {% set color = "black" %}
+                    <div class="col-3 text-right text-nowrap text-muted">
+                        0,00 €
+                    </div>
+                    <div class="col-3 text-right text-nowrap text-muted">
+                        0,00 €
+                    </div>
+                    <div class="col-3 text-right text-nowrap text-muted">
+                        0,00 €
+                    </div>
                 {% endif %}
-                <td align="right" style="color:{{ color }}">
-                    {{ expense|number_format('2', ',', ' ') }} €
-                </td>
-                {% set balance = operation['details'][user.id].balance %}
-                {% if balance >= 0 %}
-                    {% set color = "green" %}
-                {% else %}
-                    {% set color = "red" %}
-                {% endif %}
-                <td align="right" style="color:{{ color }}">
-                    {{ balance|number_format('2', ',', ' ') }} €
-                </td>
             </tr>
         {% endfor %}
         </tbody>
