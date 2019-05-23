@@ -2,3 +2,9 @@
 body {
     background-color: white;
 }
+
+.jumbotron {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
