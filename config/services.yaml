@@ -29,3 +29,7 @@ services:
         arguments:
             $poolId: '%env(COGNITO_POOL_ID)%'
             $clientId: '%env(COGNITO_CLIENT_ID)%'
+
+    App\EventListener\EntityListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
