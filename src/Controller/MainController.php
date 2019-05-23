@@ -164,15 +164,6 @@ class MainController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        /** @var \App\Security\User $authenticatedUser */
-        $authenticatedUser = $this->getUser();
-
-        /** @var UserRepository $userRepo */
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-
-        /** @var User $user */
-        $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
-
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
@@ -189,6 +180,9 @@ class MainController extends AbstractController
 
             foreach ($event->getUserEvents() as $userEvent) {
 
+                /** @var User $user */
+                $user = $userEvent->getUser();
+
                 /*
                  * check if new user added to event
                  */
@@ -201,10 +195,7 @@ class MainController extends AbstractController
                         $userEvent->setAdministrator(false);
                     }
 
-                    /** @var User $user */
-                    $user = $userEvent->getUser();
-
-                    /** @var User $userCheck */
+                     /** @var User $userCheck */
                     $userCheck = $userRepo->findOneBy(['mail' => $user->getMail()]);
                     if (is_null($userCheck)) {
                         /*
@@ -226,14 +217,14 @@ class MainController extends AbstractController
                  * TODO manage async operation on user creation
                  */
                 try {
+                    /*
+                     * systematically create user, cognito manages already existing user
+                     */
                     $this->cognitoClient->adminCreateUser($user->getMail());
                 } catch (CognitoIdentityProviderException $e) {
                     if ($e->getAwsErrorCode() == 'UsernameExistsException') {
                         /*
                          * TODO send a mail for information to the user (if admin / if user)
-                         *
-                         * comment faire pour gérer les changements de mail de participants ?
-                         * voir sur event update entity user
                          */
                     } else {
                         $this->addFlash('danger', $e->getAwsErrorMessage() . " (" . $user->getMail() . ")");
