@@ -15,9 +15,9 @@ require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
 
 var eventAddUser = require('./eventAddUser');
-var operation = require('./operation');
+var submit = require('./submit');
 
 $(document).ready(function () {
     eventAddUser();
-    operation();
+    submit();
 });
