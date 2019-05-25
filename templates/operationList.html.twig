@@ -97,24 +97,26 @@
                        role="button"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
-            <div class="row border mt-3 shadow-sm">
-                <div class="col-12 bg-light font-weight-bold">Total</div>
-                <div class="col-12 text-right border-top">
-                    <strong>{{ event.grandTotal|number_format('2', ',', ' ') }} €</strong>
-                </div>
-                <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
-                {% for data in event.summary %}
-                    {% if data.balance >= 0 %}
-                        {% set color = "text-success" %}
-                    {% else %}
-                        {% set color = "text-danger" %}
-                    {% endif %}
-                    <div class="col-6">{{ data.pseudo }}</div>
-                    <div class="col-6 {{ color }} text-right">
-                        <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
+            {% if event.operations|length > 0 %}
+                <div class="row border mt-3 shadow-sm">
+                    <div class="col-12 bg-light font-weight-bold">Total</div>
+                    <div class="col-12 text-right border-top">
+                        <strong>{{ event.grandTotal|number_format('2', ',', ' ') }} €</strong>
                     </div>
-                {% endfor %}
-            </div>
+                    <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
+                    {% for data in event.summary %}
+                        {% if data.balance >= 0 %}
+                            {% set color = "text-success" %}
+                        {% else %}
+                            {% set color = "text-danger" %}
+                        {% endif %}
+                        <div class="col-6">{{ data.pseudo }}</div>
+                        <div class="col-6 {{ color }} text-right">
+                            <strong>{{ data.balance|number_format('2', ',', ' ') }} €</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="row mt-3">
                 <div class="col-6">
                     <a class="btn btn-block btn-primary btn-lg"
@@ -122,9 +124,14 @@
                        role="button"><i class="fas fa-arrow-left"></i></a>
                 </div>
                 <div class="col-6">
-                    <a class="btn btn-block btn-primary btn-lg"
-                       href="{{ path("user_summary", {'eventId': event.id}) }}"
-                       role="button"><i class="fas fa-user-check"></i></a>
+                    {% if event.operations|length > 0 %}
+                        <a class="btn btn-block btn-primary btn-lg"
+                           href="{{ path("user_summary", {'eventId': event.id}) }}"
+                           role="button"><i class="fas fa-user-check"></i></a>
+                    {% else %}
+                        <a class="btn btn-block btn-primary btn-lg disabled"
+                           href="" role="button"><i class="fas fa-user-check"></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
