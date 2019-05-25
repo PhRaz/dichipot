@@ -49,11 +49,11 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <a class="btn btn-block btn-danger btn-lg" href="{{ path("event_list") }}"
+                    <a id="cancel" class="btn btn-block btn-danger btn-lg" href="{{ path("event_list") }}"
                        role="button">Annule</a>
                 </div>
                 <div class="col-6">
-                    <button type="submit" class="btn btn-block btn-success btn-lg">Enregistre</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Enregistre</button>
                 </div>
             </div>
             {{ form_end(form) }}
