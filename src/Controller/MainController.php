@@ -195,7 +195,7 @@ class MainController extends AbstractController
                         $userEvent->setAdministrator(false);
                     }
 
-                     /** @var User $userCheck */
+                    /** @var User $userCheck */
                     $userCheck = $userRepo->findOneBy(['mail' => $user->getMail()]);
                     if (is_null($userCheck)) {
                         /*
@@ -266,8 +266,8 @@ class MainController extends AbstractController
 
         if (count($event->getOperations()) > 0) {
             $event = $eventRepo->getEventOperations($eventId, true);
-            $eventHelper = new EventHelper($event);
         }
+        $eventHelper = new EventHelper($event);
 
         return $this->render('operationList.html.twig', [
             'user' => $user,
@@ -393,13 +393,17 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $eventId = $operation->getEvent()->getId();
+            if ($operation !== null) {
+                $eventId = $operation->getEvent()->getId();
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($operation);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($operation);
+                $entityManager->flush();
+                return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
+            } else {
+                return $this->redirectToRoute('event_list');
+            }
 
-            return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
         return $this->render("operationRemove.html.twig", ['form' => $form->createView(), 'operation' => $operation]);
@@ -431,7 +435,7 @@ class MainController extends AbstractController
         $event = $eventRepo->getEventOperations($eventId);
 
         if (count($event->getOperations()) === 0) {
-            throw new \Exception("no operation found");
+            return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
         }
 
         $event = $eventRepo->getEventOperations($eventId, true);
