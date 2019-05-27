@@ -22,7 +22,7 @@ module.exports = function () {
     operationDetail.on('show.bs.collapse', function() {
         toggleLine($(this));
     });
-    operationDetail.on('hidden.bs.collapse', function() {
+    operationDetail.on('hide.bs.collapse', function() {
         toggleLine($(this));
     });
 };
