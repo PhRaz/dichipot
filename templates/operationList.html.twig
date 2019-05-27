@@ -10,7 +10,7 @@
                 <div class="col-4 col-md-2 font-weight-bold">Dépense</div>
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
-                <div class="row">
+                <div class="row" id="line_operation_{{ operation.id }}">
                     <div class="col-12 border-top shadow-sm">
                         <a data-toggle="collapse" data-target="#operation_{{ operation.id }}"
                            href="#operation_{{ operation.id }}"
@@ -28,46 +28,48 @@
                 <div class="row bg-light">
                     <div class="col-12 hidden">
                         <div class="accordion-body collapse small" id="operation_{{ operation.id }}">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="font-weight-light">Opération enregistrée
-                                        par {{ operation.pseudo }}
-                                        dans {{ operation.category }}</p>
+                            <div class="accordion-toggle" data-toggle="collapse" data-target="#operation_{{ operation.id }}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="font-weight-light">Opération enregistrée
+                                            par {{ operation.pseudo }}
+                                            dans {{ operation.category }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-sm">
-                                        <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th class="text-right">Paiement</th>
-                                            <th class="text-right">Dû</th>
-                                            <th class="text-right">Balance</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for data in operation.details %}
-                                            {% if data.balance >= 0 %}
-                                                {% set color = "text-success" %}
-                                            {% else %}
-                                                {% set color = "text-danger" %}
-                                            {% endif %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table table-sm">
+                                            <thead>
                                             <tr>
-                                                <th>{{ data.pseudo }}</th>
-                                                <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
-                                                    €
-                                                </td>
-                                                <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }}
-                                                    €
-                                                </td>
-                                                <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
-                                                    €
-                                                </td>
+                                                <th></th>
+                                                <th class="text-right">Paiement</th>
+                                                <th class="text-right">Dû</th>
+                                                <th class="text-right">Balance</th>
                                             </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            {% for data in operation.details %}
+                                                {% if data.balance >= 0 %}
+                                                    {% set color = "text-success" %}
+                                                {% else %}
+                                                    {% set color = "text-danger" %}
+                                                {% endif %}
+                                                <tr>
+                                                    <th>{{ data.pseudo }}</th>
+                                                    <td class="text-right text-nowrap">{{ data.expense|number_format('2', ',', ' ') }}
+                                                        €
+                                                    </td>
+                                                    <td class="text-right text-nowrap">{{ data.amountToPay|number_format('2', ',', ' ') }}
+                                                        €
+                                                    </td>
+                                                    <td class="text-right text-nowrap {{ color }}">{{ data.balance|number_format('2', ',', ' ') }}
+                                                        €
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
