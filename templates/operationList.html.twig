@@ -12,17 +12,16 @@
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row" id="line_operation_{{ operation.id }}">
                     <div class="col-12 border-top shadow-sm">
-                        <a data-toggle="collapse" data-target="#operation_{{ operation.id }}"
-                           href="#operation_{{ operation.id }}"
+                        <div style="cursor: pointer;"  data-toggle="collapse" data-target="#operation_{{ operation.id }}"
                            class="accordion-toggle" style="text-decoration: none;">
-                            <div class="row">
+                            <div class="row text-primary">
                                 <div class="col-3 col-md-2">{{ operation.date|date('d/m/y') }}</div>
                                 <div class="col-5 col-md-8 text-truncate">{{ operation.description }}</div>
                                 <div class="col-4 col-md-2 text-right text-nowrap">
                                     {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
                 </div>
                 <div class="row bg-light">
