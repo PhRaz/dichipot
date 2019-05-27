@@ -1,6 +1,7 @@
 var $ = require('jquery');
 
 module.exports = function () {
+
     /*
      * Disable submit button on submit.
      */
@@ -12,15 +13,16 @@ module.exports = function () {
     /*
      * Toggle color and shadow on operation accordion
      */
-    var toggleLine = function(element) {
-        $('#line_' + $(this).attr('id'))
+    const toggleLine = function(element) {
+        $('#line_' + element.attr('id'))
             .toggleClass('bg-light')
             .children(":first").toggleClass("shadow-sm");
     };
-    $('.accordion-body').on('show.bs.collapse', function() {
+    const operationDetail = $('.accordion-body');
+    operationDetail.on('show.bs.collapse', function() {
         toggleLine($(this));
     });
-    $('.accordion-body').on('hidden.bs.collapse', function() {
+    operationDetail.on('hidden.bs.collapse', function() {
         toggleLine($(this));
     });
 };
