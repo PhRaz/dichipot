@@ -121,10 +121,10 @@ class MainController extends AbstractController
         /** @var UserRepository $userRepo */
         $userEventRepo = $this->getDoctrine()->getRepository(UserEvent::class);
         $nbEvent = $userEventRepo->getUserNbEvent($user);
-        if ($nbEvent >= $freelimit['maxNbEvent']['premium']) {
+        if ($nbEvent >= $freeLimit['maxNbEvent']['premium']) {
             throw new AccessDeniedException();
         }
-        if ($nbEvent >= $freelimit['maxNbEvent']['free']) {
+        if ($nbEvent >= $freeLimit['maxNbEvent']['free']) {
             $this->denyAccessUnlessGranted('ROLE_PREMIUM');
         }
         if ($authChecker->isGranted('ROLE_PREMIUM')) {
@@ -294,7 +294,7 @@ class MainController extends AbstractController
             return $this->redirectToRoute('event_list');
         }
 
-         return $this->render('eventUpdate.html.twig', [
+        return $this->render('eventUpdate.html.twig', [
             'form' => $form->createView(),
             'maxNbParticipant' => $maxNbParticipant
         ]);
@@ -302,11 +302,13 @@ class MainController extends AbstractController
 
     /**
      * @route("/operation/list/{eventId}", name="operation_list")
+     * @param $authChecker
      * @param integer $eventId
+     * @param $freeLimit
      * @return Response
      * @throws \Exception
      */
-    public function operationList($eventId)
+    public function operationList(AuthorizationCheckerInterface $authChecker, $eventId, $freeLimit)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -330,9 +332,19 @@ class MainController extends AbstractController
         }
         $eventHelper = new EventHelper($event);
 
+        /*
+         * check user limit on number of operation
+         */
+        if ($authChecker->isGranted('ROLE_PREMIUM')) {
+            $newOperationButton = (count($eventHelper->operations) < $freeLimit['maxNbOperation']['premium']);
+        } else {
+            $newOperationButton = (count($eventHelper->operations) < $freeLimit['maxNbOperation']['free']);
+        }
+
         return $this->render('operationList.html.twig', [
             'user' => $user,
-            'event' => $eventHelper
+            'event' => $eventHelper,
+            'newOperationButton' => $newOperationButton
         ]);
     }
 

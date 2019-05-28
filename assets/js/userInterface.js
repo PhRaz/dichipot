@@ -3,9 +3,13 @@ var $ = require('jquery');
 module.exports = function () {
 
     /*
-     * Disable submit button on submit.
+     * Disable submitand cancel buttons on submit and on cancel.
      */
     $("form").submit(function () {
+        $("#submit").attr("disabled", true);
+        $("#cancel").addClass("disabled");
+    });
+    $('#cancel').on('click', function() {
         $("#submit").attr("disabled", true);
         $("#cancel").addClass("disabled");
     });
