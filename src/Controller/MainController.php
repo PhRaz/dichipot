@@ -16,9 +16,11 @@ use App\Repository\EventRepository;
 use App\Service\EventHelper;
 use Aws\CognitoIdentityProvider\Exception\CognitoIdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -49,7 +51,7 @@ class MainController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function eventList(): Response
+    public function eventList(AuthorizationCheckerInterface $authChecker): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -66,22 +68,54 @@ class MainController extends AbstractController
              */
             return ($this->redirectToRoute("app_logout"));
         }
+
+        /** @var UserRepository $userRepo */
+        $userEventRepo = $this->getDoctrine()->getRepository(UserEvent::class);
+
+        /*
+         * check user limit on number of event
+         */
+        $newEventButton = true;
+        if ($userEventRepo->getUserNbEvent($user) >= 3) {
+            $newEventButton = $authChecker->isGranted('ROLE_PREMIUM');
+        }
+
         $userId = $user->getId();
         $data = $userRepo->getUserEvents($userId);
 
-        return $this->render("eventList.html.twig", ['user' => $data]);
+        return $this->render("eventList.html.twig", ['user' => $data, 'newEventButton' => $newEventButton]);
     }
 
     /**
-     * @route("/event/create/{id}", name="event_create")
+     * @route("/event/create", name="event_create")
      * @param $request Request
-     * @param $admin User
      * @return Response
      * @throws \Exception
      */
-    public function eventCreate(Request $request, User $admin)
+    public function eventCreate(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        /** @var \App\Security\User $loggedUser */
+        $loggedUser = $this->getUser();
+        $mail = $loggedUser->getEmail();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->findOneBy(['mail' => $mail]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
+        /** @var UserRepository $userRepo */
+        $userEventRepo = $this->getDoctrine()->getRepository(UserEvent::class);
+
+        if ($userEventRepo->getUserNbEvent($user) >= 3) {
+            $this->denyAccessUnlessGranted('ROLE_PREMIUM');
+        }
 
         $event = new Event();
 
@@ -90,7 +124,7 @@ class MainController extends AbstractController
          */
         $userEvent = new UserEvent();
         $userEvent->setAdministrator(true);
-        $admin->addUserEvent($userEvent);
+        $user->addUserEvent($userEvent);
         $event->setDate(new \DateTime());
         $event->addUserEvent($userEvent);
 
@@ -98,8 +132,6 @@ class MainController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            /** @var UserRepository $userRepo */
-            $userRepo = $this->getDoctrine()->getRepository(User::class);
             foreach ($event->getUserEvents() as $userEvent) {
                 $userEvent
                     ->setDate(new \DateTime())

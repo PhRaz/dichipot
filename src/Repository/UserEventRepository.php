@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UserEvent;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,32 +20,21 @@ class UserEventRepository extends ServiceEntityRepository
         parent::__construct($registry, UserEvent::class);
     }
 
-    // /**
-    //  * @return UserEvent[] Returns an array of UserEvent objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * return he number of event created as admin
+     * @param $user
+     * @return int number of event
+     * @throws \Exception
+     */
+    public function getUserNbEvent(User $user): int
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ue')
+            ->select('count(ue.id)')
+            ->join('ue.user', 'ueu')
+            ->andWhere('ueu.id = :userId')
+            ->andWhere('ue.administrator = true')
+            ->setParameter('userId', $user->getId())
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UserEvent
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
