@@ -558,7 +558,7 @@ class MainController extends AbstractController
 
         /*
          * security check on user participating to the event
-         * todo use voters
+         * TODO use voters
          */
         if (!$event->isUserParticipant($user)) {
             throw $this->createAccessDeniedException();
