@@ -12,7 +12,7 @@
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row" id="line_operation_{{ operation.id }}">
                     <div class="col-12 border-top shadow-sm">
-                        <div style="cursor: pointer;text-decoration: none;" data-toggle="collapse" data-target="#operation_{{ operation.id }}"
+                        <div style="cursor: pointer;" data-toggle="collapse" data-target="#operation_{{ operation.id }}"
                              class="accordion-toggle">
                             <div class="row text-primary">
                                 <div class="col-3 col-md-2">{{ operation.date|date('d/m/y') }}</div>
