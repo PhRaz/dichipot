@@ -47,9 +47,10 @@
             </table>
             <h3>Détail de vos opérations</h3>
             <div class="row bg-light border-top">
-                <div class="col-12 font-weight-bold small text-muted">Date Description</div>
+                <div class="col-4 font-weight-bold small text-muted">Date</div>
+                <div class="col-8 font-weight-bold small text-muted">Description</div>
             </div>
-            <div class="row">
+            <div class="row small">
                 <div class="col-3 font-weight-bold text-right">Dépense</div>
                 <div class="col-3 font-weight-bold text-right">Paiement</div>
                 <div class="col-3 font-weight-bold text-right">Dû</div>
@@ -57,11 +58,14 @@
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row  bg-light border-top">
-                    <div class="col-12 small text-muted">
-                        {{ operation.date|date('d/m/y') }} {{ operation.description }}
+                    <div class="col-4 small text-muted">
+                        {{ operation.date|date('d/m/y') }}
+                    </div>
+                    <div class="col-8 small text-muted">
+                        {{ operation.description }}
                     </div>
                 </div>
-                <div class="row">
+                <div class="row small mt-1 mb-2">
                     <div class="col-3 text-right text-nowrap">
                         {{ operation.totalExpense|number_format('2', ',', ' ') }} €
                     </div>
@@ -105,7 +109,7 @@
                     Totaux
                 </div>
             </div>
-            <div class="row border-bottom">
+            <div class="row border-bottom small mt-1 mb-2">
                 <div class="col-3 text-right font-weight-bold text-nowrap">
                     {{ event.grandTotal|number_format('2', ',', ' ') }} €
                 </div>
