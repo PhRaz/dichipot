@@ -16,7 +16,7 @@
                 {{ form_errors(form.description) }}
             </div>
 
-            <div class="userEvents" data-prototype="
+            <div class="userEvents" data-max-nb-participant="{{ maxNbParticipant }}" data-prototype="
             {% filter escape %}
                 {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
             {% endfilter %}">

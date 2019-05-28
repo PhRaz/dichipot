@@ -33,3 +33,17 @@ services:
     App\EventListener\EntityListener:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
+
+    App\Controller\MainController:
+        public: true
+        bind:
+            $freeLimit:
+                maxNbEvent:
+                    free: 3
+                    premium: 100
+                maxNbParticipant:
+                    free: 5
+                    premium: 10
+                maxNbOperation:
+                    free: 50
+                    premium: 100

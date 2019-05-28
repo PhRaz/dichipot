@@ -48,10 +48,12 @@ class MainController extends AbstractController
 
     /**
      * @route("/event/list", name="event_list")
+     * @param $authChecker
+     * @param $freeLimit array
      * @return Response
      * @throws \Exception
      */
-    public function eventList(AuthorizationCheckerInterface $authChecker): Response
+    public function eventList(AuthorizationCheckerInterface $authChecker, $freeLimit): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -75,24 +77,30 @@ class MainController extends AbstractController
         /*
          * check user limit on number of event
          */
-        $newEventButton = true;
-        if ($userEventRepo->getUserNbEvent($user) >= 3) {
-            $newEventButton = $authChecker->isGranted('ROLE_PREMIUM');
+        if ($authChecker->isGranted('ROLE_PREMIUM')) {
+            $newEventButton = ($userEventRepo->getUserNbEvent($user) < $freeLimit['maxNbEvent']['premium']);
+        } else {
+            $newEventButton = ($userEventRepo->getUserNbEvent($user) < $freeLimit['maxNbEvent']['free']);
         }
 
         $userId = $user->getId();
         $data = $userRepo->getUserEvents($userId);
 
-        return $this->render("eventList.html.twig", ['user' => $data, 'newEventButton' => $newEventButton]);
+        return $this->render("eventList.html.twig", [
+            'user' => $data,
+            'newEventButton' => $newEventButton
+        ]);
     }
 
     /**
      * @route("/event/create", name="event_create")
      * @param $request Request
+     * @param $freeLimit
+     * @param $maxNbParticipant
      * @return Response
      * @throws \Exception
      */
-    public function eventCreate(Request $request)
+    public function eventCreate(Request $request, AuthorizationCheckerInterface $authChecker, $freeLimit)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -112,9 +120,17 @@ class MainController extends AbstractController
 
         /** @var UserRepository $userRepo */
         $userEventRepo = $this->getDoctrine()->getRepository(UserEvent::class);
-
-        if ($userEventRepo->getUserNbEvent($user) >= 3) {
+        $nbEvent = $userEventRepo->getUserNbEvent($user);
+        if ($nbEvent >= $freelimit['maxNbEvent']['premium']) {
+            throw new AccessDeniedException();
+        }
+        if ($nbEvent >= $freelimit['maxNbEvent']['free']) {
             $this->denyAccessUnlessGranted('ROLE_PREMIUM');
+        }
+        if ($authChecker->isGranted('ROLE_PREMIUM')) {
+            $maxNbParticipant = $freeLimit['maxNbParticipant']['premium'];
+        } else {
+            $maxNbParticipant = $freeLimit['maxNbParticipant']['free'];
         }
 
         $event = new Event();
@@ -181,18 +197,22 @@ class MainController extends AbstractController
             return $this->redirectToRoute('event_list');
         }
 
-        return $this->render('eventCreate.html.twig', ['form' => $form->createView()]);
+        return $this->render('eventCreate.html.twig', [
+            'form' => $form->createView(),
+            'maxNbParticipant' => $maxNbParticipant
+        ]);
     }
-
 
     /**
      * @route("/event/update/{eventId}", name="event_update")
      * @param Request $request
+     * @param $authChecker
      * @param $eventId
+     * @param $freeLimit
      * @return Response
      * @throws \Exception
      */
-    public function eventUpdate(Request $request, $eventId)
+    public function eventUpdate(Request $request, AuthorizationCheckerInterface $authChecker, $eventId, $freeLimit)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -201,6 +221,12 @@ class MainController extends AbstractController
 
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
+
+        if ($authChecker->isGranted('ROLE_PREMIUM')) {
+            $maxNbParticipant = $freeLimit['maxNbParticipant']['premium'];
+        } else {
+            $maxNbParticipant = $freeLimit['maxNbParticipant']['free'];
+        }
 
         $form = $this->createForm(eventType::class, $event);
         $form->handleRequest($request);
@@ -268,7 +294,10 @@ class MainController extends AbstractController
             return $this->redirectToRoute('event_list');
         }
 
-        return $this->render('eventUpdate.html.twig', ['form' => $form->createView()]);
+         return $this->render('eventUpdate.html.twig', [
+            'form' => $form->createView(),
+            'maxNbParticipant' => $maxNbParticipant
+        ]);
     }
 
     /**

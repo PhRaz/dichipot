@@ -74,8 +74,8 @@ module.exports = function () {
         checkMaxNbUser();
     };
 
-    let maxNbParticipant = 5;
     let $collectionHolder = $('.userEvents');
+    let maxNbParticipant = $collectionHolder.data('max-nb-participant');
 
     $collectionHolder.append($addUserButton);
     $collectionHolder.data('index', $collectionHolder.find('.user').length);
