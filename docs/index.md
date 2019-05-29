@@ -20,7 +20,8 @@ This application is available online at <http://dichipot.com>.
 
 ## CGU 
 
-The document 'conditions générale d'utilisation' of the site (CGU) have been produce by :
+The document 'conditions générale d'utilisation' of the site (CGU) have been produce 
+by a tool provided online :
 
 https://www.legalplace.fr/contrats/conditions-generales-d-utilisation/
 
@@ -30,6 +31,12 @@ User authentication and authorisation is managed with AWS Cognito.
 Here are some blogs entries usefull to understand server side Cognito usage :
 - <https://tech.mybuilder.com/managing-authentication-in-your-symfony-project-with-aws-cognito/>
 - <https://sanderknape.com/2017/02/getting-started-with-aws-cognito/>
+
+## favicon
+
+Favicon files for web and mobile webapp have been produce by a tool provided online :
+
+https://realfavicongenerator.net/
 
 ## Docker
 
