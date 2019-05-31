@@ -153,10 +153,12 @@ TODO : fix password on command line
 ## restore the DB
 
 ```
-aws s3 cp s3://dichipot/201905061434.sql.gz .
-gunzip 201905061434.sql.gz
+from /home/ec2-user/dichipot
+aws s3 cp s3://dichipot/xxx.sql.gz .
+gunzip xxx.sql.gz
+sudo mv xxx.sql .docker/data/db/
 docker exec -it sf4_mysql bash
-mysql -uroot -proot sf4 </var/lib/mysql/201905061434.sql
+mysql -uroot -proot sf4 </var/lib/mysql/xxx.sql
 ```
 
 ## Data model
