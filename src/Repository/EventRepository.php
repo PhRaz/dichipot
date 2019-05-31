@@ -20,6 +20,18 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNbEvent(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('count(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param $eventId integer
      * @param $full
      * @return Event

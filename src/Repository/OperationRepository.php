@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Operation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * @method Operation|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,9 +21,21 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return int
+     * @throws NonUniqueResultException
+     */
+    public function getNbOperation(): int
+    {
+        return $this->createQueryBuilder('o')
+            ->select('count(o.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param $operationId
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findForUpdate($operationId)
     {

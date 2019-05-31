@@ -20,6 +20,18 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return int
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getNbUser() :int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Retourne les évènements pour userId, chaque évènement contient la liste des participants.
      *
      * @param $userId integer
