@@ -40,10 +40,27 @@ class MainController extends AbstractController
     /**
      * @route("/", name="home")
      * @return Response
+     * @throws \Exception
      */
     public function home(): Response
     {
-        return $this->render("home.html.twig");
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $nbUser = $userRepo->getNbUser();
+
+        /** @var EventRepository $eventRepo */
+        $eventRepo = $this->getDoctrine()->getRepository(Event::class);
+        $nbEvent = $eventRepo->getNbEvent();
+
+        /** @var OperationRepository $operation */
+        $operation = $this->getDoctrine()->getRepository(Operation::class);
+        $nbOperation = $operation->getNbOperation();
+
+        return $this->render("home.html.twig", [
+                'nbUser' => $nbUser,
+                'nbEvent' => $nbEvent,
+                'nbOperation' => $nbOperation
+            ]);
     }
 
     /**

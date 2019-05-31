@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-8 offset-md-2 mb-2">
             <div class="jumbotron">
                 <div class="container">
-                    <h1 class="display-4 text-center">
+                    <h1 class="text-center">
                         <img src="{{ asset('build/dichipot_logo_color.svg') }}" height="64"
                              class="d-inline-block align-top" alt="dichipot">
                     </h1>
@@ -22,40 +21,136 @@
                     <div class="text-center">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes
-                                événements</a>
+                                évènements</a>
                         {% else %}
                             <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
                         {% endif %}
                     </div>
                 </div>
             </div>
-            <div class="container small text-center">
-                <h3>Comment ça marche ?</h3><br>
-                <div class="card-group">
-                    <div class="card">
+            <hr class="col-xs-12">
+            <div class="container mb-2">
+                <h1 class="display-4">Simple</h1>
+                <div class="card-deck">
+                    <div class="card bg-light">
                         <div class="card-body">
                             <img class="card-img-top" src="{{ asset('build/step1.png') }}" alt="Card image cap">
-                            <h5 class="card-title mt-5">1. Créez</h5>
-                            <p class="card-text"> Créez un événement. Listez les participants.</p>
+                            <h3 class="card-title mt-5">1. Créez</h3>
+                            <p class="card-text"> Créez un évènement. Listez les participants.</p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card bg-light">
                         <div class="card-body">
                             <img class="card-img-top" src="{{ asset('build/step3.jpg') }}" alt="Card image cap">
-                            <h5 class="card-title mt-5">2. Enregistrez</h5>
+                            <h3 class="card-title mt-5">2. Enregistrez</h3>
                             <p class="card-text">Tous les participants peuvent enregistrer des dépenses et effectuer la
                                 répartion des paiements sur le groupe.</p>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <img class="card-img-top" src="{{ asset('build/step2.png') }}" alt="Card image cap">
-                            <h5 class="card-title mt-5">3. Respirez</h5>
+                            <h3 class="card-title mt-5">3. Respirez</h3>
                             <p class="card-text">L'application maintient les comptes à jour. A tout moment chacun sait
                                 "qui doit combien à qui".</p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <hr class="col-xs-12">
+            <div class="container mb-2">
+                <h1 class="display-4">Screenshots</h1>
+                <p>Voici quelques screenshots pour se faire une idée de l'application.</p>
+                <div class="row mb-2">
+                    <div class="col-12 col-sm-6 mb-2 mb-sm-0">
+                        <h4>Création d'un évènement</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid" src="{{ asset('build/localhost_operation_create.png') }}"
+                                     alt="Création d'un évènement">
+                            </div>
+                            <div class="col-6 small">
+                                <p>Pour créer un évènement on utilise la page suivante. de lui donner un nom et
+                                    d'indiquer les
+                                    pseudos et adresse email des
+                                    participants.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <h4>Création d'une opération</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid" src="{{ asset('build/localhost_operation_create.png') }}"
+                                     alt="Création d'un évènement">
+                            </div>
+                            <div class="col-6 small">
+                                <p>Chaque évènement permet d'enregistrer les dépenses à partager.</p>
+                                <p>Une dépense peut être payée par plusieures personnes. Les part
+                                    dûes par les participants peuvent être indiquées par
+                                <ul>
+                                    <li>un nombre de part ou</li>
+                                    <li>le montant exact</li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12 col-sm-6 mb-2 mb-sm-0">
+                        <h4>La liste des opérations</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid" src="{{ asset('build/operation_create.png') }}"
+                                     alt="Création d'un évènement">
+                            </div>
+                            <div class="col-6 small">
+                                <p>La liste des opérations donne toutes les informations.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <h4>Le résumé de vérification</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <img class="img-fluid" src="{{ asset('build/operation_create.png') }}"
+                                     alt="Création d'un évènement">
+                            </div>
+                            <div class="col-6 small">
+                                <p>La liste des opérations donne toutes les informations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="col-xs-12">
+            <div class="container mb-2">
+                <h1 class="display-4">Dashboard</h1>
+                <p>Voici quelques informations sur la quantité d'information gérée par le site.</p>
+                <table class="table">
+                    <tr>
+                        <th>Nombre de comptes</th>
+                        <td>{{ nbUser }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre d'évènements</th>
+                        <td>{{ nbEvent }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre d'opérations</th>
+                        <td>{{ nbOperation }}</td>
+                    </tr>
+                </table>
+            </div>
+            <hr class="col-xs-12">
+            <div class="container mb-2">
+                <h1 class="display-4">Une dernière chose</h1>
+                <p>Pour toutes questions ou suggestions vous pouvez contacter l'administrateur du site à
+                    <a href="mailto:admin@dichipot.com">admin@dichipot.com</a>.</p>
+                <p>Le code et la documentation technique sont disponible sur <a
+                            href="https://github.com/PhRaz/dichipot">Github <i class="fab fa-github"></i></a>.</p>
+                <p>Cette application est gratuite.</p>
             </div>
         </div>
     </div>
