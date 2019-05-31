@@ -49,15 +49,21 @@ Here is the procedure to install the application on a server.
 - log in server
 - install git and docker
   ```
+  sudo yum update
   sudo yum install git -y
   sudo yum install docker -y
-  sudo service docker start
   sudo usermod -a -G docker ec2-user
+  sudo service docker start
   sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
   sudo chmod +x /usr/local/bin/docker-compose
   ```
   Logout and re-login for the ec2-user new group to apply.
   
+- create swap
+  ```
+  swap problem on VPS installation :
+  https://getcomposer.org/doc/articles/troubleshooting.md#proc-open-fork-failed-errors
+  ```
 - deploy the git repo
   ```
   git clone https://github.com/PhRaz/dichipot.git
@@ -89,13 +95,17 @@ Here is the procedure to install the application on a server.
   yarn install
   
   yarn encore production
-  
-  swap problem on installation :
-  https://getcomposer.org/doc/articles/troubleshooting.md#proc-open-fork-failed-errors
   ```
 - update DB schema
   ```
   php bin/console doctrine:schema:update --force
+  
+  TODO PB privilege
+  mysql> create user sf4@'172.20.0.4' identified by 'sf4';
+  Query OK, 0 rows affected (0.01 sec)
+
+  mysql> GRANT ALL PRIVILEGES ON sf4.* TO sf4@'172.20.0.4';
+  Query OK, 0 rows affected (0.00 sec)
   ```
 - done
   ```
