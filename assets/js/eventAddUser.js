@@ -62,7 +62,7 @@ module.exports = function () {
                 .unbind('click')
                 .removeClass('btn-primary shadow-sm')
                 .addClass('disabled btn-secondary')
-                .append('<p>Vous avez atteint le nombre maximum de participants pour un événement.</p>')
+                .append('<p>Vous avez atteint le nombre maximum de participants pour un évènement.</p>')
         }
     };
 
