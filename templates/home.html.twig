@@ -15,7 +15,7 @@
                     <ul class="list-unstyled">
                         <li>&#9658; les colocs,</li>
                         <li>&#9658; les couples,</li>
-                        <li>&#9658; les vacances entre amis ...</li>
+                        <li>&#9658; les amis en vacances ...</li>
                     </ul>
                     elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.</p>
                     <div class="text-center">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <hr class="col-xs-12">
+            <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Simple</h1>
                 <div class="card-deck">
@@ -57,74 +57,39 @@
                     </div>
                 </div>
             </div>
-            <hr class="col-xs-12">
+            <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Screenshots</h1>
                 <p>Voici quelques screenshots pour se faire une idée de l'application.</p>
+                <h4>Création d'un évènement</h4>
                 <div class="row mb-2">
-                    <div class="col-12 col-sm-6 mb-2 mb-sm-0">
-                        <h4>Création d'un évènement</h4>
-                        <div class="row">
-                            <div class="col-6">
-                                <img class="img-fluid" src="{{ asset('build/localhost_operation_create.png') }}"
-                                     alt="Création d'un évènement">
-                            </div>
-                            <div class="col-6 small">
-                                <p>Pour créer un évènement on utilise la page suivante. de lui donner un nom et
-                                    d'indiquer les
-                                    pseudos et adresse email des
-                                    participants.</p>
-                            </div>
-                        </div>
+                    <div class="col-6 col-sm-4">
+                        <img class="img-fluid" src="{{ asset('build/localhost_operation_create.png') }}"
+                             alt="Création d'un évènement">
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <h4>Création d'une opération</h4>
+                    {% set text = "Tous les participants peuvent enregistrer des dépenses et effectuer la répartion des
+                                    paiements sur le groupe.Tous les participants peuvent enregistrer des dépenses et
+                                    effectuer
+                                    la répartion des paiements sur le groupe.Tous les participants peuvent enregistrer
+                                    des
+                                    dépenses et effectuer la répartion des paiements sur le groupe." %}
+                    <div class="col-6 col-sm-8">
                         <div class="row">
-                            <div class="col-6">
-                                <img class="img-fluid" src="{{ asset('build/localhost_operation_create.png') }}"
-                                     alt="Création d'un évènement">
+                            <div class="col-12">
+                                <p>Pour créer un évènement on utilise la page suivante. de lui donner un nom et
+                                    d'indiquer les pseudos et adresse email des participants.</p>
                             </div>
-                            <div class="col-6 small">
-                                <p>Chaque évènement permet d'enregistrer les dépenses à partager.</p>
-                                <p>Une dépense peut être payée par plusieures personnes. Les part
-                                    dûes par les participants peuvent être indiquées par
-                                <ul>
-                                    <li>un nombre de part ou</li>
-                                    <li>le montant exact</li>
-                                </ul>
-                                </p>
+                            <div class="col-12 d-none d-sm-block">
+                                <p>{{ text }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-12 col-sm-6 mb-2 mb-sm-0">
-                        <h4>La liste des opérations</h4>
-                        <div class="row">
-                            <div class="col-6">
-                                <img class="img-fluid" src="{{ asset('build/operation_create.png') }}"
-                                     alt="Création d'un évènement">
-                            </div>
-                            <div class="col-6 small">
-                                <p>La liste des opérations donne toutes les informations.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <h4>Le résumé de vérification</h4>
-                        <div class="row">
-                            <div class="col-6">
-                                <img class="img-fluid" src="{{ asset('build/operation_create.png') }}"
-                                     alt="Création d'un évènement">
-                            </div>
-                            <div class="col-6 small">
-                                <p>La liste des opérations donne toutes les informations.</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row d-sm-none">
+                    <p>{{ text }}</p>
                 </div>
             </div>
-            <hr class="col-xs-12">
+            <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Dashboard</h1>
                 <p>Voici quelques informations sur la quantité d'information gérée par le site.</p>
@@ -143,7 +108,7 @@
                     </tr>
                 </table>
             </div>
-            <hr class="col-xs-12">
+            <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Une dernière chose</h1>
                 <p>Pour toutes questions ou suggestions vous pouvez contacter l'administrateur du site à
