@@ -12,10 +12,10 @@
                     <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
                     <hr class="my-4">
                     <p>Cette application web vous permet de gérer des dépenses communes. Utile pour
-                    <ul class="list-unstyled">
-                        <li>&#9658; les colocs,</li>
-                        <li>&#9658; les couples,</li>
-                        <li>&#9658; les amis en vacances ...</li>
+                    <ul>
+                        <li>les colocs,</li>
+                        <li>les couples,</li>
+                        <li>les amis ...</li>
                     </ul>
                     elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.</p>
                     <div class="text-center">
@@ -93,29 +93,51 @@
             <div class="container mb-2">
                 <h1 class="display-4">Dashboard</h1>
                 <p>Voici quelques informations sur la quantité d'information gérée par le site.</p>
-                <table class="table">
-                    <tr>
-                        <th>Nombre de comptes</th>
-                        <td>{{ nbUser }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre d'évènements</th>
-                        <td>{{ nbEvent }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre d'opérations</th>
-                        <td>{{ nbOperation }}</td>
-                    </tr>
-                </table>
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2">
+                        <table class="table">
+                            <tr>
+                                <th style="width: 80%">Nombre de comptes</th>
+                                <td class="text-right" style="width: 20%">{{ nbUser }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre d'évènements</th>
+                                <td class="text-right" style="width: 20%">{{ nbEvent }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre d'opérations</th>
+                                <td class="text-right" style="width: 20%">{{ nbOperation }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
             <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Une dernière chose</h1>
+                <p>Cette application est gratuite ... avec les limites suivantes pour chaque compte :
+                <div class="row">
+                    <div class="col-12 col-sm-8 offset-sm-2">
+                        <table class="table">
+                            <tr>
+                                <th style="width: 80%">Evènements</th>
+                                <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Participants par évènement</th>
+                                <td class="text-right">{{ freeLimit['maxNbParticipant']['free'] }}</td>
+                            </tr>
+                            <tr>
+                                <th>Opérations par évènement</th>
+                                <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
                 <p>Pour toutes questions ou suggestions vous pouvez contacter l'administrateur du site à
                     <a href="mailto:admin@dichipot.com">admin@dichipot.com</a>.</p>
                 <p>Le code et la documentation technique sont disponible sur <a
                             href="https://github.com/PhRaz/dichipot">Github <i class="fab fa-github"></i></a>.</p>
-                <p>Cette application est gratuite.</p>
             </div>
         </div>
     </div>

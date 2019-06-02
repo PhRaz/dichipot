@@ -39,10 +39,11 @@ class MainController extends AbstractController
 
     /**
      * @route("/", name="home")
+     * @param $freeLimit
      * @return Response
      * @throws \Exception
      */
-    public function home(): Response
+    public function home($freeLimit): Response
     {
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
@@ -59,7 +60,8 @@ class MainController extends AbstractController
         return $this->render("home.html.twig", [
                 'nbUser' => $nbUser,
                 'nbEvent' => $nbEvent,
-                'nbOperation' => $nbOperation
+                'nbOperation' => $nbOperation,
+                'freeLimit' => $freeLimit
             ]);
     }
 
