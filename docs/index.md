@@ -153,7 +153,7 @@ TODO : fix password on command line
 ## restore the DB
 
 ```
-from /home/ec2-user/dichipot
+cd /home/ec2-user/dichipot
 aws s3 cp s3://dichipot/xxx.sql.gz .
 gunzip xxx.sql.gz
 sudo mv xxx.sql .docker/data/db/
