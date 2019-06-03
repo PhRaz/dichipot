@@ -2,7 +2,7 @@ version: '3'
 services:
     apache:
         build: .docker/apache
-        container_name: sf4_apache
+        container_name: dichipot_apache
         ports:
           - 80:80
         volumes:
@@ -14,7 +14,7 @@ services:
     mysql:
         image: mysql
         command: "--default-authentication-plugin=mysql_native_password"
-        container_name: sf4_mysql
+        container_name: dichipot_mysql
         volumes:
             - .docker/data/db:/var/lib/mysql
         environment:
@@ -25,7 +25,7 @@ services:
 
     php:
         build: .docker/php
-        container_name: sf4_php
+        container_name: dichipot_php
         volumes:
           - .:/home/wwwroot/sf4
         environment:
@@ -36,7 +36,7 @@ services:
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: sf4_phpmyadmin
+        container_name: dichipot_phpmyadmin
         environment:
           PMA_HOST: mysql
           PMA_PORT: 3306
@@ -47,6 +47,6 @@ services:
 
     maildev:
         image: djfarrelly/maildev
-        container_name: sf4_maildev
+        container_name: dichipot_maildev
         ports:
           - 8001:80
