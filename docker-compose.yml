@@ -29,7 +29,7 @@ services:
         volumes:
           - .:/home/wwwroot/sf4
         environment:
-          - maildev_host=sf4_maildev
+          - maildev_host=dichipot_maildev
         depends_on:
           - maildev
           - mysql
