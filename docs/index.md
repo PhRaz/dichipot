@@ -60,20 +60,33 @@ Here is the procedure to install the application on a server.
   Logout and re-login for the ec2-user new group to apply.
   
 - create swap
-  ```
   swap problem on VPS installation :
+  ```
   https://getcomposer.org/doc/articles/troubleshooting.md#proc-open-fork-failed-errors
   ```
+  Here is a command from SO : 
+  ```
+  https://serverfault.com/questions/218750/why-dont-ec2-ubuntu-images-have-swap
+  
+  sudo dd if=/dev/zero of=/var/swapfile bs=1M count=2048 &&
+  sudo chmod 600 /var/swapfile &&
+  sudo mkswap /var/swapfile &&
+  echo /var/swapfile none swap defaults 0 0 | sudo tee -a /etc/fstab &&
+  sudo swapon -a
+  ```
+  
 - deploy the git repo
   ```
   git clone https://github.com/PhRaz/dichipot.git
   ```
+
 - launch the containers
   ```
   cd dichipot
   docker-compose build
   docker-compose up -d
   ```
+
 - log in Symfony container
   ```
   docker exec -it sf4_php bash
@@ -160,7 +173,13 @@ sudo mv xxx.sql .docker/data/db/
 docker exec -it sf4_mysql bash
 mysql -uroot -proot sf4 </var/lib/mysql/xxx.sql
 ```
+## production
 
+Build container for production.
+
+```
+docker build -t prod/dichipot_apache  -f ./.docker/prod/apache/Dockerfile .
+```
 ## Data model
 
 ```
