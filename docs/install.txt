@@ -62,3 +62,6 @@ mysql>
 create user ‘root’@‘127.0.0.1' identified by 'root';
 GRANT ALL PRIVILEGES ON sf4.* TO root@'127.0.0.1';
 mysql -u root  sf4 < /var/lib/mysql/201906040000.sql
+
+crontab -e
+0 0 * * * docker exec dichipot_mysql mysqldump -uroot sf4 | gzip - | aws s3 cp - s3://dichipot/$(date +\%Y\%m\%d\%H\%M).sql.gz

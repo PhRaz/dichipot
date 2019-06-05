@@ -156,7 +156,7 @@ php bin/console doctrine:schema:update --force
 Command to backup the DB to S3 bucket :
 
 ```
-docker exec -it sf4_mysql mysqldump -uroot -proot sf4 2>/dev/null | gzip - | aws s3 cp - s3://dichipot/$(date +%Y%m%d%H%M)
+docker exec -it sf4_mysql mysqldump -uroot -proot sf4 2>/dev/null | gzip - | aws s3 cp - s3://dichipot/$(date +%Y%m%d%H%M).sql.gz
 ```
 
 To set this command as a cron job you must remove the `-it` option.
