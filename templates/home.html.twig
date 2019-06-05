@@ -61,81 +61,107 @@
             <div class="container mb-2">
                 <h1 class="display-4">Screenshots</h1>
                 <p>Voici quelques screenshots pour se faire une idée de l'application.</p>
-                <h4>Enregistrement d'une dépense</h4>
-                <div class="row mb-2">
-                    <div class="col-6 col-sm-4">
-                        <img class="img-fluid border" src="{{ asset('build/screenshots/new_operation.png') }}"
-                             alt="Création d'un évènement">
-                    </div>
-                    {% set text = "Tous les participants peuvent enregistrer des dépenses et effectuer la répartion des
-                                    paiements sur le groupe." %}
-                    <div class="col-6 col-sm-8">
-                        <div class="row">
-                            <div class="col-12">
-                                <p>Une opération peut être une dépenses commune ou un échange d'argent (prêt,
-                                    remboursement) dans le groupe.</p>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h2>Enregistrement d'une dépense</h2>
+                        <div class="row mb-2">
+                            <div class="col-6 col-sm-4">
+                                <img class="img-fluid border" src="{{ asset('build/screenshots/new_operation.png') }}"
+                                     alt="Création d'un évènement">
                             </div>
-                            <div class="col-12 d-none d-sm-block">
+                            <div class="col-6 col-sm-8">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>
+                                            Tous les participants d'un évènement peuvent enregistrer des dépenses et
+                                            effectuer la répartion des paiements sur le groupe.
+                                        </p>
+                                    </div>
+                                    <div class="col-12 d-none d-sm-block">
+                                        {% set text = [
+                                            "Une dépense peut être prise en charge par 1 ou plusieurs personnes.",
+                                            "La répartition peut être indiquée en nombre de part ou par les montants exacts.",
+                                            "Plus généralement, une opération peut être une dépense commune ou un échange d'argent dans le groupe (prêt, remboursement)."
+                                        ] | join
+                                        %}
+                                        <p>{{ text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-sm-none">
+                            <div class="col-12">
                                 <p>{{ text }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row d-sm-none">
-                    <p>{{ text }}</p>
-                </div>
-                <h4>Liste des opérations</h4>
-                <div class="row mb-2">
-                    <div class="col-6 col-sm-4">
-                        <img class="img-fluid border" src="{{ asset('build/screenshots/operation_list.png') }}"
-                             alt="Création d'un évènement">
-                    </div>
-                    {% set text = "Tous les participants peuvent enregistrer des dépenses et effectuer la répartion des
-                                    paiements sur le groupe." %}
-                    <div class="col-6 col-sm-8">
-                        <div class="row">
-                            <div class="col-12">
-                                <p>Une opération peut être une dépenses commune ou un échange d'argent (prêt,
-                                    remboursement) dans le groupe.</p>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h2>Liste des opérations</h2>
+                        <div class="row mb-2">
+                            <div class="col-6 col-sm-4">
+                                <img class="img-fluid border" src="{{ asset('build/screenshots/operation_list.png') }}"
+                                     alt="Création d'un évènement">
                             </div>
-                            <div class="col-12 d-none d-sm-block">
+                            <div class="col-6 col-sm-8">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>
+                                            Toutes les opérations sont affichées par ordre chronologique. Un click sur
+                                            une ligne permet d'afficher le détail de l'opération.
+                                        </p>
+                                    </div>
+                                    <div class="col-12 d-none d-sm-block">
+                                        {% set text = "Un bilan de l'évènement est affiché en bas de la page." %}
+                                        <p>{{ text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-sm-none">
+                            <div class="col-12">
                                 <p>{{ text }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row d-sm-none">
-                    <p>{{ text }}</p>
-                </div>
-                <h4>Liste des opérations</h4>
-                <div class="row mb-2">
-                    <div class="col-6 col-sm-4">
-                        <img class="img-fluid border" src="{{ asset('build/screenshots/bilan.png') }}"
-                             alt="Création d'un évènement">
-                    </div>
-                    {% set text = "Tous les participants peuvent enregistrer des dépenses et effectuer la répartion des
-                                    paiements sur le groupe." %}
-                    <div class="col-6 col-sm-8">
-                        <div class="row">
-                            <div class="col-12">
-                                <p>Une opération peut être une dépenses commune ou un échange d'argent (prêt,
-                                    remboursement) dans le groupe.</p>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h2>Bilan</h2>
+                        <div class="row mb-2">
+                            <div class="col-6 col-sm-4">
+                                <img class="img-fluid border" src="{{ asset('build/screenshots/bilan.png') }}"
+                                     alt="Création d'un évènement">
                             </div>
-                            <div class="col-12 d-none d-sm-block">
+                            <div class="col-6 col-sm-8">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>
+                                            A tout moment chaque participant peut accéder à un listing des opérations
+                                            avec ses dépenses. Ce listing peut être reçu par mail.
+                                        </p>
+                                    </div>
+                                    <div class="col-12 d-none d-sm-block">
+                                        {% set text = "" %}
+                                        <p>{{ text }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-sm-none">
+                            <div class="col-12">
                                 <p>{{ text }}</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row d-sm-none">
-                    <p>{{ text }}</p>
                 </div>
             </div>
             <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Dashboard</h1>
-                <p>Ce dashboard affiche quelques indicateurs, en temps réel, sur la quantité d'information gérée par le
-                    site.</p>
+                <p>Ce dashboard affiche quelques indicateurs, en temps réel, sur la quantité d'information gérée par
+                    le site.</p>
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2">
                         <table class="table">
