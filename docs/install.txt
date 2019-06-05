@@ -1,0 +1,64 @@
+# Installation en dev
+
+git clone https://github.com/PhRaz/dichipot.git
+update .env.local file with credentials
+update .env.local file with APP_ENV=dev
+docker-compose build
+docker-compose up -d
+docker exec -it dichipot_php bash
+cd dichipot
+composer install
+composer require encore (tester sans cette ligne)
+yarn install
+yarn encore dev
+php bin/console cache:clear
+php bin/console doctrine:schema:update --force
+
+## restore the db
+
+aws configure ... 
+cd /home/ec2-user/dichipot
+aws s3 cp s3://dichipot/xxx.sql.gz .
+gunzip xxx.sql.gz
+sudo mv xxx.sql .docker/data/db/
+docker exec -it dichipot_mysql bash
+mysql -uroot -proot sf4 </var/lib/mysql/xxx.sql
+
+# Installation en prod
+
+sudo yum update -y
+sudo yum install git -y
+sudo yum install docker -y
+sudo usermod -a -G docker ec2-user
+sudo service docker start
+sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+logout/login
+git clone https://github.com/PhRaz/dichipot.git
+cd dichipot
+docker-compose build
+
+sudo dd if=/dev/zero of=/var/swapfile bs=1M count=2048 &&
+sudo chmod 600 /var/swapfile &&
+sudo mkswap /var/swapfile &&
+echo /var/swapfile none swap defaults 0 0 | sudo tee -a /etc/fstab &&
+sudo swapon -a
+
+docker-compose up -d
+cd dichipot
+composer install --no-dev --optimize-autoloader
+yarn install
+yarn encore production
+update .env (crendentials aws et ENV=prod)
+
+dans le container mysql
+create user sf4@'172.20.0.4' identified by 'sf4';
+GRANT ALL PRIVILEGES ON sf4.* TO sf4@'172.20.0.4';
+
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+aws configure
+mysql>
+create user ‘root’@‘127.0.0.1' identified by 'root';
+GRANT ALL PRIVILEGES ON sf4.* TO root@'127.0.0.1';
+mysql -u root  sf4 < /var/lib/mysql/201906040000.sql
