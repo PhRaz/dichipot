@@ -11,17 +11,20 @@
                     </h1>
                     <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
                     <hr class="my-4">
-                    <p>Cette application web vous permet de gérer des dépenses communes. Utile pour
+                    <p>
+                        Cette application web vous permet de gérer un compte commun pour partager des dépenses.<br>
+                        Utile pour
                     <ul>
-                        <li>les colocs,</li>
+                        <li>les colocataires,</li>
                         <li>les couples,</li>
                         <li>les amis ...</li>
                     </ul>
-                    elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.</p>
+                    elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
+                    </p>
                     <div class="text-center">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes
-                                évènements</a>
+                                comptes</a>
                         {% else %}
                             <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
                         {% endif %}
@@ -32,66 +35,76 @@
             <div class="container mb-2">
                 <h1 class="display-4">Simple</h1>
                 <div class="card-deck">
-                    <div class="card bg-light">
+                    <div class="card bg-light text-center border border-light shadow-sm">
                         <div class="card-body">
-                            <img class="card-img-top" src="{{ asset('build/step1.jpg') }}" alt="Card image cap">
-                            <h3 class="card-title mt-5">1. Créez</h3>
-                            <p class="card-text"> Créez un évènement. Listez les participants.</p>
+                            <h2 class="card-title">1 créez</h2>
+                            <img class="card-img-top rounded" src="{{ asset('build/step1.jpg') }}" alt="Calendrier">
+                            <p class="card-text mt-2">
+                                Créez un compte, ajoutez les participants.
+                            </p>
                         </div>
                     </div>
-                    <div class="card bg-light">
+                    <div class="card bg-light text-center border border-light shadow-sm">
                         <div class="card-body">
-                            <img class="card-img-top" src="{{ asset('build/step2.jpg') }}" alt="Card image cap">
-                            <h3 class="card-title mt-5">2. Enregistrez</h3>
-                            <p class="card-text">Tous les participants peuvent enregistrer des dépenses et effectuer la
-                                répartion des paiements sur le groupe.</p>
+                            <h2 class="card-title">2 enregistrez</h2>
+                            <img class="card-img-top rounded" src="{{ asset('build/step2.jpg') }}"
+                                 alt="tickets de caisse">
+                            <p class="card-text mt-2">
+                                Les participants enregistrent les dépenses.
+                            </p>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card bg-light text-center border border-light shadow-sm">
                         <div class="card-body bg-light">
-                            <img class="card-img-top" src="{{ asset('build/step3.jpg') }}" alt="Card image cap">
-                            <h3 class="card-title mt-5">3. Respirez</h3>
-                            <p class="card-text">L'application maintient les comptes à jour. A tout moment chacun sait
-                                "qui doit combien à qui".</p>
+                            <h2 class="card-title">3 respirez</h2>
+                            <img class="card-img-top rounded" src="{{ asset('build/step3.jpg') }}"
+                                 alt="cocktails sur la plage">
+                            <p class="card-text mt-2">
+                                A tout moment chacun sait "qui doit combien à qui".
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
             <hr class="col-12">
             <div class="container mb-2">
-                <h1 class="display-4">Screenshots</h1>
-                <p>Voici quelques screenshots pour se faire une idée de l'application.</p>
+                <h1 class="display-4">Captures d'écran</h1>
+                <p>Voici quelques captures d'écran, au format mobile, pour se faire une idée de l'application.</p>
                 <div class="row mb-3">
                     <div class="col-12">
                         <h2>Enregistrement d'une dépense</h2>
                         <div class="row mb-2">
                             <div class="col-6 col-sm-4">
                                 <img class="img-fluid border" src="{{ asset('build/screenshots/new_operation.png') }}"
-                                     alt="Création d'un évènement">
+                                     alt="enregistrement d'une opération">
                             </div>
                             <div class="col-6 col-sm-8">
                                 <div class="row">
                                     <div class="col-12">
                                         <p>
-                                            Tous les participants d'un évènement peuvent enregistrer des dépenses et
-                                            effectuer la répartion des paiements sur le groupe.
+                                            Cette page permet d'enregistrer une dépense. On y indique les sommes
+                                            effectivement payées et la répartition souhaitée par les participants.
                                         </p>
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
-                                        {% set text = [
-                                            "Une dépense peut être prise en charge par 1 ou plusieurs personnes.",
-                                            "La répartition peut être indiquée en nombre de part ou par les montants exacts.",
-                                            "Plus généralement, une opération peut être une dépense commune ou un échange d'argent dans le groupe (prêt, remboursement)."
-                                        ] | join
-                                        %}
-                                        <p>{{ text }}</p>
+                                        {% set textp1 = [
+                                            "Une dépense peut être payée par 1 ou plusieurs personnes. ",
+                                            "La répartition peut être indiquée en nombre de part ou par les montants exacts en euros. "
+                                        ]|join(' ') %}
+                                        {% set textp2 = [
+                                            "Plus généralement une opération peut être une dépense à partager ",
+                                            "mais aussi un échange d'argent dans le groupe que l'on souhaite intégrer dans le compte. (prêt, remboursement),"
+                                        ] | join(' ') %}
+                                        <p>{{ textp1 }}</p>
+                                        <p>{{ textp2 }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row d-sm-none">
                             <div class="col-12">
-                                <p>{{ text }}</p>
+                                <p>{{ textp1 }}</p>
+                                <p>{{ textp2 }}</p>
                             </div>
                         </div>
                     </div>
@@ -102,26 +115,35 @@
                         <div class="row mb-2">
                             <div class="col-6 col-sm-4">
                                 <img class="img-fluid border" src="{{ asset('build/screenshots/operation_list.png') }}"
-                                     alt="Création d'un évènement">
+                                     alt="liste des opérations d'un compte">
                             </div>
                             <div class="col-6 col-sm-8">
                                 <div class="row">
                                     <div class="col-12">
                                         <p>
-                                            Toutes les opérations sont affichées par ordre chronologique. Un click sur
-                                            une ligne permet d'afficher le détail de l'opération.
+                                            Cette page affiche la liste des opérations. Toutes les opérations sont
+                                            affichées par ordre chronologique.
                                         </p>
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
-                                        {% set text = "Un bilan de l'évènement est affiché en bas de la page." %}
-                                        <p>{{ text }}</p>
+                                        {% set textp1 =
+                                            "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante."
+                                        %}
+                                        {% set textp2 = [
+                                            "Un bilan du compte est affiché en bas de la page.",
+                                            "Ce bilan indique qui doit de l'argent au groupe (nombre négatif en rouge)",
+                                            "et qui doit récupérer de l'argent du groupe (nombre en vert)."
+                                        ] | join(' ') %}
+                                        <p>{{ textp1 }}</p>
+                                        <p>{{ textp2 }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row d-sm-none">
                             <div class="col-12">
-                                <p>{{ text }}</p>
+                                <p>{{ textp1 }}</p>
+                                <p>{{ textp2 }}</p>
                             </div>
                         </div>
                     </div>
@@ -132,18 +154,19 @@
                         <div class="row mb-2">
                             <div class="col-6 col-sm-4">
                                 <img class="img-fluid border" src="{{ asset('build/screenshots/bilan.png') }}"
-                                     alt="Création d'un évènement">
+                                     alt="Création d'un compte">
                             </div>
                             <div class="col-6 col-sm-8">
                                 <div class="row">
                                     <div class="col-12">
                                         <p>
                                             A tout moment chaque participant peut accéder à un listing des opérations
-                                            avec ses dépenses. Ce listing peut être reçu par mail.
+                                            avec le détail de ses propres dépenses.
                                         </p>
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
-                                        {% set text = "" %}
+                                        {% set text =
+                                            "L'utilisateur peut demander à recevoir un répapitulatif du compte par mail ." %}
                                         <p>{{ text }}</p>
                                     </div>
                                 </div>
@@ -159,18 +182,20 @@
             </div>
             <hr class="col-12">
             <div class="container mb-2">
-                <h1 class="display-4">Dashboard</h1>
-                <p>Ce dashboard affiche quelques indicateurs, en temps réel, sur la quantité d'information gérée par
-                    le site.</p>
+                <h1 class="display-4">Tableau de bord</h1>
+                <p>
+                    Ce tableau de bord affiche quelques indicateurs, en temps réel, sur la quantité d'information gérée
+                    par le site.
+                </p>
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2">
                         <table class="table">
                             <tr>
-                                <th style="width: 80%">Nombre de comptes</th>
+                                <th style="width: 80%">Nombre d'utilisateurs</th>
                                 <td class="text-right" style="width: 20%">{{ nbUser }}</td>
                             </tr>
                             <tr>
-                                <th>Nombre d'évènements</th>
+                                <th>Nombre de comptes</th>
                                 <td class="text-right" style="width: 20%">{{ nbEvent }}</td>
                             </tr>
                             <tr>
@@ -184,20 +209,20 @@
             <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Encore une chose</h1>
-                <p>Cette application est gratuite ... avec les limites suivantes pour chaque compte :
+                <p>Cette application est gratuite ... avec les limites suivantes pour chaque compte utilisateur&nbsp;:
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2">
                         <table class="table">
                             <tr>
-                                <th style="width: 80%">Evènements</th>
+                                <th style="width: 80%">Compte</th>
                                 <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
                             </tr>
                             <tr>
-                                <th>Participants par évènement</th>
+                                <th>Participants par compte</th>
                                 <td class="text-right">{{ freeLimit['maxNbParticipant']['free'] }}</td>
                             </tr>
                             <tr>
-                                <th>Opérations par évènement</th>
+                                <th>Opérations par compte</th>
                                 <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
                             </tr>
                         </table>
