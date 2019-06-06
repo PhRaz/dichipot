@@ -93,7 +93,7 @@
                                         ]|join(' ') %}
                                         {% set textp2 = [
                                             "Plus généralement une opération peut être une dépense à partager ",
-                                            "mais aussi un échange d'argent dans le groupe que l'on souhaite intégrer dans le compte. (prêt, remboursement),"
+                                            "mais aussi un échange d'argent, entre participants, que l'on souhaite intégrer dans le compte. (prêt, remboursement),"
                                         ] | join(' ') %}
                                         <p>{{ textp1 }}</p>
                                         <p>{{ textp2 }}</p>
@@ -130,9 +130,9 @@
                                             "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante."
                                         %}
                                         {% set textp2 = [
-                                            "Un bilan du compte est affiché en bas de la page.",
-                                            "Ce bilan indique qui doit de l'argent au groupe (nombre négatif en rouge)",
-                                            "et qui doit récupérer de l'argent du groupe (nombre en vert)."
+                                            "Un résumé du compte est affiché en bas de la page.",
+                                            "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
+                                            "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
                                         ] | join(' ') %}
                                         <p>{{ textp1 }}</p>
                                         <p>{{ textp2 }}</p>
@@ -161,7 +161,7 @@
                                     <div class="col-12">
                                         <p>
                                             A tout moment chaque participant peut accéder à un listing des opérations
-                                            avec le détail de ses propres dépenses.
+                                            du compte avec le détail de ses propres dépenses.
                                         </p>
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
