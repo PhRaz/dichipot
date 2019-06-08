@@ -37,31 +37,44 @@ logout/login
 git clone https://github.com/PhRaz/dichipot.git
 cd dichipot
 docker-compose build
-
 sudo dd if=/dev/zero of=/var/swapfile bs=1M count=2048 &&
 sudo chmod 600 /var/swapfile &&
 sudo mkswap /var/swapfile &&
 echo /var/swapfile none swap defaults 0 0 | sudo tee -a /etc/fstab &&
 sudo swapon -a
-
 docker-compose up -d
+
+docker exec -it dichipot_php bash
 cd dichipot
 composer install --no-dev --optimize-autoloader
 yarn install
 yarn encore production
 update .env (crendentials aws et ENV=prod)
-
-dans le container mysql
-create user sf4@'172.20.0.4' identified by 'sf4';
-GRANT ALL PRIVILEGES ON sf4.* TO sf4@'172.20.0.4';
-
-php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
-aws configure
-mysql>
-create user ‘root’@‘127.0.0.1' identified by 'root';
-GRANT ALL PRIVILEGES ON sf4.* TO root@'127.0.0.1';
-mysql -u root  sf4 < /var/lib/mysql/201906040000.sql
+exit
 
-crontab -e
-0 0 * * * docker exec dichipot_mysql mysqldump -uroot sf4 | gzip - | aws s3 cp - s3://dichipot/$(date +\%Y\%m\%d\%H\%M).sql.gz
+restore the db
+
+> crontab -e
+MAILTO="philippe.razavet@gmail.com"
+30 0 * * * docker exec dichipot_mysql mysqldump -uroot -proot sf4 | gzip - | aws s3 cp - s3://dichipot/$(date +\%Y\%m\%d\%H\%M).sql.gz
+
+installation certificat SSL
+
+wget https://dl.eff.org/certbot-auto
+sudo mv certbot-auto /usr/local/bin/certbot-auto
+sudo chown root /usr/local/bin/certbot-auto
+sudo chmod 0755 /usr/local/bin/certbot-auto
+
+sudo /usr/local/bin/certbot-auto --debug -v --server https://acme-v01.api.letsencrypt.org/directory certonly -d dichipot.com
+on utilise le serveur local pour la procédure d'installation :
+Input the webroot for dichipot.com: (Enter 'c' to cancel): /home/wwwroot/dichipot/public
+
+docker exec -it dichipot_apache bash
+les fichiers de certification :
+/etc/letsencrypt/live/dichipot.com/fullchain.pem
+/etc/letsencrypt/live/dichipot.com/privkey.pem
+    cd /etc/apache2/sites-available
+sed -i 's|/etc/ssl/certs/ssl-cert-snakeoil.pem|/etc/letsencrypt/live/dichipot.com/fullchain.pem|' default-ssl.conf
+
+sed -i 's/#SSLCertificateChainFile/SSLCertificateChainFile/' default-ssl.conf

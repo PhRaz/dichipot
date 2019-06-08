@@ -88,12 +88,13 @@
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
                                         {% set textp1 = [
-                                            "Une dépense peut être payée par 1 ou plusieurs personnes. ",
-                                            "La répartition peut être indiquée en nombre de part ou par les montants exacts en euros. "
+                                            "Une dépense peut être payée par une ou plusieurs personnes. ",
+                                            "La répartition est faite en attribuant un nombre de part à chaque participant.",
+                                            "Il est possible d'indiquer les montants exacts en euros à la place des parts."
                                         ]|join(' ') %}
                                         {% set textp2 = [
-                                            "Plus généralement une opération peut être une dépense à partager ",
-                                            "mais aussi un échange d'argent, entre participants, que l'on souhaite intégrer dans le compte. (prêt, remboursement),"
+                                            "Plus généralement une opération peut être une dépense à partager,",
+                                            "ou un échange d'argent entre participants (prêt, remboursement), que l'on souhaite intégrer dans le compte."
                                         ] | join(' ') %}
                                         <p>{{ textp1 }}</p>
                                         <p>{{ textp2 }}</p>
@@ -228,7 +229,7 @@
                         </table>
                     </div>
                 </div>
-                <p>Pour toutes questions ou suggestions vous pouvez contacter l'administrateur du site à
+                <p>Pour toutes questions ou suggestions vous pouvez contacter
                     <a href="mailto:admin@dichipot.com" target="_blank">admin@dichipot.com</a>.</p>
                 <p>Le code et la documentation technique sont disponible sur <a
                             href="https://github.com/PhRaz/dichipot" target="_blank">Github <i class="fab fa-github"></i></a>.</p>
