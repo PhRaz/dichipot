@@ -46,7 +46,7 @@ Dichipot is developed and deployed with the docker configuration as provided her
 ## SSL
 
 Installation d'un certificat SSL gratuit avec letsencrypt
-https://www.developercookies.net/?p=400
+- <https://www.developercookies.net/?p=400>
 
 ## installation
 
