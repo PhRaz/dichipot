@@ -14,12 +14,14 @@
                     <p>
                         Cette application web vous permet de gérer un compte commun pour partager des dépenses.<br>
                         Utile pour
+                    </p>
                     <ul>
                         <li>les colocataires,</li>
                         <li>les couples,</li>
                         <li>les amis ...</li>
                     </ul>
-                    elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
+                    <p>
+                        elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
                     </p>
                     <div class="text-center">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -122,8 +124,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <p>
-                                            Cette page affiche la liste des opérations. Toutes les opérations sont
-                                            affichées par ordre chronologique.
+                                            Cette page affiche la liste des opérations pour un compte (ici c'est "WE à
+                                            Paris"). Toutes les opérations sont affichées par ordre chronologique.
                                         </p>
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
@@ -210,7 +212,7 @@
             <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Encore une chose</h1>
-                <p>Cette application est gratuite ... avec les limites suivantes pour chaque utilisateur&nbsp;:
+                <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque utilisateur&nbsp;:
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2">
                         <table class="table">
@@ -232,7 +234,8 @@
                 <p>Pour toutes questions ou suggestions vous pouvez contacter
                     <a href="mailto:admin@dichipot.com" target="_blank">admin@dichipot.com</a>.</p>
                 <p>Le code et la documentation technique sont disponible sur <a
-                            href="https://github.com/PhRaz/dichipot" target="_blank">Github <i class="fab fa-github"></i></a>.</p>
+                            href="https://github.com/PhRaz/dichipot" target="_blank">Github <i
+                                class="fab fa-github"></i></a>.</p>
             </div>
         </div>
     </div>
