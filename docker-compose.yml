@@ -5,6 +5,7 @@ services:
     container_name: dichipot_apache
     ports:
       - 80:80
+      - 443:443
     volumes:
       - .docker/config/vhosts:/etc/apache2/sites-enabled
       - .:/home/wwwroot/dichipot
