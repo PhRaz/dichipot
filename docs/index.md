@@ -43,6 +43,11 @@ https://realfavicongenerator.net/
 Dichipot is developed and deployed with the docker configuration as provided here 
 <https://github.com/romaricp/kit-starter-symfony-4-docker>
 
+## SSL
+
+Installation d'un certificat SSL gratuit avec letsencrypt
+https://www.developercookies.net/?p=400
+
 ## installation
 
 Here is the procedure to install the application on a server.
