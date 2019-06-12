@@ -56,25 +56,28 @@ exit
 
 restore the db
 
+cp .docker/prod/config/vhosts/dichipot.conf .docker/config/vhosts/dichipot.conf
+
 > crontab -e
 MAILTO="philippe.razavet@gmail.com"
 30 0 * * * docker exec dichipot_mysql mysqldump -uroot -proot sf4 | gzip - | aws s3 cp - s3://dichipot/$(date +\%Y\%m\%d\%H\%M).sql.gz
-40 0 * * * sudo tar -cvzf - certs | aws s3 cp - s3://dichipot/certs_$(date +\%Y\%m\%d\%H\%M).tar.gz
+
+sudo tar -cvzf - dichipot/certs | aws s3 cp - s3://dichipot/certs_$(date +\%Y\%m\%d\%H\%M).tar.gz
 
 # installation certificat SSL en prod
+
+mettre à jour l'EIP sur la nouvelle instance ec2 pour avoir le nomde domaine en face de dichipot.com
 
 cd; cd dichipot
 mkdir certs
 mkdir data
 
-mettre à jour l'EIP sur la nouvelle instance ec2 (dichipot.com)
-
-docker run -it --rm -v /home/ec2-user/dichipot/certs:/etc/letsencrypt \
--v /home/ec2-user/dichipot/data:/data/letsencrypt certbot/certbot certonly \
+docker run -it --rm \
+-v /home/ec2-user/dichipot/certs:/etc/letsencrypt \
+-v /home/ec2-user/dichipot/data:/data/letsencrypt \
+certbot/certbot certonly \
 --webroot --webroot-path=/data/letsencrypt -d dichipot.com --email admin@dichipot.com --agree-tos
 
-pour le renouvellement :
+sudo tar -cvzf - certs | aws s3 cp - s3://dichipot-certs/certs_$(date +\%Y\%m\%d\%H\%M).tar.gz
 
-0 0 0 */2 * docker run -it --rm -v /home/letsencrypt/certs:/etc/letsencrypt \
--v /home/letsencrypt/data:/data/letsencrypt certbot/certbot certonly \
---webroot --webroot-path=/data/letsencrypt -d somedomain.com --email info@somedomain.com --agree-tos >/dev/null 2>&1
+Pour le renouvellement c'est la même commande.

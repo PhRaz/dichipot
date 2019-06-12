@@ -41,7 +41,8 @@ https://realfavicongenerator.net/
 ## Docker
 
 Dichipot is developed and deployed with the docker configuration as provided here 
-<https://github.com/romaricp/kit-starter-symfony-4-docker>
+- <https://github.com/romaricp/kit-starter-symfony-4-docker>
+- <https://hub.docker.com/r/certbot/certbot/>
 
 ## SSL
 
