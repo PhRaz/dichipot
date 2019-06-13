@@ -169,8 +169,20 @@ class Event
     public function isUserParticipant(User $user): bool
     {
         /** @var UserEvent $userEvent */
-        foreach($this->getUserEvents() as $userEvent) {
+        foreach ($this->getUserEvents() as $userEvent) {
             if ($userEvent->getUser() === $user) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function isUserAdmin(User $user): bool
+    {
+        /** @var UserEvent $userEvent */
+        foreach ($this->getUserEvents() as $userEvent) {
+            if ($userEvent->getUser() === $user &&
+                $userEvent->getAdministrator() === true) {
                 return true;
             }
         }

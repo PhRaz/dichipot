@@ -58,11 +58,11 @@ class MainController extends AbstractController
         $nbOperation = $operation->getNbOperation();
 
         return $this->render("home.html.twig", [
-                'nbUser' => $nbUser,
-                'nbEvent' => $nbEvent,
-                'nbOperation' => $nbOperation,
-                'freeLimit' => $freeLimit
-            ]);
+            'nbUser' => $nbUser,
+            'nbEvent' => $nbEvent,
+            'nbOperation' => $nbOperation,
+            'freeLimit' => $freeLimit
+        ]);
     }
 
     /**
@@ -235,11 +235,32 @@ class MainController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        /** @var \App\Security\User $loggedUser */
+        $loggedUser = $this->getUser();
+        $mail = $loggedUser->getEmail();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->findOneBy(['mail' => $mail]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
+
+        if (!$event->isUserAdmin($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         if ($authChecker->isGranted('ROLE_PREMIUM')) {
             $maxNbParticipant = $freeLimit['maxNbParticipant']['premium'];
@@ -339,12 +360,25 @@ class MainController extends AbstractController
 
         /** @var User $user */
         $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
+
+        if (!$event->isUserParticipant($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         if (count($event->getOperations()) > 0) {
             $event = $eventRepo->getEventOperations($eventId, true);
@@ -384,8 +418,14 @@ class MainController extends AbstractController
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
 
-        /** @var User $user */
-        $admin = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        /** @var User $loggedUser */
+        $loggedUser = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         /** @var array $users */
         $users = $userRepo->getEventUsers($eventId);
@@ -399,10 +439,17 @@ class MainController extends AbstractController
         /** @var Event $event */
         $event = $userEvent->getEvent();
 
+        if (!$event->isUserParticipant($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
         /*
          * init operation and relate to the event
          */
-        $operation->setUser($admin);
+        $operation->setUser($loggedUser);
         $operation->setDate(new \DateTime());
         $event->addOperation($operation);
 
@@ -449,6 +496,28 @@ class MainController extends AbstractController
         /** @var Operation $operation */
         $operation = $operationRepo->findForUpdate($operationId);
 
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $loggedUser */
+        $loggedUser = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
+        if (!$operation->getEvent()->isUserParticipant($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
         $form = $this->createForm(OperationType::class, $operation);
         $form->handleRequest($request);
 
@@ -480,6 +549,28 @@ class MainController extends AbstractController
 
         /** @var Operation $operation */
         $operation = $operationRepo->findForUpdate($operationId);
+
+        /** @var \App\Security\User $authenticatedUser */
+        $authenticatedUser = $this->getUser();
+
+        /** @var UserRepository $userRepo */
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+
+        /** @var User $loggedUser */
+        $loggedUser = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
+
+        if (!$operation->getEvent()->isUserParticipant($loggedUser)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
@@ -519,12 +610,25 @@ class MainController extends AbstractController
 
         /** @var User $user */
         $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
 
         /** @var Event $event */
         $event = $eventRepo->getEventOperations($eventId);
+
+        if (!$event->isUserParticipant($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         if (count($event->getOperations()) === 0) {
             return $this->redirectToRoute('operation_list', ['eventId' => $eventId]);
@@ -568,6 +672,12 @@ class MainController extends AbstractController
 
         /** @var User $user */
         $user = $userRepo->findOneBy(['mail' => $authenticatedUser->getEmail()]);
+        if (is_null($user)) {
+            /*
+             * should never occurs
+             */
+            return ($this->redirectToRoute("app_logout"));
+        }
 
         /** @var EventRepository $eventRepo */
         $eventRepo = $this->getDoctrine()->getRepository(Event::class);
@@ -577,7 +687,6 @@ class MainController extends AbstractController
 
         /*
          * security check on user participating to the event
-         * TODO use voters
          */
         if (!$event->isUserParticipant($user)) {
             throw $this->createAccessDeniedException();
