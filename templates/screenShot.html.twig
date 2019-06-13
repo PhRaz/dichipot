@@ -1,0 +1,31 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <h2>{{ title }}</h2>
+        <div class="row mb-2">
+            <div class="col-6 col-sm-4">
+                {% set imageAsset = asset(image) %}
+                <img class="img-fluid border" src="{{ imageAsset }}"
+                     alt="{{ title }}">
+            </div>
+            <div class="col-6 col-sm-8">
+                <div class="row">
+                    <div class="col-12">
+                        <p>
+                            {{ textp0 }}
+                        </p>
+                    </div>
+                    <div class="col-12 d-none d-sm-block">
+                        <p>{{ textp1 }}</p>
+                        <p>{{ textp2 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-sm-none">
+            <div class="col-12">
+                <p>{{ textp1 }}</p>
+                <p>{{ textp2 }}</p>
+            </div>
+        </div>
+    </div>
+</div>

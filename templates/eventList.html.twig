@@ -2,11 +2,11 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-2">
+        <div class="col-12 mb-2">
             <div class="row">
                 {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
                     {% set event = userEvent.event %}
-                    <div class="col-12 col-md-6">
+                    <div class="col-xs-12 col-md-6 col-lg-4">
                         <div class="card mt-2 mb-2">
                             <div class="card-header">
                                 <div class="row">
@@ -47,7 +47,7 @@
                     </div>
                 {% endfor %}
                 {% if newEventButton is same as (true) %}
-                    <div class="col-12 col-md-6">
+                    <div class="col-xs-12 col-md-6 col-lg-4">
                         <div class="card mt-2 mb-2">
                             <div class="card-body">
                                 <p class="lead">Créez un nouvel évènement.</p>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="col-12 col-md-6">
+                    <div class="col-xs-12 col-md-6 col-lg-4">
                         <div class="card mt-2 mb-2">
                             <div class="card-body">
                                 <p class="lead">Vous avez atteint le nombre maximum d'évènements autorisé.</p>
