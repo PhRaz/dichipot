@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2 mb-2">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-2">
             <div class="jumbotron">
                 <div class="container">
                     <h1 class="text-center">
@@ -12,7 +12,7 @@
                     <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
                     <hr class="my-4">
                     <p>
-                        Cette application web vous permet de gérer un compte commun pour partager des dépenses.<br>
+                        Cette application web vous permet de gérer des comptes communs pour partager des dépenses.<br>
                         Utile pour
                     </p>
                     <ul>
@@ -130,8 +130,7 @@
                                     </div>
                                     <div class="col-12 d-none d-sm-block">
                                         {% set textp1 =
-                                            "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante."
-                                        %}
+                                            "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante." %}
                                         {% set textp2 = [
                                             "Un résumé du compte est affiché en bas de la page.",
                                             "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
@@ -212,12 +211,13 @@
             <hr class="col-12">
             <div class="container mb-2">
                 <h1 class="display-4">Encore une chose</h1>
-                <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque utilisateur&nbsp;:
+                <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque
+                    utilisateur&nbsp;:</p>
                 <div class="row">
                     <div class="col-12 col-sm-8 offset-sm-2">
                         <table class="table">
                             <tr>
-                                <th style="width: 80%">Compte</th>
+                                <th style="width: 80%">Compte (*)</th>
                                 <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
                             </tr>
                             <tr>
@@ -229,6 +229,8 @@
                                 <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
                             </tr>
                         </table>
+                        <p class="text-muted small">(*) Nombre maximum de compte que vous pouvez créer. Toutefois vous
+                            pouvez être invité à participer à un nombre de comptes illimité.</p>
                     </div>
                 </div>
                 <p>Pour toutes questions ou suggestions vous pouvez contacter

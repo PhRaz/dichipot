@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12 offset-md-2 col-md-8 mb-2">
+        <div class="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 mb-2">
             <div class="row">
                 {% for userEvent in user.userEvents if user.userEvents|length > 0 %}
                     {% set event = userEvent.event %}
