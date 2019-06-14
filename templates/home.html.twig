@@ -4,175 +4,167 @@
     <div class="row">
         <div class="col-12 col-xl-8 offset-xl-2 mb-2">
             <div class="jumbotron">
-                <div class="container">
-                    <h1 class="text-center">
-                        <img src="{{ asset('build/dichipot_logo_color.svg') }}" height="80"
-                             class="d-inline-block align-top" alt="dichipot">
-                    </h1>
-                    <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
-                    <hr class="my-4">
-                    <div class="row">
-                        <div class="col-12 col-md-9">
-                            <p>
-                                Cette application web vous permet de gérer des comptes communs pour partager des dépenses.<br>
-                                Utile pour
-                            </p>
-                            <ul>
-                                <li>les colocataires,</li>
-                                <li>les couples,</li>
-                                <li>les amis ...</li>
-                            </ul>
-                            <p>
-                                elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
-                            </p>
-                        </div>
-                        <div class="d-none col-md-3 d-md-block">
-                            <img class="img-fluid" src="{{ asset('build/screenshots/mobile.png') }}" alt="mobile">
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                            <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes
-                                comptes</a>
-                        {% else %}
-                            <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <hr class="col-12">
-            <div class="container mb-4">
-                <h1 class="display-4">Simple</h1>
-                <div class="card-deck">
-                    <div class="card bg-light text-center border border-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">1 créez</h5>
-                            <img class="card-img-top rounded" src="{{ asset('build/step1.jpg') }}" alt="Calendrier">
-                            <p class="card-text mt-2">
-                                Créez un compte, ajoutez les participants.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card bg-light text-center border border-light shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title text-nowrap">2 enregistrez</h5>
-                            <img class="card-img-top rounded" src="{{ asset('build/step2.jpg') }}"
-                                 alt="tickets de caisse">
-                            <p class="card-text mt-2">
-                                Les participants enregistrent les dépenses.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card bg-light text-center border border-light shadow-sm">
-                        <div class="card-body bg-light">
-                            <h5 class="card-title">3 respirez</h5>
-                            <img class="card-img-top rounded" src="{{ asset('build/step3.jpg') }}"
-                                 alt="cocktails sur la plage">
-                            <p class="card-text mt-2">
-                                A tout moment chacun sait "qui doit combien à qui".
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr class="col-12">
-            <div class="container mb-2">
-                <h1 class="display-4">Captures d'écran</h1>
-                <p>Voici quelques captures d'écran, au format mobile, pour se faire une idée de l'application.</p>
-                {{ include('screenShot.html.twig', {
-                    'title': "Enregistrement d'une dépense",
-                    'image': 'build/screenshots/new_operation.png',
-                    'textp0': "Cette page permet d'enregistrer une dépense. On y indique les sommes effectivement payées et la répartition souhaitée par les participants.",
-                    'textp1': [
-                        "Une dépense peut être payée par une ou plusieurs personnes. ",
-                        "La répartition est faite en attribuant un nombre de part à chaque participant.",
-                        "Il est possible d'indiquer les montants exacts en euros à la place des parts."
-                    ] | join(' '),
-                    'textp2': [
-                        "Plus généralement une opération peut être une dépense à partager,",
-                        "ou un échange d'argent entre participants (prêt, remboursement), que l'on souhaite intégrer dans le compte."
-                    ] | join(' ')
-                }) }}
-                {{ include('screenShot.html.twig', {
-                    'title': "Liste des opérations",
-                    'image': 'build/screenshots/operation_list.png',
-                    'textp0': [
-                        "Cette page affiche la liste des opérations pour un compte (ici c'est \"WE à Paris\").",
-                        "Toutes les opérations sont affichées par ordre chronologique.",
-                    ] | join(' '),
-                    'textp1': "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante.",
-                    'textp2': [
-                        "Un résumé du compte est affiché en bas de la page.",
-                        "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
-                        "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
-                    ] | join(' ')
-                }) }}
-                {{ include('screenShot.html.twig', {
-                    'title': "Bilan",
-                    'image': 'build/screenshots/bilan.png',
-                    'textp0': "A tout moment chaque participant peut accéder à un listing des opérations du compte avec le détail de ses propres dépenses.",
-                    'textp1': "L'utilisateur peut demander à recevoir un récapitulatif du compte par mail.",
-                    'textp2': ""
-                }) }}
-            </div>
-            <hr class="col-12">
-            <div class="container mb-2">
-                <h1 class="display-4">Tableau de bord</h1>
-                <p>
-                    Ce tableau de bord affiche quelques indicateurs sur la quantité d'information gérée
-                    par le site.
-                </p>
+                <h1 class="text-center">
+                    <img src="{{ asset('build/dichipot_logo_color.svg') }}" height="80"
+                         class="d-inline-block align-top" alt="dichipot">
+                </h1>
+                <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
+                <hr class="my-4">
                 <div class="row">
-                    <div class="col-12 col-lg-8 offset-lg-2">
-                        <table class="table">
-                            <tr>
-                                <th style="width: 80%">Nombre d'utilisateurs</th>
-                                <td class="text-right" style="width: 20%">{{ nbUser }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nombre de comptes</th>
-                                <td class="text-right" style="width: 20%">{{ nbEvent }}</td>
-                            </tr>
-                            <tr>
-                                <th>Nombre d'opérations</th>
-                                <td class="text-right" style="width: 20%">{{ nbOperation }}</td>
-                            </tr>
-                        </table>
+                    <div class="col-12 col-md-9">
+                        <p>
+                            Cette application web vous permet de gérer des comptes communs pour partager des
+                            dépenses.<br>
+                            Utile pour
+                        </p>
+                        <ul>
+                            <li>les colocataires,</li>
+                            <li>les couples,</li>
+                            <li>les amis ...</li>
+                        </ul>
+                        <p>
+                            elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
+                        </p>
+                    </div>
+                    <div class="d-none col-md-3 d-md-block">
+                        <img class="img-fluid" src="{{ asset('build/screenshots/mobile.png') }}" alt="mobile">
+                    </div>
+                </div>
+                <div class="text-center">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes
+                            comptes</a>
+                    {% else %}
+                        <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <h1 class="display-4">Simple</h1>
+            <div class="card-deck">
+                <div class="card bg-light text-center border border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">1 créez</h5>
+                        <img class="card-img-top rounded" src="{{ asset('build/step1.jpg') }}" alt="Calendrier">
+                        <p class="card-text mt-2">
+                            Créez un compte, ajoutez les participants.
+                        </p>
+                    </div>
+                </div>
+                <div class="card bg-light text-center border border-light shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-nowrap">2 enregistrez</h5>
+                        <img class="card-img-top rounded" src="{{ asset('build/step2.jpg') }}"
+                             alt="tickets de caisse">
+                        <p class="card-text mt-2">
+                            Les participants enregistrent les dépenses.
+                        </p>
+                    </div>
+                </div>
+                <div class="card bg-light text-center border border-light shadow-sm">
+                    <div class="card-body bg-light">
+                        <h5 class="card-title">3 respirez</h5>
+                        <img class="card-img-top rounded" src="{{ asset('build/step3.jpg') }}"
+                             alt="cocktails sur la plage">
+                        <p class="card-text mt-2">
+                            A tout moment chacun sait "qui doit combien à qui".
+                        </p>
                     </div>
                 </div>
             </div>
-            <hr class="col-12">
-            <div class="container mb-2">
-                <h1 class="display-4">Encore une chose</h1>
-                <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque
-                    utilisateur&nbsp;:</p>
-                <div class="row">
-                    <div class="col-12 col-lg-8 offset-lg-2">
-                        <table class="table">
-                            <tr>
-                                <th style="width: 80%">Compte</th>
-                                <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Participants par compte</th>
-                                <td class="text-right">{{ freeLimit['maxNbParticipant']['free'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Opérations par compte</th>
-                                <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
-                            </tr>
-                        </table>
-                    </div>
+            <hr>
+            <h1 class="display-4">Captures d'écran</h1>
+            <p>Voici quelques captures d'écran, au format mobile, pour se faire une idée de
+                l'application.</p>
+            {{ include('screenShot.html.twig', {
+                'title': "Enregistrement d'une dépense",
+                'image': 'build/screenshots/new_operation.png',
+                'textp0': "Cette page permet d'enregistrer une dépense. On y indique les sommes effectivement payées et la répartition souhaitée par les participants.",
+                'textp1': [
+                    "Une dépense peut être payée par une ou plusieurs personnes. ",
+                    "La répartition est faite en attribuant un nombre de part à chaque participant.",
+                    "Il est possible d'indiquer les montants exacts en euros à la place des parts."
+                ] | join(' '),
+                'textp2': [
+                    "Plus généralement une opération peut être une dépense à partager,",
+                    "ou un échange d'argent entre participants (prêt, remboursement), que l'on souhaite intégrer dans le compte."
+                ] | join(' ')
+            }) }}
+            {{ include('screenShot.html.twig', {
+                'title': "Liste des opérations",
+                'image': 'build/screenshots/operation_list.png',
+                'textp0': [
+                    "Cette page affiche la liste des opérations pour un compte (ici c'est \"WE à Paris\").",
+                    "Toutes les opérations sont affichées par ordre chronologique.",
+                ] | join(' '),
+                'textp1': "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante.",
+                'textp2': [
+                    "Un résumé du compte est affiché en bas de la page.",
+                    "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
+                    "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
+                ] | join(' ')
+            }) }}
+            {{ include('screenShot.html.twig', {
+                'title': "Bilan",
+                'image': 'build/screenshots/bilan.png',
+                'textp0': "A tout moment chaque participant peut accéder à un listing des opérations du compte avec le détail de ses propres dépenses.",
+                'textp1': "L'utilisateur peut demander à recevoir un récapitulatif du compte par mail.",
+                'textp2': ""
+            }) }}
+            <hr>
+            <h1 class="display-4">Tableau de bord</h1>
+            <p>
+                Ce tableau de bord affiche quelques indicateurs sur la quantité d'information gérée
+                par le site.
+            </p>
+            <div class="row">
+                <div class="col-12 col-lg-8 offset-lg-2">
+                    <table class="table">
+                        <tr>
+                            <th style="width: 80%">Nombre d'utilisateurs</th>
+                            <td class="text-right" style="width: 20%">{{ nbUser }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de comptes</th>
+                            <td class="text-right" style="width: 20%">{{ nbEvent }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre d'opérations</th>
+                            <td class="text-right" style="width: 20%">{{ nbOperation }}</td>
+                        </tr>
+                    </table>
                 </div>
-                <p>
-                    Pour toutes questions ou suggestions vous pouvez contacter
-                    <a href="mailto:admin@dichipot.com" target="_blank">admin@dichipot.com</a>.<br>
-                    Vous pouvez aussi <a href="https://github.com/PhRaz/dichipot/issues">ouvrir un ticket sur GitHub</a>.
-                </p>
-                <p>Le code et la documentation technique sont disponible sur <a
-                            href="https://github.com/PhRaz/dichipot" target="_blank">Github <i
-                                class="fab fa-github"></i></a>.</p>
             </div>
+            <hr>
+            <h1 class="display-4">Encore une chose</h1>
+            <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque
+                utilisateur&nbsp;:</p>
+            <div class="row">
+                <div class="col-12 col-lg-8 offset-lg-2">
+                    <table class="table">
+                        <tr>
+                            <th style="width: 80%">Compte</th>
+                            <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Participants par compte</th>
+                            <td class="text-right">{{ freeLimit['maxNbParticipant']['free'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Opérations par compte</th>
+                            <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <p>
+                Pour toutes questions ou suggestions vous pouvez contacter
+                <a href="mailto:admin@dichipot.com" target="_blank">admin@dichipot.com</a>.<br>
+                Vous pouvez aussi <a href="https://github.com/PhRaz/dichipot/issues">ouvrir un ticket sur GitHub</a>.
+            </p>
+            <p>Le code et la documentation technique sont disponible sur <a
+                        href="https://github.com/PhRaz/dichipot" target="_blank">Github <i
+                            class="fab fa-github"></i></a>.</p>
         </div>
     </div>
 {% endblock %}
