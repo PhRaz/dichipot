@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="row">
-        <div class="col-12 col-md-6 offset-md-3">
-
+        <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
             <h2>Modification évènement</h2>
-
             {{ form_start(form) }}
-
             <div class="form-group">
                 {{ form_widget(form.date) }}
                 {{ form_errors(form.date) }}
@@ -19,7 +16,6 @@
                 {{ form_widget(form.description, {'attr': {'placeholder': 'description'}} ) }}
                 {{ form_errors(form.description) }}
             </div>
-
             <div class="userEvents" data-max-nb-participant="{{ maxNbParticipant }}" data-prototype="
             {% filter escape %}
                 {{ include('addUserOnEvent.html.twig', { 'form': form.userEvents.vars.prototype }) }}
