@@ -77,6 +77,20 @@
             <p>Voici quelques captures d'écran, au format mobile, pour se faire une idée de
                 l'application.</p>
             {{ include('screenShot.html.twig', {
+                'title': "Liste des opérations",
+                'image': 'build/screenshots/operation_list.png',
+                'textp0': [
+                    "Cette page affiche la liste des opérations pour un compte (ici c'est \"WE à Paris\").",
+                    "Toutes les opérations sont affichées par ordre chronologique.",
+                ] | join(' '),
+                'textp1': "Les détails de chaque opération sont accessibles en cliquant sur la ligne correspondante.",
+                'textp2': [
+                    "Un résumé du compte est affiché en bas de la page.",
+                    "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
+                    "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
+                ] | join(' ')
+            }) }}
+            {{ include('screenShot.html.twig', {
                 'title': "Enregistrement d'une dépense",
                 'image': 'build/screenshots/new_operation.png',
                 'textp0': "Cette page permet d'enregistrer une dépense. On y indique les sommes effectivement payées et la répartition souhaitée par les participants.",
@@ -88,20 +102,6 @@
                 'textp2': [
                     "Plus généralement une opération peut être une dépense à partager,",
                     "ou un échange d'argent entre participants (prêt, remboursement), que l'on souhaite intégrer dans le compte."
-                ] | join(' ')
-            }) }}
-            {{ include('screenShot.html.twig', {
-                'title': "Liste des opérations",
-                'image': 'build/screenshots/operation_list.png',
-                'textp0': [
-                    "Cette page affiche la liste des opérations pour un compte (ici c'est \"WE à Paris\").",
-                    "Toutes les opérations sont affichées par ordre chronologique.",
-                ] | join(' '),
-                'textp1': "Les détails de chaque opération sont affichés en cliquant sur la ligne correspondante.",
-                'textp2': [
-                    "Un résumé du compte est affiché en bas de la page.",
-                    "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
-                    "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
                 ] | join(' ')
             }) }}
             {{ include('screenShot.html.twig', {
