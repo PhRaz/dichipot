@@ -65,7 +65,7 @@
                         {% if expense == 0 %}
                             {% set color = "text-muted" %}
                         {% else %}
-                            {% set color = "text-dark" %}
+                            {% set color = "font-weight-bold" %}
                         {% endif %}
                         <div class="col-3 text-right text-nowrap {{ color }}">
                             {{ expense|number_format('2', ',', ' ') }} €
@@ -122,3 +122,4 @@
         </div>
     </div>
 {% endblock %}
+
