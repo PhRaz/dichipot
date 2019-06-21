@@ -4,8 +4,8 @@ body {
 }
 
 .jumbotron {
-    background-image: url("../images/step2_blur.jpg");
-    background-size: cover;
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url("../images/sauzon.svg");
+    background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
 }
-
