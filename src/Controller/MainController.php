@@ -105,9 +105,21 @@ class MainController extends AbstractController
         $userId = $user->getId();
         $data = $userRepo->getUserEvents($userId);
 
+        $balance = [];
+        foreach ($data->getUserEvents() as $userEvent) {
+            $event = $userEvent->getEvent();
+            $eventId = $event->getId();
+            /** @var EventHelper $eventHelper */
+            $eventHelper = new EventHelper($event);
+            foreach ($eventHelper->summary as $userId => $userData) {
+                $balance[$eventId][$userId] = $userData['balance'];
+            }
+        }
+
         return $this->render("eventList.html.twig", [
             'user' => $data,
-            'newEventButton' => $newEventButton
+            'newEventButton' => $newEventButton,
+            'balance' => $balance
         ]);
     }
 
