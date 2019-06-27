@@ -1,11 +1,9 @@
-FROM php:7.2.10-fpm
+FROM php:7.3.6-fpm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim curl debconf subversion git apt-transport-https apt-utils \
     build-essential locales acl mailutils wget nodejs zip unzip \
-    gnupg gnupg1 gnupg2 \
-    zlib1g-dev \
-    sudo
+    gnupg gnupg1 gnupg2 zlib1g-dev libzip-dev
 
 RUN docker-php-ext-install pdo pdo_mysql zip
 
