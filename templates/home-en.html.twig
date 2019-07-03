@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% trans_default_domain 'dichipot' %}
+
 {% block body %}
     <div class="row">
         <div class="col-12 col-xl-8 offset-xl-2 mb-2">
@@ -8,33 +10,32 @@
                     <img src="{{ asset('build/dichipot_logo_color_white.svg') }}" height="80"
                          class="d-inline-block align-top" alt="dichipot">
                 </h1>
-                <p class="lead text-center">Une solution simple pour partager les dépenses.</p>
+                <p class="lead text-center">A simple solution to share expenses.</p>
                 <div class="row">
                     <div class="col-12 col-md-6 offset-md-2">
                         <p>
-                            Cette application web vous permet de gérer des comptes communs pour partager des
-                            dépenses.<br>
-                            Utile pour
+                            This web application allows you to manage common accounts to share expenses.<br>
+                            Useful for
                         </p>
                         <ul>
-                            <li>les colocataires,</li>
-                            <li>les couples,</li>
-                            <li>les amis ...</li>
+                            <li>roomates,</li>
+                            <li>couples,</li>
+                            <li>friends ...</li>
                         </ul>
                         <p>
-                            elle fonctionne aussi bien sur un mobile que sur une tablette ou un ordinateur de bureau.
+                            it works just as well on a mobile phone as on a tablet or a desktop computer.
                         </p>
                     </div>
                     <div class="d-none col-md-2 d-md-block">
-                        <img class="img-fluid" src="{{ asset('build/screenshots/mobile.png') }}" alt="Dichipot version mobile">
+                        <img class="img-fluid" src="{{ asset('build/screenshots/mobile.png') }}"
+                             alt="Dichipot version mobile">
                     </div>
                 </div>
                 <div class="text-center">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">Mes
-                            comptes</a>
+                        <a class="btn btn-primary btn-lg" href="{{ path('event_list') }}" role="button">My accounts</a>
                     {% else %}
-                        <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+                        <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Log in</a>
                     {% endif %}
                 </div>
             </div>
@@ -43,125 +44,123 @@
             <div class="card-deck">
                 <div class="card text-center border border-white">
                     <div class="card-body">
-                        <h5 class="card-title">1 créez</h5>
-                        <img class="card-img-top rounded" src="{{ asset('build/step1.png') }}" alt="groupe de participants">
+                        <h5 class="card-title">1 create</h5>
+                        <img class="card-img-top rounded" src="{{ asset('build/step1.png') }}"
+                             alt="groupe de participants">
                         <p class="card-text mt-2">
-                            Créez un compte, ajoutez les participants.
+                            Create an account, add the participants.
                         </p>
                     </div>
                 </div>
                 <div class="card text-center border border-white">
                     <div class="card-body">
-                        <h5 class="card-title text-nowrap">2 enregistrez</h5>
+                        <h5 class="card-title text-nowrap">2 record</h5>
                         <img class="card-img-top rounded" src="{{ asset('build/step2.png') }}"
                              alt="des tickets de caisse">
                         <p class="card-text mt-2">
-                            Les participants enregistrent les dépenses.
+                            Participants record expenses.
                         </p>
                     </div>
                 </div>
                 <div class="card text-center border border-white">
                     <div class="card-body">
-                        <h5 class="card-title">3 respirez</h5>
+                        <h5 class="card-title">3 breathe</h5>
                         <img class="card-img-top rounded" src="{{ asset('build/step3.png') }}"
                              alt="cocktails sur la plage">
                         <p class="card-text mt-2">
-                            A tout moment chacun sait "qui doit combien à qui".
+                            At any moment everyone knows "who owes how much to whom".
                         </p>
                     </div>
                 </div>
             </div>
             <hr>
-            <h1 class="display-4">Captures d'écran</h1>
-            <p>Voici quelques captures d'écran, au format mobile, pour se faire une idée de
-                l'application.</p>
+            <h1 class="display-4">Screenshot</h1>
+            <p>Here are some screenshots, in mobile format, to get an idea of the application.</p>
             {{ include('screenShot.html.twig', {
-                'title': "Liste des opérations",
+                'title': "List of operations",
                 'image': 'build/screenshots/operation_list.png',
                 'textp0': [
-                    "Cette page affiche la liste des opérations pour un compte (ici c'est \"WE à Paris\").",
-                    "Toutes les opérations sont affichées par ordre chronologique.",
+                    "This page displays the list of transactions for an account (here it is \"WE in Paris \").",
+                    "All operations are displayed in chronological order.",
                 ] | join(' '),
-                'textp1': "Les détails de chaque opération sont accessibles en cliquant sur la ligne correspondante.",
+                'textp1': "The details of each operation are accessible by clicking on the corresponding line.",
                 'textp2': [
-                    "Un résumé du compte est affiché en bas de la page.",
-                    "Ce résumé indique qui doit de l'argent au groupe (nombre négatif en rouge)",
-                    "et qui doit récupérer de l'argent du groupe (nombre positif en vert)."
+                    "A summary of the account is displayed at the bottom of the page.",
+                    "This summary indicates who owes money to the group (negative number in red)",
+                    "and who needs to get money back from the group (positive number in green)."
                 ] | join(' ')
             }) }}
             {{ include('screenShot.html.twig', {
-                'title': "Enregistrement d'une dépense",
+                'title': "Recording an expense",
                 'image': 'build/screenshots/new_operation.png',
-                'textp0': "Cette page permet d'enregistrer une dépense. On y indique les sommes effectivement payées et la répartition souhaitée par les participants.",
+                'textp0': "This page allows you to record an expense. It indicates the amounts actually paid and the distribution desired by the participants.",
                 'textp1': [
-                    "Une dépense peut être payée par une ou plusieurs personnes. ",
-                    "La répartition est faite en attribuant un nombre de part à chaque participant.",
-                    "Il est possible d'indiquer les montants exacts en euros à la place des parts."
+                    "An expense can be paid by one or more people. ",
+                    "The distribution is made by assigning a number of shares to each participant.",
+                    "It is possible to indicate the exact amounts in place of the units."
                 ] | join(' '),
                 'textp2': [
-                    "Plus généralement une opération peut être une dépense à partager,",
-                    "ou un échange d'argent entre participants (prêt, remboursement), que l'on souhaite intégrer dans le compte."
+                    "More generally, an operation can be an expense to share,",
+                    "or an exchange of money between participants (loan, refund), which one wishes to integrate into the account."
                 ] | join(' ')
             }) }}
             {{ include('screenShot.html.twig', {
-                'title': "Bilan",
+                'title': "Balance sheet",
                 'image': 'build/screenshots/bilan.png',
-                'textp0': "A tout moment chaque participant peut accéder à un listing des opérations du compte avec le détail de ses propres dépenses.",
-                'textp1': "L'utilisateur peut demander à recevoir un récapitulatif du compte par mail.",
+                'textp0': "At any time, each participant can access a list of account transactions with details of his own expenses.",
+                'textp1': "The user can request to receive a summary of the account by email.",
                 'textp2': ""
             }) }}
             <hr>
-            <h1 class="display-4">Tableau de bord</h1>
+            <h1 class="display-4">Dashboard</h1>
             <p>
-                Ce tableau de bord affiche quelques indicateurs sur la quantité d'information gérée
-                par le site.
+                This dashboard displays some indicators on the amount of information managed by the site.
             </p>
             <div class="row">
                 <div class="col-12 col-lg-8 offset-lg-2">
                     <table class="table">
                         <tr>
-                            <th style="width: 80%">Nombre d'utilisateurs</th>
+                            <th style="width: 80%">Number of users</th>
                             <td class="text-right" style="width: 20%">{{ nbUser }}</td>
                         </tr>
                         <tr>
-                            <th>Nombre de comptes</th>
+                            <th>Number of accounts</th>
                             <td class="text-right" style="width: 20%">{{ nbEvent }}</td>
                         </tr>
                         <tr>
-                            <th>Nombre d'opérations</th>
+                            <th>Number of operations</th>
                             <td class="text-right" style="width: 20%">{{ nbOperation }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
             <hr>
-            <h1 class="display-4">Encore une chose</h1>
-            <p>Cette application est gratuite et sans publicité ... avec les limites suivantes pour chaque
-                utilisateur&nbsp;:</p>
+            <h1 class="display-4">One more thing</h1>
+            <p>This app is free and ad-free ... with the following limits for each user&nbsp;:</p>
             <div class="row">
                 <div class="col-12 col-lg-8 offset-lg-2">
                     <table class="table">
                         <tr>
-                            <th style="width: 80%">Compte</th>
+                            <th style="width: 80%">Account</th>
                             <td class="text-right" style="width: 20%">{{ freeLimit['maxNbEvent']['free'] }}</td>
                         </tr>
                         <tr>
-                            <th>Participants par compte</th>
+                            <th>Participants per account</th>
                             <td class="text-right">{{ freeLimit['maxNbParticipant']['free'] }}</td>
                         </tr>
                         <tr>
-                            <th>Opérations par compte</th>
+                            <th>Transactions by account</th>
                             <td class="text-right">{{ freeLimit['maxNbOperation']['free'] }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
             <p>
-                Pour toutes questions ou suggestions vous pouvez contacter
+                For any questions or suggestions you can contact
                 <a href="mailto:admin@dichipot.com" target="_blank">admin@dichipot.com</a>.<br>
-                Vous pouvez aussi <a href="https://github.com/PhRaz/dichipot/issues">ouvrir un ticket sur GitHub</a>.
+                You can also <a href="https://github.com/PhRaz/dichipot/issues">open an issue on GitHub</a>.
             </p>
-            <p>Le code et la documentation technique sont disponible sur <a
+            <p>Code and technical documentation are available on <a
                         href="https://github.com/PhRaz/dichipot" target="_blank">Github <i
                             class="fab fa-github"></i></a>.</p>
         </div>
