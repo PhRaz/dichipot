@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="cxqB9r7" resname="compte">
+        <source>compte</source>
+        <target>compte</target>
+      </trans-unit>
+      <trans-unit id="mcQKtAW" resname="Date">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="nnyda3w" resname="Dépense">
+        <source>Dépense</source>
+        <target>Dépense</target>
+      </trans-unit>
+      <trans-unit id="CxNejej" resname="dans">
+        <source>dans</source>
+        <target>dans</target>
+      </trans-unit>
+      <trans-unit id="XZ6eROG" resname="Paiement">
+        <source>Paiement</source>
+        <target>Paiement</target>
+      </trans-unit>
+      <trans-unit id="udsuDRq" resname="Dû">
+        <source>Dû</source>
+        <target>Dû</target>
+      </trans-unit>
+      <trans-unit id="0F4Ht8F" resname="Balance">
+        <source>Balance</source>
+        <target>Balance</target>
+      </trans-unit>
+      <trans-unit id="RoibQ7y" resname="Modification">
+        <source>Modification</source>
+        <target>Modification</target>
+      </trans-unit>
+      <trans-unit id="D4SLB8u" resname="aucune opération sur cet évènement">
+        <source>aucune opération sur cet évènement</source>
+        <target>aucune opération sur cet évènement</target>
+      </trans-unit>
+      <trans-unit id="ASiALxy" resname="Vous avez atteint le nombre maximum d'opérations autorisée.">
+        <source>Vous avez atteint le nombre maximum d'opérations autorisée.</source>
+        <target>Vous avez atteint le nombre maximum d'opérations autorisée.</target>
+      </trans-unit>
+      <trans-unit id="ybPDgkf" resname="Total">
+        <source>Total</source>
+        <target>Total</target>
+      </trans-unit>
+      <trans-unit id="QCPJPFt" resname="Opération enregistrée par">
+        <source>Opération enregistrée par</source>
+        <target>Opération enregistrée par</target>
+      </trans-unit>
+      <trans-unit id="CbFHUK8" resname="CGU dichipot.com">
+        <source>CGU dichipot.com</source>
+        <target>CGU dichipot.com</target>
+      </trans-unit>
+      <trans-unit id="bySo20M" resname="Nouvel évènement">
+        <source>Nouvel évènement</source>
+        <target>Nouvel évènement</target>
+      </trans-unit>
+      <trans-unit id="L1iK.hS" resname="nom">
+        <source>nom</source>
+        <target>nom</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
+        <target>description</target>
+      </trans-unit>
+      <trans-unit id="4LcUv5A" resname="pseudo">
+        <source>pseudo</source>
+        <target>pseudo</target>
+      </trans-unit>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
+        <target>email</target>
+      </trans-unit>
+      <trans-unit id="z5ozZ8_" resname="Annule">
+        <source>Annule</source>
+        <target>Annule</target>
+      </trans-unit>
+      <trans-unit id="H8s57Ie" resname="Enregistre">
+        <source>Enregistre</source>
+        <target>Enregistre</target>
+      </trans-unit>
+      <trans-unit id="mCgbCbw" resname="Créez un compte">
+        <source>Créez un compte</source>
+        <target>Créez un compte</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id=".5yLjAZ" resname="Mot de passe">
+        <source>Mot de passe</source>
+        <target>Mot de passe</target>
+      </trans-unit>
+      <trans-unit id="z7GsDIB" resname="Inscription">
+        <source>Inscription</source>
+        <target>Inscription</target>
+      </trans-unit>
+      <trans-unit id="kJgi9GH" resname="Réinitialisation du mot de passe">
+        <source>Réinitialisation du mot de passe</source>
+        <target>Réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="mfu.q6c" resname="Confirmez votre adresse mail.">
+        <source>Confirmez votre adresse mail.</source>
+        <target>Confirmez votre adresse mail.</target>
+      </trans-unit>
+      <trans-unit id="VlM5vE0" resname="OK">
+        <source>OK</source>
+        <target>OK</target>
+      </trans-unit>
+      <trans-unit id="F8x72yp" resname="Identifiez-vous SVP !">
+        <source>Identifiez-vous SVP !</source>
+        <target>Identifiez-vous SVP !</target>
+      </trans-unit>
+      <trans-unit id="eakEBsN" resname="OU">
+        <source>OU</source>
+        <target>OU</target>
+      </trans-unit>
+      <trans-unit id=".bC0ngl" resname="Si vous n'avez pas de compte vous pouvez en créer un.">
+        <source>Si vous n'avez pas de compte vous pouvez en créer un.</source>
+        <target>Si vous n'avez pas de compte vous pouvez en créer un.</target>
+      </trans-unit>
+      <trans-unit id="K7XBk.L" resname="Mot de passe perdu">
+        <source>Mot de passe perdu</source>
+        <target>Mot de passe perdu</target>
+      </trans-unit>
+      <trans-unit id="o9ZcpWl" resname="Nouveau mot de passe">
+        <source>Nouveau mot de passe</source>
+        <target>Nouveau mot de passe</target>
+      </trans-unit>
+      <trans-unit id="jorX0Pe" resname="Code de confirmation">
+        <source>Code de confirmation</source>
+        <target>Code de confirmation</target>
+      </trans-unit>
+      <trans-unit id="6_ScQBW" resname="Votre bilan">
+        <source>Votre bilan</source>
+        <target>Votre bilan</target>
+      </trans-unit>
+      <trans-unit id="lQW3aPb" resname="Pour cet évènement les participants ont payé un total de">
+        <source>Pour cet évènement les participants ont payé un total de</source>
+        <target>Pour cet évènement les participants ont payé un total de</target>
+      </trans-unit>
+      <trans-unit id="FXAaJZ9" resname="Vous devez participer à hauteur de">
+        <source>Vous devez participer à hauteur de</source>
+        <target>Vous devez participer à hauteur de</target>
+      </trans-unit>
+      <trans-unit id="LNCt3JJ" resname="Vous avez déjà payé un total de">
+        <source>Vous avez déjà payé un total de</source>
+        <target>Vous avez déjà payé un total de</target>
+      </trans-unit>
+      <trans-unit id="ntKHIC1" resname="Le groupe vous dois donc la somme de">
+        <source>Le groupe vous dois donc la somme de</source>
+        <target>Le groupe vous dois donc la somme de</target>
+      </trans-unit>
+      <trans-unit id="lqtpevj" resname="Vous devez donc au groupe la somme de">
+        <source>Vous devez donc au groupe la somme de</source>
+        <target>Vous devez donc au groupe la somme de</target>
+      </trans-unit>
+      <trans-unit id="EezMYS9" resname="Détail des opérations">
+        <source>Détail des opérations</source>
+        <target>Détail des opérations</target>
+      </trans-unit>
+      <trans-unit id="XWpiK7Y" resname="Modification évènement">
+        <source>Modification évènement</source>
+        <target>Modification évènement</target>
+      </trans-unit>
+      <trans-unit id="MaeOjCS" resname="Nouvelle opération">
+        <source>Nouvelle opération</source>
+        <target>Nouvelle opération</target>
+      </trans-unit>
+      <trans-unit id="LjBU4S." resname="Aide">
+        <source>Aide</source>
+        <target>Aide</target>
+      </trans-unit>
+      <trans-unit id="yUCWOsc" resname="Dans la colonne paiement">
+        <source>Dans la colonne paiement</source>
+        <target>Dans la colonne paiement</target>
+      </trans-unit>
+      <trans-unit id="geZev4O" resname="Dans la colonne part">
+        <source>Dans la colonne part</source>
+        <target>Dans la colonne part</target>
+      </trans-unit>
+      <trans-unit id="nMgo8Xx" resname="indiquez le nombre de parts dues par chaque participant.">
+        <source>indiquez le nombre de parts dues par chaque participant.</source>
+        <target>indiquez le nombre de parts dues par chaque participant.</target>
+      </trans-unit>
+      <trans-unit id="hXCi4Wa" resname="Part">
+        <source>Part</source>
+        <target>Part</target>
+      </trans-unit>
+      <trans-unit id="YvX0V5V" resname="Vérifiez vos comptes">
+        <source>Vérifiez vos comptes</source>
+        <target>Vérifiez vos comptes</target>
+      </trans-unit>
+      <trans-unit id="14yzI4k" resname="Détail de vos opérations">
+        <source>Détail de vos opérations</source>
+        <target>Détail de vos opérations</target>
+      </trans-unit>
+      <trans-unit id="rvaaTsr" resname="Totaux">
+        <source>Totaux</source>
+        <target>Totaux</target>
+      </trans-unit>
+      <trans-unit id="VSNkjuU" resname="Envoi du résumé">
+        <source>Envoi du résumé</source>
+        <target>Envoi du résumé</target>
+      </trans-unit>
+      <trans-unit id="GW7pRdv" resname="Le résumé de vos opérations sera envoyé par mail à">
+        <source>Le résumé de vos opérations sera envoyé par mail à</source>
+        <target>Le résumé de vos opérations sera envoyé par mail à</target>
+      </trans-unit>
+      <trans-unit id=".gyMA9m" resname="Envoie">
+        <source>Envoie</source>
+        <target>Envoie</target>
+      </trans-unit>
+      <trans-unit id="b0P12o4" resname="Suppression opération">
+        <source>Suppression opération</source>
+        <target>Suppression opération</target>
+      </trans-unit>
+      <trans-unit id="aKU0H8a" resname="Catégorie">
+        <source>Catégorie</source>
+        <target>Catégorie</target>
+      </trans-unit>
+      <trans-unit id="C4b0LQi" resname="Dépenses">
+        <source>Dépenses</source>
+        <target>Dépenses</target>
+      </trans-unit>
+      <trans-unit id="77zWdLT" resname="Parts">
+        <source>Parts</source>
+        <target>Parts</target>
+      </trans-unit>
+      <trans-unit id="BSid8c1" resname="Supprime">
+        <source>Supprime</source>
+        <target>Supprime</target>
+      </trans-unit>
+      <trans-unit id="N_X4Aej" resname="Modification opération">
+        <source>Modification opération</source>
+        <target>Modification opération</target>
+      </trans-unit>
+      <trans-unit id="vSlH3g." resname="catégorie">
+        <source>catégorie</source>
+        <target>catégorie</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Connexion</target>
+      </trans-unit>
+      <trans-unit id="GF798tS" resname="Demandez une réinitialisation de votre mot de passe">
+        <source>Demandez une réinitialisation de votre mot de passe</source>
+        <target>Demandez une réinitialisation de votre mot de passe</target>
+      </trans-unit>
+      <trans-unit id="AW7YGn." resname="Confirmation réinitialisation du mot de passe">
+        <source>Confirmation réinitialisation du mot de passe</source>
+        <target>Confirmation réinitialisation du mot de passe</target>
+      </trans-unit>
+      <trans-unit id="EuS4zDd" resname="A la place des parts, vous pouvez indiquer les sommes exactes.">
+        <source>A la place des parts, vous pouvez indiquer les sommes exactes.</source>
+        <target>A la place des parts, vous pouvez indiquer les sommes exactes.</target>
+      </trans-unit>
+      <trans-unit id="Pc1QbSl" resname="Disponible sur Github">
+        <source>Disponible sur Github</source>
+        <target>Disponible sur Github</target>
+      </trans-unit>
+      <trans-unit id="Wqbe.ey" resname="indiquez les paiements effectués par chacun des participants de cette opération.">
+        <source>indiquez les paiements effectués par chacun des participants de cette opération.</source>
+        <target>indiquez les paiements effectués par chacun des participants de cette opération.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
