@@ -4,26 +4,26 @@
 
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
-            <h2>Vérifiez vos comptes</h2>
+            <h2>{% trans %}Vérifiez vos comptes{% endtrans %}</h2>
             <h3>{{ event.name }}</h3>
             <p>{{ event.description }}</p>
-            <h3>Votre bilan</h3>
+            <h3>{% trans %}Votre bilan{% endtrans %}</h3>
             <table class="table table-sm table-borderless">
                 <tr class="">
-                    <td class="small">Pour cet évènement les participants ont payé un total de :</td>
+                    <td class="small">{% trans %}Pour cet évènement les participants ont payé un total de{% endtrans %} :</td>
                     <td class="text-nowrap text-right font-weight-bold">{{ event.grandTotal|number_format('2', ',', ' ') }}
                         €
                     </td>
                 </tr>
                 <tr class="">
-                    <td class="small">Vous devez participer à hauteur de :</td>
+                    <td class="small">{% trans %}Vous devez participer à hauteur de{% endtrans %} :</td>
                     <td class="text-nowrap text-right font-weight-bold">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }}
                         €
                     </td>
                 </tr>
                 <tr class="">
                     {% if event.summary[user.id].expense > 0 %}
-                        <td class="small">Vous avez déjà payé un total de :</td>
+                        <td class="small">{% trans %}Vous avez déjà payé un total de{% endtrans %} :</td>
                         <td class="text-nowrap text-right font-weight-bold">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }}
                             €
                         </td>
@@ -34,10 +34,10 @@
                         {% set totalBalance = event.summary[user.id].balance %}
                         {% if totalBalance >= 0 %}
                             {% set color = "text-success" %}
-                            Le groupe vous dois donc la somme de :
+                            {% trans %}Le groupe vous dois donc la somme de{% endtrans %} :
                         {% else %}
                             {% set color = "text-danger" %}
-                            Vous devez donc au groupe la somme de :
+                            {% trans %}Vous devez donc au groupe la somme de{% endtrans %} :
                         {% endif %}
                     </td>
                     <td class="text-nowrap text-right font-weight-bold {{ color }}">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
@@ -45,12 +45,12 @@
                     </td>
                 </tr>
             </table>
-            <h3>Détail de vos opérations</h3>
+            <h3>{% trans %}Détail de vos opérations{% endtrans %}</h3>
             <div class="row bg-light border-top">
-                <div class="col-2 font-weight-bold">Date</div>
-                <div class="col-4 font-weight-bold">Description</div>
-                <div class="col-3 font-weight-bold text-right">Paiement</div>
-                <div class="col-3 font-weight-bold text-right">Balance</div>
+                <div class="col-2 font-weight-bold">{% trans %}Date{% endtrans %}</div>
+                <div class="col-4 font-weight-bold">{% trans %}Description{% endtrans %}</div>
+                <div class="col-3 font-weight-bold text-right">{% trans %}Paiement{% endtrans %}</div>
+                <div class="col-3 font-weight-bold text-right">{% trans %}Balance{% endtrans %}</div>
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row  small border-top">
@@ -91,7 +91,7 @@
             {% endfor %}
             <div class="row border-top">
                 <div class="col-2 font-weight-bold ">
-                    Totaux
+                    {% trans %}Totaux{% endtrans %}
                 </div>
                 <div class="col-4"></div>
                 <div class="col-3 text-right font-weight-bold text-nowrap">

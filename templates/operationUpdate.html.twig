@@ -7,28 +7,28 @@
 {% block body %}
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
-            <h2>Modification opération</h2>
+            <h2>{% trans %}Modification opération{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_widget(form.date) }}
                 {{ form_errors(form.date) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.description, {'attr': {'placeholder': 'description'}} ) }}
+                {{ form_widget(form.description, {'attr': {'placeholder': 'description'|trans}} ) }}
                 {{ form_errors(form.description) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.category, {'attr': {'placeholder': 'catégorie'}} ) }}
+                {{ form_widget(form.category, {'attr': {'placeholder': 'catégorie'|trans}} ) }}
                 {{ form_errors(form.category) }}
             </div>
             <div class="form-group row">
                 <div class="col-4">
                 </div>
                 <div class="col-5">
-                    Paiement
+                    {% trans %}Paiement{% endtrans %}
                 </div>
                 <div class="col-3">
-                    Parts
+                    {% trans %}Parts{% endtrans %}
                 </div>
             </div>
             {% for expense in form.expenses %}
@@ -52,10 +52,10 @@
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg"
                        href="{{ path("operation_list", {'eventId': operation.event.id}) }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Enregistre</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}Enregistre{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

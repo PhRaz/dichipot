@@ -2,18 +2,18 @@
 {% block body %}
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
-            <h2>Nouvel évènement</h2>
+            <h2>{% trans %}Nouvel évènement{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_widget(form.date) }}
                 {{ form_errors(form.date) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.name, {'attr': {'placeholder': 'nom', 'autofocus': null}} ) }}
+                {{ form_widget(form.name, {'attr': {'placeholder': 'nom'|trans, 'autofocus': null}} ) }}
                 {{ form_errors(form.name) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.description, {'attr': {'placeholder': 'description'}} ) }}
+                {{ form_widget(form.description, {'attr': {'placeholder': 'description'|trans}} ) }}
                 {{ form_errors(form.description) }}
             </div>
             <div class="userEvents" data-max-nb-participant="{{ maxNbParticipant }}" data-prototype="
@@ -30,14 +30,14 @@
                             <div class="col-11">
 
                                 <div class="form-group">
-                                    {{ form_widget(userEvent.pseudo, {'attr': {'placeholder': 'pseudo'}} ) }}
+                                    {{ form_widget(userEvent.pseudo, {'attr': {'placeholder': 'pseudo'|trans}} ) }}
                                     {{ form_errors(userEvent.pseudo) }}
                                 </div>
                                 <div class="form-group">
                                     {% if form.vars.value.userEvents[index].administrator is same as (true) %}
-                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email', 'readonly': true}} ) }}
+                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'|trans, 'readonly': true}} ) }}
                                     {% else %}
-                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'}} ) }}
+                                        {{ form_widget(userEvent.user.mail, {'attr': {'placeholder': 'email'|trans}} ) }}
                                     {% endif %}
                                     {{ form_errors(userEvent.user.mail) }}
                                 </div>
@@ -51,10 +51,11 @@
             <div class="row">
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg" href="{{ path("event_list") }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Enregistre</button>
+                    <button id="submit" type="submit"
+                            class="btn btn-block btn-success btn-lg">{% trans %}Enregistre{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

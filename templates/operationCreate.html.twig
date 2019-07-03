@@ -7,7 +7,7 @@
 {% block body %}
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
-            <h2>Nouvelle opération</h2>
+            <h2>{% trans %}Nouvelle opération{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_widget(form.date) }}
@@ -23,10 +23,9 @@
             </div>
             <div class="row" id="line_help">
                 <div class="col-12 shadow-sm">
-                    <div style="cursor: pointer;" data-toggle="collapse" data-target="#help"
-                         class="accordion-toggle">
+                    <div style="cursor: pointer;" data-toggle="collapse" data-target="#help" class="accordion-toggle">
                         <div class="row text-primary text-right">
-                            <div class="col-12">Help</div>
+                            <div class="col-12">{% trans %}Aide{% endtrans %}</div>
                         </div>
                     </div>
                 </div>
@@ -34,25 +33,25 @@
             <div class="row bg-light mb-2">
                 <div class="col-12 hidden">
                     <div class="accordion-body collapse small" id="help">
-                        <div style="cursor: pointer;" class="accordion-toggle" data-toggle="collapse" data-target="#help">
+                        <div style="cursor: pointer;" class="accordion-toggle" data-toggle="collapse"
+                             data-target="#help">
                             <div class="row mb-2">
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-4">
-                                            Dans la colonne paiement
+                                            {% trans %}Dans la colonne paiement{% endtrans %}
                                         </div>
                                         <div class="col-8">
-                                            indiquez les paiement effectués par chacun des participants de cette
-                                            opération.
+                                            {% trans %}indiquez les paiements effectués par chacun des participants de cette opération.{% endtrans %}
                                         </div>
                                     </div>
                                     <div class="row mt-1">
                                         <div class="col-4">
-                                            Dans la colonne part
+                                            {% trans %}Dans la colonne part{% endtrans %}
                                         </div>
                                         <div class="col-8">
-                                            indiquez le nombre de parts dues par chaque participant.<br>
-                                            A la place des parts, vous pouvez indiquer les sommes exactes en euros.
+                                            {% trans %}indiquez le nombre de parts dues par chaque participant.{% endtrans %}<br>
+                                            {% trans %}A la place des parts, vous pouvez indiquer les sommes exactes.{% endtrans %}
                                         </div>
                                     </div>
                                 </div>
@@ -65,10 +64,10 @@
                 <div class="col-4">
                 </div>
                 <div class="col-5">
-                    Paiement
+                    {% trans %}Paiement{% endtrans %}
                 </div>
                 <div class="col-3">
-                    Part
+                    {% trans %}Part{% endtrans %}
                 </div>
             </div>
             {% for expense in form.expenses %}
@@ -92,10 +91,10 @@
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg"
                        href="{{ path("operation_list", {'eventId': eventId}) }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Enregistre</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}Enregistre{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

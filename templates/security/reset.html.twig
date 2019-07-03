@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset password{% endblock %}
+{% block title %}{% trans %}Réinitialisation du mot de passe{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-4 offset-md-4">
-            <h2>Reset du mot de passe</h2>
-            <p>Confirmez votre adresse mail.</p>
+            <h2>{% trans %}Réinitialisation du mot de passe{% endtrans %}</h2>
+            <p>{% trans %}Confirmez votre adresse mail.{% endtrans %}</p>
             {{ form_start(form) }}
             <div class="form-group">
-                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}} ) }}
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'|trans}} ) }}
                 {{ form_errors(form.email) }}
             </div>
             <div class="row">
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg" href="{{ path("app_login") }}"
-                       role="button">Cancel</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">OK</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}OK{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

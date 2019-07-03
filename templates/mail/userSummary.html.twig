@@ -5,24 +5,24 @@
     <h2>{{ event.name }}</h2>
     <p>{{ event.description }}</p>
 
-    <h3>Votre bilan</h3>
+    <h3>{% trans %}Votre bilan{% endtrans %}</h3>
 
     <table>
         <tr>
-            <td>Pour cet évènement les participants ont payé un total de&nbsp;:</td>
+            <td>{% trans %}Pour cet évènement les participants ont payé un total de{% endtrans %}&nbsp;:</td>
             <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.grandTotal|number_format('2', ',', ' ') }}
                 €
             </td>
         </tr>
         <tr>
-            <td>Vous devez participer à hauteur de&nbsp;:</td>
+            <td>{% trans %}Vous devez participer à hauteur de{% endtrans %}&nbsp;:</td>
             <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].amountToPay|number_format('2', ',', ' ') }}
                 €
             </td>
         </tr>
         <tr>
             {% if event.summary[user.id].expense > 0 %}
-                <td>Vous avez déjà payé un total de&nbsp;:</td>
+                <td>{% trans %}Vous avez déjà payé un total de{% endtrans %}&nbsp;:</td>
                 <td style="white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].expense|number_format('2', ',', ' ') }}
                     €
                 </td>
@@ -32,10 +32,10 @@
             {% set totalBalance = event.summary[user.id].balance %}
             {% if totalBalance >= 0 %}
                 {% set color = "green" %}
-                <td>Le groupe vous dois donc la somme de&nbsp;:</td>
+                <td>{% trans %}Le groupe vous dois donc la somme de{% endtrans %}&nbsp;:</td>
             {% else %}
                 {% set color = "red" %}
-                <td>Vous devez donc au groupe la somme de&nbsp;:</td>
+                <td>{% trans %}Vous devez donc au groupe la somme de{% endtrans %}&nbsp;:</td>
             {% endif %}
             <td style="color:{{ color }};white-space:nowrap;text-align:right;vertical-align:top;">{{ event.summary[user.id].balance|number_format('2', ',', ' ') }}
                 €
@@ -43,18 +43,18 @@
         </tr>
     </table>
 
-    <h3>Détail des opérations</h3>
+    <h3>{% trans %}Détail des opérations{% endtrans %}</h3>
 
     <table border="0" width="100%" cellpadding="3"
            style="border-collapse: collapse;">
         <thead>
         <tr style="background-color: lightgray">
-            <th align="left">Date</th>
-            <th align="left">Description</th>
-            <th align="right">Dépense</th>
-            <th align="right">Dû</th>
-            <th align="right">Paiement</th>
-            <th align="right">Balance</th>
+            <th align="left">{% trans %}Date{% endtrans %}</th>
+            <th align="left">{% trans %}Description{% endtrans %}</th>
+            <th align="right">{% trans %}Dépense{% endtrans %}</th>
+            <th align="right">{% trans %}Dû{% endtrans %}</th>
+            <th align="right">{% trans %}Paiement{% endtrans %}</th>
+            <th align="right">{% trans %}Balance{% endtrans %}</th>
         </tr>
         </thead>
         <tbody>

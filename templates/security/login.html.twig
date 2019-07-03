@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
     <div class="row">
@@ -8,29 +8,29 @@
             <form action="{{ path('app_login') }}" method="post">
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="h3 mb-3 font-weight-normal">Identifiez-vous SVP !</h1>
+                        <h1 class="h3 mb-3 font-weight-normal">{% trans %}Identifiez-vous SVP !{% endtrans %}</h1>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="inputEmail" class="sr-only">Email</label>
+                        <label for="inputEmail" class="sr-only">{% trans %}Email{% endtrans %}</label>
                         <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
                                class="form-control"
-                               placeholder="Email" required autofocus>
+                               placeholder="{% trans %}Email{% endtrans %}" required autofocus>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="inputPassword" class="sr-only">Mot de passe</label>
+                        <label for="inputPassword" class="sr-only">{% trans %}Mot de passe{% endtrans %}</label>
                         <input type="password" name="password" id="inputPassword" class="form-control"
-                               placeholder="Password"
+                               placeholder="{% trans %}Mot de passe{% endtrans %}"
                                required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <button class="btn btn-lg btn-block btn-primary" type="submit">
-                            Login
+                            {% trans %}Connexion{% endtrans %}
                         </button>
                     </div>
                 </div>
@@ -38,21 +38,21 @@
                     <div class="col">
                         <hr>
                     </div>
-                    <div class="col-auto">OU</div>
+                    <div class="col-auto">{% trans %}OU{% endtrans %}</div>
                     <div class="col">
                         <hr>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="h3 mb-3 font-weight-normal">Créez un compte</h1>
-                        <p>Si vous n'avez pas de compte vous pouvez en créer un.</p>
+                        <h1 class="h3 mb-3 font-weight-normal">{% trans %}Créez un compte{% endtrans %}</h1>
+                        <p>{% trans %}Si vous n'avez pas de compte vous pouvez en créer un.{% endtrans %}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_signup') }}">
-                            Signup
+                            {% trans %}Inscription{% endtrans %}
                         </a>
                     </div>
                 </div>
@@ -60,21 +60,21 @@
                     <div class="col">
                         <hr>
                     </div>
-                    <div class="col-auto">OU</div>
+                    <div class="col-auto">{% trans %}OU{% endtrans %}</div>
                     <div class="col">
                         <hr>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <h1 class="h3 mb-3 font-weight-normal">Mot de passe perdu</h1>
-                        <p>Demandez un reset de votre mot de passe.</p>
+                        <h1 class="h3 mb-3 font-weight-normal">{% trans %}Mot de passe perdu{% endtrans %}</h1>
+                        <p>{% trans %}Demandez une réinitialisation de votre mot de passe{% endtrans %}.</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-12">
                         <a class="btn btn-lg btn-block btn-primary" href="{{ path('app_reset_password') }}">
-                            Reset mot de passe
+                            {% trans %}Réinitialisation du mot de passe{% endtrans %}
                         </a>
                     </div>
                 </div>

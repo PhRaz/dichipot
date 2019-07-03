@@ -3,18 +3,18 @@
 {% block body %}
     <div class="row">
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
-            <h2>Suppression opération</h2>
+            <h2>{% trans %}Suppression opération{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-4"><strong>Date</strong></div>
+                <div class="col-4"><strong>{% trans %}Date{% endtrans %}</strong></div>
                 <div class="col-8">{{ operation.date|date('d/m/Y') }}</div>
             </div>
             <div class="row">
-                <div class="col-4"><strong>Description</strong></div>
+                <div class="col-4"><strong>{% trans %}Description{% endtrans %}</strong></div>
                 <div class="col-8">{{ operation.description }}</div>
             </div>
             <div class="row">
-                <div class="col-4"><strong>Catégorie</strong></div>
+                <div class="col-4"><strong>{% trans %}Catégorie{% endtrans %}</strong></div>
                 <div class="col-8">{{ operation.category }}</div>
             </div>
             <div class="row mt-3">
@@ -23,8 +23,8 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th class="text-right">Dépenses</th>
-                            <th class="text-right">Parts</th>
+                            <th class="text-right">{% trans %}Dépenses{% endtrans %}</th>
+                            <th class="text-right">{% trans %}Parts{% endtrans %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,10 +46,10 @@
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg"
                        href="{{ path("operation_list", {'eventId': operation.event.id}) }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Supprime</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}Supprime{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

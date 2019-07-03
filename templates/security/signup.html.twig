@@ -1,30 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sign up!{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-4 offset-md-4">
 
-            <h2>Créez un compte</h2>
+            <h2>{% trans %}Créez un compte{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="form-group">
-                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}} ) }}
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'|trans}} ) }}
                 {{ form_errors(form.email) }}
             </div>
             <div class="form-group">
                 {{ form_widget(form.password,
-                    {'attr': {'placeholder': 'Mot de passe'}} ) }}
+                    {'attr': {'placeholder': 'Mot de passe'|trans}} ) }}
                 {{ form_help(form.password) }}
                 {{ form_errors(form.password) }}
             </div>
             <div class="row">
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg" href="{{ path("app_login") }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Signup</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}Inscription{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

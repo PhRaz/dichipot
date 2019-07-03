@@ -1,31 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Confirm reset password{% endblock %}
+{% block title %}{% trans %}Confirmation réinitialisation du mot de passe{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-4 offset-md-4">
-            <h2>Nouveau mot de passe</h2>
+            <h2>{% trans %}Nouveau mot de passe{% endtrans %}</h2>
             {{ form_start(form) }}
             <div class="form-group">
-                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}} ) }}
+                {{ form_widget(form.email, {'attr': {'placeholder': 'Email'|trans}} ) }}
                 {{ form_errors(form.email) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.newPassword, {'attr': {'placeholder': 'Nouveau mot de passe'}} ) }}
+                {{ form_widget(form.newPassword, {'attr': {'placeholder': 'Nouveau mot de passe'|trans}} ) }}
                 {{ form_errors(form.newPassword) }}
             </div>
             <div class="form-group">
-                {{ form_widget(form.code, {'attr': {'placeholder': 'Code de confirmation'}} ) }}
+                {{ form_widget(form.code, {'attr': {'placeholder': 'Code de confirmation'|trans}} ) }}
                 {{ form_errors(form.code) }}
             </div>
             <div class="row">
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg" href="{{ path("app_login") }}"
-                       role="button">Cancel</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div id="submit" class="col-6">
-                    <button type="submit" class="btn btn-block btn-success btn-lg">OK</button>
+                    <button type="submit" class="btn btn-block btn-success btn-lg">{% trans %}OK{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}

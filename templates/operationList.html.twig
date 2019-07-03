@@ -5,9 +5,9 @@
         <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-xl-6 offset-xl-3 mb-2">
             <h2>{{ event.name }}</h2>
             <div class="row bg-light shadow-sm">
-                <div class="col-3 col-md-2 font-weight-bold">Date</div>
-                <div class="col-5 col-md-8 font-weight-bold">Description</div>
-                <div class="col-4 col-md-2 font-weight-bold">Dépense</div>
+                <div class="col-3 col-md-2 font-weight-bold">{% trans %}Date{% endtrans %}</div>
+                <div class="col-5 col-md-8 font-weight-bold">{% trans %}Description{% endtrans %}</div>
+                <div class="col-4 col-md-2 font-weight-bold">{% trans %}Dépense{% endtrans %}</div>
             </div>
             {% for operation in event.operations if event.operations|length > 0 %}
                 <div class="row" id="line_operation_{{ operation.id }}">
@@ -31,9 +31,11 @@
                                  data-target="#operation_{{ operation.id }}">
                                 <div class="row">
                                     <div class="col-12">
-                                        <p class="font-weight-light">Opération enregistrée
-                                            par {{ operation.pseudo }}
-                                            dans {{ operation.category }}</p>
+                                        <p class="font-weight-light">
+                                            {% trans %}Opération enregistrée par{% endtrans %}
+                                            {{ operation.pseudo }}
+                                            {% trans %}dans{% endtrans %} {{ operation.category }}
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -42,9 +44,9 @@
                                             <thead>
                                             <tr>
                                                 <th></th>
-                                                <th class="text-right">Paiement</th>
-                                                <th class="text-right">Dû</th>
-                                                <th class="text-right">Balance</th>
+                                                <th class="text-right">{% trans %}Paiement{% endtrans %}</th>
+                                                <th class="text-right">{% trans %}Dû{% endtrans %}</th>
+                                                <th class="text-right">{% trans %}Balance{% endtrans %}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -81,7 +83,7 @@
                                 <div class="col-9">
                                     <a class="btn btn-block btn-primary btn-sm mb-2 shadow-sm"
                                        href="{{ path("operation_update", {'eventId': event.id, 'operationId': operation.id}) }}"
-                                       role="button">Modification</a>
+                                       role="button">{% trans %}Modification{% endtrans %}</a>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +91,7 @@
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="col-12 border-top shadow-sm">aucune opération sur cet évènement</div>
+                    <div class="col-12 border-top shadow-sm">{% trans %}aucune opération sur cet évènement{% endtrans %}</div>
                 </div>
             {% endfor %}
             <div class="row mt-3">
@@ -102,18 +104,18 @@
                         <a class="btn btn-block btn-secondary disabled"
                            href=""
                            role="button"><i class="fas fa-plus"></i>
-                            <p>Vous avez atteint le nombre maximum d'opérations autorisée.</p>
+                            <p>{% trans %}Vous avez atteint le nombre maximum d'opérations autorisée.{% endtrans %}</p>
                         </a>
                     {% endif %}
                 </div>
             </div>
             {% if event.operations|length > 0 %}
                 <div class="row border mt-3 shadow-sm">
-                    <div class="col-12 bg-light font-weight-bold">Total</div>
+                    <div class="col-12 bg-light font-weight-bold">{% trans %}Total{% endtrans %}</div>
                     <div class="col-12 text-right border-top">
                         <strong>{{ event.grandTotal|number_format('2', ',', ' ') }} €</strong>
                     </div>
-                    <div class="col-12 bg-light border-top border-bottom font-weight-bold">Balance</div>
+                    <div class="col-12 bg-light border-top border-bottom font-weight-bold">{% trans %}Balance{% endtrans %}</div>
                     {% for data in event.summary %}
                         {% if data.balance >= 0 %}
                             {% set color = "text-success" %}

@@ -3,17 +3,17 @@
 {% block body %}
     <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
-            <h2>Envoi du résumé</h2>
-            <p>Le résumé de vos opérations sera envoyé par mail à l'adresse {{ user.mail }}.</p>
+            <h2>{% trans %}Envoi du résumé{% endtrans %}</h2>
+            <p>{% trans %}Le résumé de vos opérations sera envoyé par mail à {% endtrans %}{{ user.mail }}.</p>
             {{ form_start(form) }}
             <div class="mt-3 row">
                 <div class="col-6">
                     <a id="cancel" class="btn btn-block btn-danger btn-lg"
                        href="{{ path("user_summary", {'eventId': event.id}) }}"
-                       role="button">Annule</a>
+                       role="button">{% trans %}Annule{% endtrans %}</a>
                 </div>
                 <div class="col-6">
-                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">Envoie</button>
+                    <button id="submit" type="submit" class="btn btn-block btn-success btn-lg">{% trans %}Envoie{% endtrans %}</button>
                 </div>
             </div>
             {{ form_end(form) }}
