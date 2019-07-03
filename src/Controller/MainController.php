@@ -38,12 +38,13 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/", name="home")
+     * @route("/{_locale}/home", name="home", requirements={"_locale"="%app.locales%"})
+     * @param $request
      * @param $freeLimit
      * @return Response
      * @throws \Exception
      */
-    public function home($freeLimit): Response
+    public function home(Request $request, $freeLimit): Response
     {
         /** @var UserRepository $userRepo */
         $userRepo = $this->getDoctrine()->getRepository(User::class);
@@ -57,7 +58,7 @@ class MainController extends AbstractController
         $operation = $this->getDoctrine()->getRepository(Operation::class);
         $nbOperation = $operation->getNbOperation();
 
-        return $this->render("home.html.twig", [
+        return $this->render("home-" . $request->getLocale() . ".html.twig", [
             'nbUser' => $nbUser,
             'nbEvent' => $nbEvent,
             'nbOperation' => $nbOperation,
@@ -66,7 +67,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/event/list", name="event_list")
+     * @route("/{_locale}/event/list", name="event_list", requirements={"_locale"="%app.locales%"})
      * @param $authChecker
      * @param $freeLimit array
      * @return Response
@@ -124,7 +125,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/event/create", name="event_create")
+     * @route("/{_locale}/event/create", name="event_create", requirements={"_locale"="%app.locales%"})
      * @param $request Request
      * @param $freeLimit
      * @param $maxNbParticipant
@@ -235,7 +236,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/event/update/{eventId}", name="event_update")
+     * @route("/{_locale}/event/update/{eventId}", name="event_update", requirements={"_locale"="%app.locales%"})
      * @param Request $request
      * @param $authChecker
      * @param $eventId
@@ -353,7 +354,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/operation/list/{eventId}", name="operation_list")
+     * @route("/{_locale}/operation/list/{eventId}", name="operation_list", requirements={"_locale"="%app.locales%"})
      * @param $authChecker
      * @param integer $eventId
      * @param $freeLimit
@@ -414,7 +415,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/operation/create/{eventId}", name="operation_create")
+     * @Route("/{_locale}/operation/create/{eventId}", name="operation_create", requirements={"_locale"="%app.locales%"})
      * @param Request $request
      * @param $eventId
      * @return Response
@@ -492,7 +493,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/operation/update/{operationId}", name="operation_update")
+     * @route("/{_locale}/operation/update/{operationId}", name="operation_update", requirements={"_locale"="%app.locales%"})
      * @param Request $request
      * @param integer $operationId
      * @return Response
@@ -546,7 +547,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/operation/remove/{operationId}", name="operation_remove")
+     * @route("/{_locale}/operation/remove/{operationId}", name="operation_remove", requirements={"_locale"="%app.locales%"})
      * @param Request $request
      * @param integer $operationId
      * @return Response
@@ -605,7 +606,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/user/summary/{eventId}", name="user_summary")
+     * @route("/{_locale}/user/summary/{eventId}", name="user_summary", requirements={"_locale"="%app.locales%"})
      * @param integer $eventId
      * @return Response
      * @throws \Exception
@@ -656,7 +657,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/cgu", name="cgu")
+     * @route("/{_locale}/cgu", name="cgu", requirements={"_locale"="%app.locales%"})
      * @return Response
      */
     public function cgu()
@@ -665,7 +666,7 @@ class MainController extends AbstractController
     }
 
     /**
-     * @route("/user/summary/mail/{eventId}", name="user_summary_mail")
+     * @route("/{_locale}/user/summary/mail/{eventId}", name="user_summary_mail", requirements={"_locale"="%app.locales%"})
      * @param Request $request
      * @param integer $eventId
      * @param \Swift_Mailer $mailer
