@@ -29,7 +29,7 @@
         {% if  app.request.get('_route') == 'home' %}
             <li class="nav-item mr-2">
                 <form class="form-inline">
-                    <select class="form-control">
+                    <select id="locale-switch" class="form-control">
                         <option {% if app.request.locale == 'fr' %}selected="selected"{% endif %} value="fr">fr</option>
                         <option {% if app.request.locale == 'en' %}selected="selected"{% endif %} value="en">en</option>
                     </select>

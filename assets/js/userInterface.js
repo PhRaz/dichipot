@@ -3,7 +3,7 @@ var $ = require('jquery');
 module.exports = function () {
 
     /*
-     * Disable submitand cancel buttons on submit and on cancel.
+     * Disable submit and cancel buttons on submit and on cancel.
      */
     $("form").submit(function () {
         $("#submit").attr("disabled", true);
@@ -28,5 +28,12 @@ module.exports = function () {
     });
     operationDetail.on('hide.bs.collapse', function() {
         toggleLine($(this));
+    });
+
+    /*
+     * switch locale from home page selector
+     */
+    $('#locale-switch').change(function() {
+        window.location.replace(window.location.protocol + "//" + window.location.host + "/" + $(this).val() + "/home");
     });
 };
