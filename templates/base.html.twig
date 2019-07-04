@@ -26,14 +26,16 @@
         dichipot
     </a>
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item mr-2">
-            <form class="form-inline">
-                <select class="form-control">
-                    <option {% if app.request.locale == 'fr' %}selected="selected"{% endif %} value="fr">fr</option>
-                    <option {% if app.request.locale == 'en' %}selected="selected"{% endif %} value="en">en</option>
-                </select>
-            </form>
-        </li>
+        {% if  app.request.get('_route') == 'home' %}
+            <li class="nav-item mr-2">
+                <form class="form-inline">
+                    <select class="form-control">
+                        <option {% if app.request.locale == 'fr' %}selected="selected"{% endif %} value="fr">fr</option>
+                        <option {% if app.request.locale == 'en' %}selected="selected"{% endif %} value="en">en</option>
+                    </select>
+                </form>
+            </li>
+        {% endif %}
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <li class="nav-item">
                 <a class="btn btn-block btn-light" href="{{ path('app_logout') }}"><i
@@ -64,9 +66,11 @@
         <div class="row small border-top bg-light">
             <div class="col-12 col-sm-4 text-sm-left text-nowrap">Copyright © 2019 PhRazApp</div>
             <div class="col-12 col-sm-4 text-sm-center text-nowrap">
-                <a href="https://github.com/PhRaz/compte" target="_blank">{% trans %}Disponible sur Github{% endtrans %} <i class="fab fa-github"></i></a>
+                <a href="https://github.com/PhRaz/compte" target="_blank">{% trans %}Disponible sur Github{% endtrans %}
+                    <i class="fab fa-github"></i></a>
             </div>
-            <div class="col-12 col-sm-4 text-sm-right"><a href="{{ path('cgu') }}" target="_blank">{% trans %}CGU dichipot.com{% endtrans %}</a>
+            <div class="col-12 col-sm-4 text-sm-right"><a href="{{ path('cgu') }}"
+                                                          target="_blank">{% trans %}CGU dichipot.com{% endtrans %}</a>
             </div>
         </div>
     </footer>
