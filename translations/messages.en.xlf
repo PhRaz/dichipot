@@ -199,7 +199,7 @@
       </trans-unit>
       <trans-unit id="YvX0V5V" resname="Vérifiez vos comptes">
         <source>Vérifiez vos comptes</source>
-        <target>Check your accounts</target>
+        <target>Check your account</target>
       </trans-unit>
       <trans-unit id="14yzI4k" resname="Détail de vos opérations">
         <source>Détail de vos opérations</source>
@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="VSNkjuU" resname="Envoi du résumé">
         <source>Envoi du résumé</source>
-        <target>Sending the summary</target>
+        <target>Send the summary</target>
       </trans-unit>
       <trans-unit id="GW7pRdv" resname="Le résumé de vos opérations sera envoyé par mail à">
         <source>Le résumé de vos opérations sera envoyé par mail à</source>
@@ -272,6 +272,30 @@
       <trans-unit id="Wqbe.ey" resname="indiquez les paiements effectués par chacun des participants de cette opération.">
         <source>indiquez les paiements effectués par chacun des participants de cette opération.</source>
         <target>indicate the payments made by each participant in this transaction.</target>
+      </trans-unit>
+      <trans-unit id="F0veTee" resname="Un résume des dépenses vous a été envoyé par mail à ">
+        <source>Un résume des dépenses vous a été envoyé par mail à </source>
+        <target>A summary of the expenses was sent to </target>
+      </trans-unit>
+      <trans-unit id="k9glmGX" resname="Une erreur a empéché l'envoi d'un mail à ">
+        <source>Une erreur a empéché l'envoi d'un mail à </source>
+        <target>An error prevented sending an email to </target>
+      </trans-unit>
+      <trans-unit id="0DWXv4X" resname="Login ou mot de passe incorrect.">
+        <source>Login ou mot de passe incorrect.</source>
+        <target>Incorrect login or password.</target>
+      </trans-unit>
+      <trans-unit id="8qS.OVk" resname="Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.">
+        <source>Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.</source>
+        <target>The password must be at least 8 characters with at least 1 digit, 1 capital and one lowercase.</target>
+      </trans-unit>
+      <trans-unit id="i_Xx.n." resname="Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.">
+        <source>Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.</source>
+        <target>You will receive an email that contains a link to confirm your registration. You can then log in with your credentials.</target>
+      </trans-unit>
+      <trans-unit id="_uipGvM" resname="Vous allez recevoir un mail avec le code de confirmation à utiliser ici.">
+        <source>Vous allez recevoir un mail avec le code de confirmation à utiliser ici.</source>
+        <target>You will receive an email with the confirmation code to use here.</target>
       </trans-unit>
     </body>
   </file>

@@ -273,6 +273,30 @@
         <source>indiquez les paiements effectués par chacun des participants de cette opération.</source>
         <target>indiquez les paiements effectués par chacun des participants de cette opération.</target>
       </trans-unit>
+      <trans-unit id="F0veTee" resname="Un résume des dépenses vous a été envoyé par mail à ">
+        <source>Un résume des dépenses vous a été envoyé par mail à </source>
+        <target>Un résume des dépenses vous a été envoyé par mail à </target>
+      </trans-unit>
+      <trans-unit id="k9glmGX" resname="Une erreur a empéché l'envoi d'un mail à ">
+        <source>Une erreur a empéché l'envoi d'un mail à </source>
+        <target>Une erreur a empéché l'envoi d'un mail à </target>
+      </trans-unit>
+      <trans-unit id="0DWXv4X" resname="Login ou mot de passe incorrect.">
+        <source>Login ou mot de passe incorrect.</source>
+        <target>Login ou mot de passe incorrect.</target>
+      </trans-unit>
+      <trans-unit id="8qS.OVk" resname="Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.">
+        <source>Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.</source>
+        <target>Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.</target>
+      </trans-unit>
+      <trans-unit id="i_Xx.n." resname="Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.">
+        <source>Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.</source>
+        <target>Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.</target>
+      </trans-unit>
+      <trans-unit id="_uipGvM" resname="Vous allez recevoir un mail avec le code de confirmation à utiliser ici.">
+        <source>Vous allez recevoir un mail avec le code de confirmation à utiliser ici.</source>
+        <target>Vous allez recevoir un mail avec le code de confirmation à utiliser ici.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
