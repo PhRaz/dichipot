@@ -297,6 +297,14 @@
         <source>Vous allez recevoir un mail avec le code de confirmation à utiliser ici.</source>
         <target>You will receive an email with the confirmation code to use here.</target>
       </trans-unit>
+      <trans-unit id="Aje_uSD" resname="Créez un nouvel évènement.">
+        <source>Créez un nouvel évènement.</source>
+        <target>Create a new event</target>
+      </trans-unit>
+      <trans-unit id="OmS2CvR" resname="Vous avez atteint le nombre maximum d'évènements autorisé.">
+        <source>Vous avez atteint le nombre maximum d'évènements autorisé.</source>
+        <target>You have reached the maximum number of events allowed.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
