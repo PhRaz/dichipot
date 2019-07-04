@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 class SecurityController extends AbstractController
@@ -21,9 +22,13 @@ class SecurityController extends AbstractController
     /** @var AwsCognitoClient */
     var $cognitoClient;
 
-    public function __construct(AwsCognitoClient $cognitoClient)
+    /** @var TranslatorInterface */
+    var $translator;
+
+    public function __construct(AwsCognitoClient $cognitoClient, TranslatorInterface $translator)
     {
         $this->cognitoClient = $cognitoClient;
+        $this->translator = $translator;
     }
 
     /**
@@ -35,7 +40,10 @@ class SecurityController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         if ($error) {
-            $this->addFlash('danger', 'Login ou mot de passe incorrect.');
+            $this->addFlash(
+                'danger',
+                $this->translator->trans('Login ou mot de passe incorrect.')
+            );
         }
         $lastUsername = $authenticationUtils->getLastUsername();
 
@@ -46,8 +54,8 @@ class SecurityController extends AbstractController
      * @route("/signup", name="app_signup")
      * @param Request $request
      * @param AuthenticationUtils $authenticationUtils
-     * @throws \Exception
      * @return Response
+     * @throws \Exception
      */
     public function signup(Request $request): Response
     {
@@ -64,7 +72,8 @@ class SecurityController extends AbstractController
                         'htmlPattern' => '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
                     ])
                 ],
-                'help' => 'Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.'
+                'help' =>
+                    $this->translator->trans('Le mot de passe doit comporter au moins 8 caractères avec au moins 1 chiffres, 1 majuscule et une minuscule.')
             ])
             ->getForm();
 
@@ -87,7 +96,10 @@ class SecurityController extends AbstractController
             $manager->persist($user);
             $manager->flush();
 
-            $this->addFlash('success', 'Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('Vous allez recevoir un mail qui contient un lien vous permettant de confirmer votre inscription. Vous pourrez ensuite vous connecter avec vos identifiants.')
+            );
             return $this->redirectToRoute('app_login');
         }
         return $this->render('security/signup.html.twig', ['form' => $form->createView()]);
@@ -128,7 +140,10 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_reset_password');
             }
 
-            $this->addFlash('success', 'Vous allez recevoir un mail avec le code de confirmation à utiliser ici.');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('Vous allez recevoir un mail avec le code de confirmation à utiliser ici.')
+            );
             return $this->redirectToRoute('app_reset_password_confirm');
         }
         return $this->render('security/reset.html.twig', ['form' => $form->createView()]);
@@ -150,13 +165,13 @@ class SecurityController extends AbstractController
         ];
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class, [
-                'label' => 'Email'
+                'label' => $this->translator->trans('Email')
             ])
             ->add('newPassword', PasswordType::class, [
-                'label' => 'Nouveau mot de passe'
+                'label' => $this->translator->trans('Nouveau mot de passe')
             ])
             ->add('code', TextType::class, [
-                'label' => 'Code de confirmation'
+                'label' => $this->translator->trans('Code de confirmation')
             ])
             ->getForm();
 

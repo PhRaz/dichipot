@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class MainController
@@ -32,9 +32,13 @@ class MainController extends AbstractController
     /** @var AwsCognitoClient */
     var $cognitoClient;
 
-    public function __construct(AwsCognitoClient $cognitoClient)
+    /** @var TranslatorInterface */
+    var $translator;
+
+    public function __construct(AwsCognitoClient $cognitoClient, TranslatorInterface $translator)
     {
         $this->cognitoClient = $cognitoClient;
+        $this->translator = $translator;
     }
 
     /**
@@ -735,9 +739,11 @@ class MainController extends AbstractController
             $nbMail = $mailer->send($message);
 
             if ($nbMail == 1) {
-                $this->addFlash('success', "Un résume des dépenses vous a été envoyé par mail à " . $user->getMail() . ".");
+                $this->addFlash('success',
+                    $this->translator->trans("Un résume des dépenses vous a été envoyé par mail à ") . $user->getMail() . ".");
             } else {
-                $this->addFlash('notice', "Une erreur a empéché l'envoi d'un mail à " . $user->getMail() . ".");
+                $this->addFlash('notice',
+                    $this->translator->trans("Une erreur a empéché l'envoi d'un mail à ") . $user->getMail() . ".");
             }
 
             return $this->redirectToRoute('user_summary', ['eventId' => $eventId]);
