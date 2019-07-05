@@ -299,11 +299,11 @@
       </trans-unit>
       <trans-unit id="Aje_uSD" resname="Créez un nouvel évènement.">
         <source>Créez un nouvel évènement.</source>
-        <target>__Créez un nouvel évènement.</target>
+        <target>Créez un nouvel évènement.</target>
       </trans-unit>
       <trans-unit id="OmS2CvR" resname="Vous avez atteint le nombre maximum d'évènements autorisé.">
         <source>Vous avez atteint le nombre maximum d'évènements autorisé.</source>
-        <target>__Vous avez atteint le nombre maximum d'évènements autorisé.</target>
+        <target>Vous avez atteint le nombre maximum d'évènements autorisé.</target>
       </trans-unit>
     </body>
   </file>
