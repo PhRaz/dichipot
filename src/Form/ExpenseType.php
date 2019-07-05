@@ -16,16 +16,22 @@ class ExpenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('payment', NumberType::class, [
-            'invalid_message' => 'Valeur incorrecte.'
+            'invalid_message' => 'Valeur incorrecte.',
+            'scale' => 2,
+            'html5' => true,
+            'attr' => ['step' => "0.01"]
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var Expense $expense */
             $expense = $event->getData();
             $form = $event->getForm();
-            $form->add('expense', MoneyType::class, [
+            $form->add('expense', NumberType::class, [
                 'label' => $expense->getUser()->getUserEvents()[0]->getPseudo(),
-                'invalid_message' => 'Valeur incorrecte.'
+                'invalid_message' => 'Valeur incorrecte.',
+                'scale' => 2,
+                'html5' => true,
+                'attr' => ['step' => "0.01"]
             ]);
         });
     }
