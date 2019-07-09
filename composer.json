@@ -69,7 +69,10 @@
         }
     },
     "require-dev": {
+        "symfony/browser-kit": "4.3.*",
+        "symfony/css-selector": "4.3.*",
         "symfony/maker-bundle": "^1.11",
+        "symfony/test-pack": "^1.0",
         "symfony/var-dumper": "4.3.*"
     }
 }
