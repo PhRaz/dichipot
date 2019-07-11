@@ -37,7 +37,7 @@
                                                 <td>
                                                     {{ userEvent2.pseudo }}{% if userEvent2.administrator is same as(true) %} (administrateur){% endif %}
                                                 </td>
-                                                {% if balance[event.id] is defined %}
+                                                {% if balance[event.id][userEvent2.user.id] is defined %}
                                                     {% set value = balance[event.id][userEvent2.user.id]|number_format('2', ',', ' ') %}
                                                 {% else %}
                                                     {% set value = 0|number_format('2', ',', ' ') %}
