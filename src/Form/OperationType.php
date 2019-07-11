@@ -18,7 +18,6 @@ class OperationType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('description')
-            ->add('category')
         ;
 
         $builder->add('expenses', CollectionType::class, [

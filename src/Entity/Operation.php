@@ -39,13 +39,6 @@ class Operation
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\Length(max=64)
-     */
-    private $category;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Expense", mappedBy="operation", orphanRemoval=true, cascade={"persist", "remove"})
      * @CustomAssert\PartSumNotNull
      */
@@ -99,18 +92,6 @@ class Operation
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }

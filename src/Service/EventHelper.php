@@ -60,7 +60,6 @@ Class EventHelper
                 'date' => $operation->getDate(),
                 'description' => $operation->getDescription(),
                 'pseudo' => $operation->getUser()->getUserEvents()[0]->getPseudo(),
-                'category' => $operation->getCategory(),
                 'totalExpense' => 0,
                 'totalPayment' => 0
             ];
