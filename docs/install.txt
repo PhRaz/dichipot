@@ -62,8 +62,6 @@ cp .docker/prod/config/vhosts/dichipot.conf .docker/config/vhosts/dichipot.conf
 MAILTO="philippe.razavet@gmail.com"
 30 0 * * * docker exec dichipot_mysql mysqldump -uroot -proot sf4 | gzip - | aws s3 cp - s3://dichipot/$(date +\%Y\%m\%d\%H\%M).sql.gz
 
-sudo tar -cvzf - dichipot/certs | aws s3 cp - s3://dichipot/certs_$(date +\%Y\%m\%d\%H\%M).tar.gz
-
 # installation certificat SSL en prod
 
 mettre à jour l'EIP sur la nouvelle instance ec2 pour avoir le nomde domaine en face de dichipot.com
@@ -79,5 +77,7 @@ certbot/certbot certonly \
 --webroot --webroot-path=/data/letsencrypt -d dichipot.com --email admin@dichipot.com --agree-tos
 
 sudo tar -cvzf - certs | aws s3 cp - s3://dichipot-certs/certs_$(date +\%Y\%m\%d\%H\%M).tar.gz
+
+docker restart dichipot_apache
 
 Pour le renouvellement c'est la même commande.
